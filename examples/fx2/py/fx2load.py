@@ -1,9 +1,7 @@
 from time import sleep
-import fx2
+from fx2 import fx2
 
 f=fx2.fx2()
-
-# you may need to change the vendor id, product id
 f.open(0x04b4,0x0082)
 
 def reset_device(reset):
@@ -38,5 +36,4 @@ def reset_bix(filename):
  reset_device(False)
  print "Closing device after reset"
  f.close();
-
 
