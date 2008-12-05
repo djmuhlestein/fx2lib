@@ -1,0 +1,16 @@
+You can move up the food chain of programming languages pretty quickly if you like:
+
+      C:    Program Your Firmware
+    C++:    Write a libusb driver
+ Python:    Write Bindings for your driver so you can test things interactively!
+
+fx2:
+ An example firmware loader and basic firmware terminal using the above strategy.
+ Requires libusb-1.0, Python 2.5
+ use fx2load.py w/ reset_bix function to load firmware onto a device.
+
+lights:
+ A really simple program that cycles the lights on the CY3864 development board.
+
+
+
