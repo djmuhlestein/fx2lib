@@ -5,7 +5,7 @@ f=fx2.fx2()
 
 # use this functions 1st
 
-def opendefault(vid=0x04b4,pid=0x0082):
+def openfx2(vid=0x04b4,pid=0x0082):
     f.open(vid,pid)
 
 def reset_device(reset):

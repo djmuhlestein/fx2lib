@@ -12,7 +12,7 @@ fx2:
  Example:
   python
   > from fx2load import *
-  > opendefault()
+  > openfx2()
   > reset_bix('<path to bix file>')
   > f.do_usb_command (.....
   > f.ep_bulk(......
