@@ -1,3 +1,25 @@
+Before building this library, you need sdcc installed and in your path.
+
+ http://sdcc.sf.net
+
+To build this library, run make in the lib folder.
+
+> cd lib
+> make
+
+You get lib/fx2.lib
+
+To use routines included with this library in your own firmware, 
+add the include files to your include path and the lib file to your compile command:
+
+> sdcc -mmcs51 -I<path to includes> <your c file> fx2.lib -L <path to fx2.lib dir> 
+
+Enjoy!
+Comments, Patches, all welcome.
+
+
+Notes on Various things I've learned about SDCC and the FX2
+
 * libusb on Linux
 * cycfx2prog: http://www.triplespark.net/elec/periph/USB-FX2/software/index.html
 * sdcc has sdcc/support/scripts/keil2sdcc.pl which I used to create the fx2regs.h file from the keil header. 
