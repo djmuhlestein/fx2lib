@@ -9,6 +9,16 @@ fx2:
  Requires libusb-1.0, Python 2.5
  use fx2load.py w/ reset_bix function to load firmware onto a device.
 
+ Example:
+  python
+  > from fx2load import *
+  > opendefault()
+  > reset_bix('<path to bix file>')
+  > f.do_usb_command (.....
+  > f.ep_bulk(......
+ 
+ At this point, the source is the documentation!
+
 lights:
  A really simple program that cycles the lights on the CY3864 development board.
 

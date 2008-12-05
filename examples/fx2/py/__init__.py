@@ -2,7 +2,11 @@ from time import sleep
 from fx2 import fx2
 
 f=fx2.fx2()
-f.open(0x04b4,0x0082)
+
+# use this functions 1st
+
+def opendefault(vid=0x04b4,pid=0x0082):
+    f.open(vid,pid)
 
 def reset_device(reset):
  print reset and "Put device in reset" or "Set device to run"
