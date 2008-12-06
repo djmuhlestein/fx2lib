@@ -21,6 +21,18 @@
 
 #include "fx2types.h"
 
+// NOTE you can't use these unless you define SYNCDELAY 
+// as a macro or function.  The reason is that SYNCDELAY
+// needs to be longer or shorter depending on your IFCONFIG
+// settings.  
+// See delay.h
+//
+// example: #define SYNCDELAY() SYNCDELAY4
+
+#define RESETFIFO(ep) {FIFORESET=0x80; SYNCDELAY();\
+                       FIFORESET=ep; SYNCDELAY();\
+                       FIFORESET=0x00; SYNCDELAY();}
+
 #define RESETFIFOS() {FIFORESET=0x80; SYNCDELAY();\
                      FIFORESET=0x02; SYNCDELAY();\
                      FIFORESET=0x04; SYNCDELAY();\
