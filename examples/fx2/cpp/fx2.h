@@ -29,12 +29,20 @@ class fx2 {
     private:
         libusb_context* libusb_ctx;
         libusb_device_handle* dev_handle;
+        int interface,alt_setting;
         
     public:
         fx2();
         ~fx2();
-        
+        /**
+         * open
+         * vid = vendor id
+         * pid = product id
+         *
+         * Opens device with vid,pid and claims alt 0 of interface 0
+         **/
         void open(int vid=VID,int pid=PID);
+        void set_interface(int interface, int alt_setting);
         bool isopen() { return dev_handle != NULL; }
         void close();
         int do_usb_command(char* buf, int size, unsigned char type, unsigned char request, unsigned short value, unsigned short index, unsigned short length );

@@ -22,7 +22,7 @@
 #include "fx2.h"
 
 
-fx2::fx2():dev_handle(NULL) {
+fx2::fx2():dev_handle(NULL),interface(0),alt_setting(0) {
 
  int rv=libusb_init(&libusb_ctx);
  assert(!rv);
@@ -40,19 +40,29 @@ fx2::~fx2() {
 void fx2::open(int vid,int pid) {
     dev_handle=libusb_open_device_with_vid_pid (libusb_ctx,vid,pid);
     assert(dev_handle);
-    if (dev_handle) {
-     int rv=libusb_claim_interface(dev_handle,0);
-     assert(!rv);
-     rv=libusb_set_interface_alt_setting(dev_handle,0,0);
-     assert(!rv);
-    }
+    int rv=libusb_claim_interface(dev_handle,interface);
+    assert(!rv);
+    rv=libusb_set_interface_alt_setting(dev_handle,interface,alt_setting);
+    assert(!rv);
 }
-
+void fx2::set_interface(int iface, int alt){
+    assert(dev_handle);
+    if (interface != iface) {
+        libusb_release_interface(dev_handle,this->interface);
+    }
+    int rv=libusb_claim_interface(dev_handle,iface);
+    assert(!rv);
+    rv=libusb_set_interface_alt_setting(dev_handle,iface,alt);
+    assert(!rv);
+    this->interface=iface;
+    this->alt_setting=alt;
+}
 void fx2::close() {
     assert(dev_handle);
-    libusb_release_interface(dev_handle,0);
+    libusb_release_interface(dev_handle,interface);
     libusb_close(dev_handle);
     dev_handle=NULL;
+    interface=0;alt_setting=0;
 }
 
 
