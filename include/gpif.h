@@ -30,7 +30,7 @@
  * code but ported to sdcc.
  *
  * uses syncdelay of 4 which might not be long enough if peripheral
- * runs slower than 30mhz
+ * runs slower than 30mhz.  May not affect anything.
  *
  * IFCONFIG is set with IFCFG[1:0] = 10 for GPIF master but you still
  * have to set the ifclk, polarity, and the rest of the bits

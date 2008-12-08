@@ -56,7 +56,7 @@ void gpif_init( BYTE* wavedata, BYTE* initdata ) {
   // ASYNC=1      , master samples asynchronous
   // GSTATE=1     , Drive GPIF states out on PORTE[2:0], debug WF
   // IFCFG[1:0]=10, FX2 in GPIF master mode  IFCONFIG
-  IFCONFIG &= ~0xfc; // turn off IFCFG[1:0]
+  IFCONFIG &= ~0x03; // turn off IFCFG[1:0]
   IFCONFIG |= 0x02; // set's IFCFG[1:0] to 10 to put in GPIF master mode.
   
  
