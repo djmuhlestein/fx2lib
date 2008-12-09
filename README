@@ -18,45 +18,4 @@ Enjoy!
 Comments, Patches, all welcome.
 
 
-Notes on Various things I've learned about SDCC and the FX2
-
-* libusb on Linux
-* cycfx2prog: http://www.triplespark.net/elec/periph/USB-FX2/software/index.html
-* sdcc has sdcc/support/scripts/keil2sdcc.pl which I used to create the fx2regs.h file from the keil header. 
-* sdcc is little endian, keil is big endian (important if doing usb communication)
-* xdata needs to start at 0x4000 (I think this is correct anyway.. 16k c/d memory then xdata)
-  - what about pdata?
-  - It seems the number can actually vary depending on the size of the image
-  - can sdcc not automatically figure that out?
-* linux has objcopy, which can be used in place of Hex2bix for bix files 
-  - objcopy -I ihex -O binary --pad-to=8192 input [output]
-  - this probably doesn't work for iic though.
-
-
-Memory
- * 256 bytes internal
-   - lower 128=registers/bits (direct or indirect)
-   - upper 128=stack (or whatever but only indirect addressing)
-   - sfs occupy upper 128 space only direct addressing
-
- * external
-  - 16k on chip 0-0x3fff
-  - 512 bytes on chip scratch ram 0xe000 - 0xe1ff (data memory only)
-  - epbuffers and control at 0xe200-0xffff (data memory only)
-  
-   Only the on chip 16k and 512 bytes can be uploaded w/ eeprom or downloaded to host with SETUPPTR
-
-sdcc data types
-  data/near=direct addressable internal memory (default for model-small)
-  xdata/far=external ram (default for model-large)
-  idata=indirect addressable internal memory
-  pdata=access to xdata area, but uses sfr to get to address (sdcc 4.1)
-  code=code memory, study this more.
-  bit=uses lower 128 bit area
-  
-  
-
-TODO:
- * what is CKCON and bmSTRETCH
- * need to implemenent sleep/resume in final firmware
 
