@@ -146,6 +146,15 @@ void gpif_single_read( BYTE* res, WORD len ){
     }
 }
 
+void gpif_single_write( BYTE* dat, WORD len) {
+   BYTE c;
+   for (c=0;c<len;c+=2) {
+    while (!(GPIFTRIG & 0x80) );
+    XGPIFSGLDATH = dat[c];
+    XGPIFSGLDATLX = dat[c+1];
+   }
+}
+
 void gpif_fifo_read ( GPIF_EP_NUM ep_num ) {
     while ( !(GPIFTRIG & 0x80 ) ); // wait until things are finished
     GPIFTRIG = GPIFTRGRD | ep_num;

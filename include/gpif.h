@@ -69,8 +69,12 @@ typedef enum {
  * Should be multiple of 2.  Should this function
  * be coded to be smart enough for 8 bit bus and 16 both
  * or should there be a different function?
+ *
+ * At least one EPxFIFOCFG has to have wordwide=1 or these
+ * functions won't transfer both bytes right
  **/
-void gpif_single_read( BYTE* res , WORD len) ;
+void gpif_single_read( BYTE* res , WORD len);
+void gpif_single_write( BYTE* data, WORD len);
 
 void gpif_fifo_read ( GPIF_EP_NUM ep_num );
 
