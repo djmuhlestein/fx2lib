@@ -26,6 +26,9 @@ run: $(BASENAME).bix
 
 bix: $(BASENAME).bix
 
+test: test.cpp
+	g++ -o test test.cpp -lusb-1.0
+
 
 reset:
 	$(CYCFX2PROG) reset

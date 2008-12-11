@@ -29,6 +29,10 @@
 //
 // example: #define SYNCDELAY() SYNCDELAY4
 
+/**
+ * RESETFIFO should not is 0x80 for IN endpoints
+ * Only use 0x02, 0x04, 0x06, 0x06 for ep value
+ **/
 #define RESETFIFO(ep) {FIFORESET=0x80; SYNCDELAY();\
                        FIFORESET=ep; SYNCDELAY();\
                        FIFORESET=0x00; SYNCDELAY();}

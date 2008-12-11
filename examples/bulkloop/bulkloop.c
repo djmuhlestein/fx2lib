@@ -8,6 +8,7 @@
 #include <usbjt.h>
 #include <lights.h>
 #include <setupdat.h>
+#include <eputils.h>
 
 
 #define SYNCDELAY() SYNCDELAY4
@@ -45,6 +46,8 @@ void main() {
  USE_USB_INTS(); 
  ENABLE_SUDAV();
  ENABLE_SOF();
+ ENABLE_HISPEED();
+ ENABLE_USBRESET();
  
  
  // only valid endpoints are 2/6
@@ -147,6 +150,17 @@ BOOL handle_set_interface(BYTE ifc, BYTE alt_ifc) {
  printf ( "Set interface %d to alt: %d\n" , ifc, alt_ifc );
  
  if (ifc==0&&alt_ifc==0) {
+    // SEE TRM 2.3.7
+    // reset toggles
+    RESETTOGGLE(0x02);
+    RESETTOGGLE(0x86);
+    // restore endpoints to default condition
+    RESETFIFO(0x02);
+    EP2BCL=0x80;
+    SYNCDELAY();
+    EP2BCL=0X80;
+    SYNCDELAY();
+    RESETFIFO(0x86);
     return TRUE;
  } else 
     return FALSE;
@@ -182,8 +196,13 @@ void sof_isr () interrupt SOF_ISR using 1 {
 
 void sutok_isr() interrupt SUTOK_ISR {}
 void suspend_isr() interrupt SUSPEND_ISR {}
-void usbreset_isr() interrupt USBRESET_ISR {}
-void hispeed_isr() interrupt HISPEED_ISR {}
+void usbreset_isr() interrupt USBRESET_ISR {
+    CLEAR_USBRESET();
+}
+void hispeed_isr() interrupt HISPEED_ISR {
+    handle_hispeed();
+    CLEAR_HISPEED();
+}
 void ep0ack_isr() interrupt EP0ACK_ISR {}
 void ep0in_isr() interrupt EP0IN_ISR {}
 void ep0out_isr() interrupt EP0OUT_ISR {}
