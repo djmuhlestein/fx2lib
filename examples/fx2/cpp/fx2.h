@@ -46,6 +46,9 @@ class fx2 {
         bool isopen() { return dev_handle != NULL; }
         void close();
         int do_usb_command(char* buf, int size, unsigned char type, unsigned char request, unsigned short value, unsigned short index, unsigned short length );
+        int clear_halt(char ep);
+        int reset();
+        int set_configuration(int config);
         bool ep_bulk(char* buf, int size, unsigned char ep, int timeout);
 
 };

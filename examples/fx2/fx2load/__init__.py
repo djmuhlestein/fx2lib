@@ -55,6 +55,5 @@ def reset_bix(filename):
  print "loading bix file of length: %d" % len(bix) 
  write_ram( 0, bix,len(bix) );
  reset_device(False)
- print "Closing device after reset"
- f.close();
+ f.close()
 

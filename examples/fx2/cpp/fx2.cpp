@@ -22,7 +22,7 @@
 #include "fx2.h"
 
 
-fx2::fx2():dev_handle(NULL),interface(0),alt_setting(0) {
+fx2::fx2():dev_handle(NULL) {
 
  int rv=libusb_init(&libusb_ctx);
  assert(!rv);
@@ -40,22 +40,25 @@ fx2::~fx2() {
 void fx2::open(int vid,int pid) {
     dev_handle=libusb_open_device_with_vid_pid (libusb_ctx,vid,pid);
     assert(dev_handle);
-    int rv=libusb_claim_interface(dev_handle,interface);
+    int rv=libusb_claim_interface(dev_handle,0);
     assert(!rv);
-    rv=libusb_set_interface_alt_setting(dev_handle,interface,alt_setting);
+    interface=0;
+    rv=libusb_set_interface_alt_setting(dev_handle,0,0);
     assert(!rv);
+    alt_setting=0;
+    
 }
 void fx2::set_interface(int iface, int alt){
     assert(dev_handle);
     if (interface != iface) {
-        libusb_release_interface(dev_handle,this->interface);
+        libusb_release_interface(dev_handle,interface);
+        int rv=libusb_claim_interface(dev_handle,iface);
+        assert(!rv);
+        this->interface=iface;
     }
-    int rv=libusb_claim_interface(dev_handle,iface);
+    int rv=libusb_set_interface_alt_setting(dev_handle,interface,alt);
     assert(!rv);
-    rv=libusb_set_interface_alt_setting(dev_handle,iface,alt);
-    assert(!rv);
-    this->interface=iface;
-    this->alt_setting=alt;
+    alt_setting=alt;
 }
 void fx2::close() {
     assert(dev_handle);
@@ -79,6 +82,30 @@ int fx2::do_usb_command(char* buf, int size, unsigned char type, unsigned char r
     1000);
 }
 
+int fx2::clear_halt(char ep) {
+    assert(dev_handle);
+    return libusb_clear_halt(dev_handle,(unsigned char)ep);
+}
+
+int fx2::reset() {
+    assert(dev_handle);
+    int rv=libusb_reset_device(dev_handle);
+    if (rv==LIBUSB_ERROR_NO_DEVICE) {
+        printf ( "Device Changed.  Closing\n");
+        libusb_close(dev_handle);
+        interface=0;alt_setting=0;
+    }
+    return rv;
+}
+
+int fx2::set_configuration(int configuration) {
+    assert(dev_handle);
+    libusb_release_interface(dev_handle,interface);
+    int rv=libusb_set_configuration(dev_handle,configuration);
+    if (!rv) {
+        libusb_claim_interface(dev_handle,interface);
+    }
+}
 
 
 bool fx2::ep_bulk(char* buf, int size, unsigned char ep, int timeout) {
