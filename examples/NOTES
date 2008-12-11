@@ -22,5 +22,11 @@ fx2:
 lights:
  A really simple program that cycles the lights on the CY3864 development board.
 
-
+bulkloop:
+ Demonstrations:
+  * looping data on endpoints.
+  * Custom device descriptor.
+  * Vendor commands.
+  * Usb jump table.
+  * serial IO
 
