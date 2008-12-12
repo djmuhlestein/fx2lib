@@ -62,6 +62,12 @@ typedef enum {
 } GPIF_EP_NUM;
 
 /**
+ * Simple function to help set the transaction count for gpif
+ * transactions.
+ **/
+void gpif_set_tc(DWORD tc);
+
+/**
  * Use the gpif to read a single byte at a time.
  * Read len bytes and store in res
  *
