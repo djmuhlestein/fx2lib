@@ -30,3 +30,6 @@ bulkloop:
   * Usb jump table.
   * serial IO
 
+i2c:
+ A port of the Cypress i2c example.
+
