@@ -68,19 +68,23 @@ typedef enum {
 void gpif_set_tc(DWORD tc);
 
 /**
- * Use the gpif to read a single byte at a time.
- * Read len bytes and store in res
+ * Use the gpif to read a single word at a time.
+ * Read len words and store in res
  *
- * This is coded to use 16 bit data bus.  Len
- * Should be multiple of 2.  Should this function
- * be coded to be smart enough for 8 bit bus and 16 both
- * or should there be a different function?
- *
- * At least one EPxFIFOCFG has to have wordwide=1 or these
- * functions won't transfer both bytes right
+ * At least one EPxFIFOCFG has to have wordwide=1 or this
+ * functions won't transfer both bytes.
  **/
-void gpif_single_read( BYTE* res , WORD len);
-void gpif_single_write( BYTE* data, WORD len);
+
+void gpif_single_read16( WORD* res , WORD len);
+
+/**
+ * Use the gpif to write a single word at a time.
+ * Write len words from data
+ *
+ * At leat one EPxFIFOCFG has to have wordwide=1 or this
+ * function won't transfer both bytes.
+ **/
+void gpif_single_write16( WORD* data, WORD len);
 
 void gpif_fifo_read ( GPIF_EP_NUM ep_num );
 

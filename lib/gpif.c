@@ -142,26 +142,25 @@ void gpif_set_tc(DWORD tc) {
     GPIFTCB0 = LSB(LSW(tc));
 }
 
-void gpif_single_read( BYTE* res, WORD len ){
-    BYTE c;
+void gpif_single_read16( WORD* res, WORD len ){
+    BYTE c;    
     while (!(GPIFTRIG & 0x80)); // wait done
     // dummy read to trigger real read
     res[0] = XGPIFSGLDATLX;
-    for (c=0;c<len;c+=2) {
+    for (c=0;c<len;++c) {
      while ( !(GPIFTRIG & 0x80) ); // wait done
      // real read
-     res[c] = GPIFSGLDATH;
-     // whether or not to do another transfer
-     res[c+1] = c==len-2 ? GPIFSGLDATLNOX : GPIFSGLDATLX;
+     // whether or not to do another transfer is controlled by GPIFSGLDATLNOX or ..DATLX
+     res[c] = MAKEWORD(GPIFSGLDATH, c==len-1 ? GPIFSGLDATLNOX : GPIFSGLDATLX );
     }
 }
 
-void gpif_single_write( BYTE* dat, WORD len) {
+void gpif_single_write16( WORD* dat, WORD len) {
    BYTE c;
-   for (c=0;c<len;c+=2) {
+   for (c=0;c<len;++c) {
     while (!(GPIFTRIG & 0x80) );
-    XGPIFSGLDATH = dat[c];
-    XGPIFSGLDATLX = dat[c+1];
+    XGPIFSGLDATH = MSB(dat[c]);
+    XGPIFSGLDATLX = LSB(dat[c]);
    }
 }
 
