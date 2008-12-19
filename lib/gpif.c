@@ -150,8 +150,9 @@ void gpif_single_read16( WORD* res, WORD len ){
     for (c=0;c<len;++c) {
      while ( !(GPIFTRIG & 0x80) ); // wait done
      // real read
+     res[c] = GPIFSGLDATH << 8;
      // whether or not to do another transfer is controlled by GPIFSGLDATLNOX or ..DATLX
-     res[c] = MAKEWORD(GPIFSGLDATH, c==len-1 ? GPIFSGLDATLNOX : GPIFSGLDATLX );
+     res[c] |= c==len-1 ? GPIFSGLDATLNOX : GPIFSGLDATLX ;
     }
 }
 
