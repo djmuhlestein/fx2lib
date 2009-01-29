@@ -33,3 +33,8 @@ bulkloop:
 i2c:
  A port of the Cypress i2c example.
 
+reset:
+ Shows writing to the eeprom on the dev board.  The included iic data is the default data
+ on the dev board and you can use this program to reset your board back to the default 
+ state if you happen to write a non-working iic file to the device.  You shouldn't 
+ probably use this on a real board unless you really know what you're doing :)
