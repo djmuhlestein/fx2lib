@@ -1,0 +1,20 @@
+#!/bin/env python
+
+import sys,re
+
+if __name__=='__main__':
+    if len(sys.argv)<3:
+        print "Usage: %s <gpif export file> <save file>" % sys.argv[0]
+        sys.exit(-1)
+
+    f=open(sys.argv[1],'r').read()
+    o=open(sys.argv[2],'w')
+
+    # write every thing between the wave data and the TODO
+    datre = re.compile ( 'const char xdata .*?\};', re.S )
+    data = datre.findall(f)
+    for dat in data:
+        o.write(dat.replace('\r\n','\n'))
+        o.write('\n')
+    o.close()
+
