@@ -45,6 +45,10 @@ class fx2 {
         void set_interface(int interface, int alt_setting);
         bool isopen() { return dev_handle != NULL; }
         void close();
+        /**
+         * level n = 0-3
+         */
+        void set_debug_level(int n);
         int do_usb_command(char* buf, int size, unsigned char type, unsigned char request, unsigned short value, unsigned short index, unsigned short length );
         int clear_halt(char ep);
         int reset();

@@ -26,7 +26,11 @@ fx2::fx2():dev_handle(NULL) {
 
  int rv=libusb_init(&libusb_ctx);
  assert(!rv);
+ libusb_set_debug(libusb_ctx,0);
+}
 
+void fx2::set_debug_level(int n) {
+ libusb_set_debug(libusb_ctx,n);
 }
 
 fx2::~fx2() {
@@ -113,11 +117,7 @@ bool fx2::ep_bulk(char* buf, int size, unsigned char ep, int timeout) {
  int transferred;
  int rv=libusb_bulk_transfer ( dev_handle, ep, (unsigned char*)buf, size, &transferred, timeout );
 
- if (!rv) 
- {
-  printf ( "Transfer Succeeded. (Bytes: %d)\n", transferred );
-  return true;
- }
+ if (!rv) return true; 
 
  if (rv==LIBUSB_ERROR_TIMEOUT) {
     printf ( "Transfer Timeout.  %d bytes transferred.\n", transferred );
