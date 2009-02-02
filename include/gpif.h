@@ -21,6 +21,8 @@
 
 #include "fx2types.h"
 
+#define GPIFDONE (GPIFTRIG&0x80)
+
 
 /**
  * Gpif designer generates a c file with waveform data.
