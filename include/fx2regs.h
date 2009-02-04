@@ -1,20 +1,30 @@
-/**
- * Copyright (C) 2008 Ubixum, Inc. 
+// Copyright (C) 2008 Ubixum, Inc. 
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+/*! \file 
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * This is the basic header/register file for working with the cypress fx2
+ * (cyc768013) and variants 8051 chipset.  It contains the special function 
+ * register definitions as well as the special configuration registers 
+ * addresses.
+ * 
+ * The TRM for the fx2 chip contains the full documentation for what each of
+ * these registers do.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- **/
+ * */
 
 #ifndef FX2REGS_H 
 #define FX2REGS_H
@@ -26,216 +36,216 @@ xdata at 0xE480 volatile BYTE RES_WAVEDATA_END;
 
 // General Configuration
 
-xdata at 0xE600 volatile BYTE CPUCS;  // Control & Status
-xdata at 0xE601 volatile BYTE IFCONFIG;  // Interface Configuration
-xdata at 0xE602 volatile BYTE PINFLAGSAB;  // FIFO FLAGA and FLAGB Assignments
-xdata at 0xE603 volatile BYTE PINFLAGSCD;  // FIFO FLAGC and FLAGD Assignments
-xdata at 0xE604 volatile BYTE FIFORESET;  // Restore FIFOS to default state
-xdata at 0xE605 volatile BYTE BREAKPT;  // Breakpoint
-xdata at 0xE606 volatile BYTE BPADDRH;  // Breakpoint Address H
-xdata at 0xE607 volatile BYTE BPADDRL;  // Breakpoint Address L
-xdata at 0xE608 volatile BYTE UART230;  // 230 Kbaud clock for T0,T1,T2
-xdata at 0xE609 volatile BYTE FIFOPINPOLAR;  // FIFO polarities
-xdata at 0xE60A volatile BYTE REVID;  // Chip Revision
-xdata at 0xE60B volatile BYTE REVCTL;  // Chip Revision Control
+xdata at 0xE600 volatile BYTE CPUCS;  //! Control & Status
+xdata at 0xE601 volatile BYTE IFCONFIG;  //! Interface Configuration
+xdata at 0xE602 volatile BYTE PINFLAGSAB;  //! FIFO FLAGA and FLAGB Assignments
+xdata at 0xE603 volatile BYTE PINFLAGSCD;  //! FIFO FLAGC and FLAGD Assignments
+xdata at 0xE604 volatile BYTE FIFORESET;  //! Restore FIFOS to default state
+xdata at 0xE605 volatile BYTE BREAKPT;  //! Breakpoint
+xdata at 0xE606 volatile BYTE BPADDRH;  //! Breakpoint Address H
+xdata at 0xE607 volatile BYTE BPADDRL;  //! Breakpoint Address L
+xdata at 0xE608 volatile BYTE UART230;  //! 230 Kbaud clock for T0,T1,T2
+xdata at 0xE609 volatile BYTE FIFOPINPOLAR;  //! FIFO polarities
+xdata at 0xE60A volatile BYTE REVID;  //! Chip Revision
+xdata at 0xE60B volatile BYTE REVCTL;  //! Chip Revision Control
 
 // Endpoint Configuration
 
-xdata at 0xE610 volatile BYTE EP1OUTCFG;  // Endpoint 1-OUT Configuration
-xdata at 0xE611 volatile BYTE EP1INCFG;  // Endpoint 1-IN Configuration
-xdata at 0xE612 volatile BYTE EP2CFG;  // Endpoint 2 Configuration
-xdata at 0xE613 volatile BYTE EP4CFG;  // Endpoint 4 Configuration
-xdata at 0xE614 volatile BYTE EP6CFG;  // Endpoint 6 Configuration
-xdata at 0xE615 volatile BYTE EP8CFG;  // Endpoint 8 Configuration
-xdata at 0xE618 volatile BYTE EP2FIFOCFG;  // Endpoint 2 FIFO configuration
-xdata at 0xE619 volatile BYTE EP4FIFOCFG;  // Endpoint 4 FIFO configuration
-xdata at 0xE61A volatile BYTE EP6FIFOCFG;  // Endpoint 6 FIFO configuration
-xdata at 0xE61B volatile BYTE EP8FIFOCFG;  // Endpoint 8 FIFO configuration
-xdata at 0xE620 volatile BYTE EP2AUTOINLENH;  // Endpoint 2 Packet Length H (IN only)
-xdata at 0xE621 volatile BYTE EP2AUTOINLENL;  // Endpoint 2 Packet Length L (IN only)
-xdata at 0xE622 volatile BYTE EP4AUTOINLENH;  // Endpoint 4 Packet Length H (IN only)
-xdata at 0xE623 volatile BYTE EP4AUTOINLENL;  // Endpoint 4 Packet Length L (IN only)
-xdata at 0xE624 volatile BYTE EP6AUTOINLENH;  // Endpoint 6 Packet Length H (IN only)
-xdata at 0xE625 volatile BYTE EP6AUTOINLENL;  // Endpoint 6 Packet Length L (IN only)
-xdata at 0xE626 volatile BYTE EP8AUTOINLENH;  // Endpoint 8 Packet Length H (IN only)
-xdata at 0xE627 volatile BYTE EP8AUTOINLENL;  // Endpoint 8 Packet Length L (IN only)
-xdata at 0xE630 volatile BYTE EP2FIFOPFH;  // EP2 Programmable Flag trigger H
-xdata at 0xE631 volatile BYTE EP2FIFOPFL;  // EP2 Programmable Flag trigger L
-xdata at 0xE632 volatile BYTE EP4FIFOPFH;  // EP4 Programmable Flag trigger H
-xdata at 0xE633 volatile BYTE EP4FIFOPFL;  // EP4 Programmable Flag trigger L
-xdata at 0xE634 volatile BYTE EP6FIFOPFH;  // EP6 Programmable Flag trigger H
-xdata at 0xE635 volatile BYTE EP6FIFOPFL;  // EP6 Programmable Flag trigger L
-xdata at 0xE636 volatile BYTE EP8FIFOPFH;  // EP8 Programmable Flag trigger H
-xdata at 0xE637 volatile BYTE EP8FIFOPFL;  // EP8 Programmable Flag trigger L
-xdata at 0xE640 volatile BYTE EP2ISOINPKTS;  // EP2 (if ISO) IN Packets per frame (1-3)
-xdata at 0xE641 volatile BYTE EP4ISOINPKTS;  // EP4 (if ISO) IN Packets per frame (1-3)
-xdata at 0xE642 volatile BYTE EP6ISOINPKTS;  // EP6 (if ISO) IN Packets per frame (1-3)
-xdata at 0xE643 volatile BYTE EP8ISOINPKTS;  // EP8 (if ISO) IN Packets per frame (1-3)
-xdata at 0xE648 volatile BYTE INPKTEND;  // Force IN Packet End
-xdata at 0xE649 volatile BYTE OUTPKTEND;  // Force OUT Packet End
+xdata at 0xE610 volatile BYTE EP1OUTCFG;  //! Endpoint 1-OUT Configuration
+xdata at 0xE611 volatile BYTE EP1INCFG;  //! Endpoint 1-IN Configuration
+xdata at 0xE612 volatile BYTE EP2CFG;  //! Endpoint 2 Configuration
+xdata at 0xE613 volatile BYTE EP4CFG;  //! Endpoint 4 Configuration
+xdata at 0xE614 volatile BYTE EP6CFG;  //! Endpoint 6 Configuration
+xdata at 0xE615 volatile BYTE EP8CFG;  //! Endpoint 8 Configuration
+xdata at 0xE618 volatile BYTE EP2FIFOCFG;  //! Endpoint 2 FIFO configuration
+xdata at 0xE619 volatile BYTE EP4FIFOCFG;  //! Endpoint 4 FIFO configuration
+xdata at 0xE61A volatile BYTE EP6FIFOCFG;  //! Endpoint 6 FIFO configuration
+xdata at 0xE61B volatile BYTE EP8FIFOCFG;  //! Endpoint 8 FIFO configuration
+xdata at 0xE620 volatile BYTE EP2AUTOINLENH;  //! Endpoint 2 Packet Length H (IN only)
+xdata at 0xE621 volatile BYTE EP2AUTOINLENL;  //! Endpoint 2 Packet Length L (IN only)
+xdata at 0xE622 volatile BYTE EP4AUTOINLENH;  //! Endpoint 4 Packet Length H (IN only)
+xdata at 0xE623 volatile BYTE EP4AUTOINLENL;  //! Endpoint 4 Packet Length L (IN only)
+xdata at 0xE624 volatile BYTE EP6AUTOINLENH;  //! Endpoint 6 Packet Length H (IN only)
+xdata at 0xE625 volatile BYTE EP6AUTOINLENL;  //! Endpoint 6 Packet Length L (IN only)
+xdata at 0xE626 volatile BYTE EP8AUTOINLENH;  //! Endpoint 8 Packet Length H (IN only)
+xdata at 0xE627 volatile BYTE EP8AUTOINLENL;  //! Endpoint 8 Packet Length L (IN only)
+xdata at 0xE630 volatile BYTE EP2FIFOPFH;  //! EP2 Programmable Flag trigger H
+xdata at 0xE631 volatile BYTE EP2FIFOPFL;  //! EP2 Programmable Flag trigger L
+xdata at 0xE632 volatile BYTE EP4FIFOPFH;  //! EP4 Programmable Flag trigger H
+xdata at 0xE633 volatile BYTE EP4FIFOPFL;  //! EP4 Programmable Flag trigger L
+xdata at 0xE634 volatile BYTE EP6FIFOPFH;  //! EP6 Programmable Flag trigger H
+xdata at 0xE635 volatile BYTE EP6FIFOPFL;  //! EP6 Programmable Flag trigger L
+xdata at 0xE636 volatile BYTE EP8FIFOPFH;  //! EP8 Programmable Flag trigger H
+xdata at 0xE637 volatile BYTE EP8FIFOPFL;  //! EP8 Programmable Flag trigger L
+xdata at 0xE640 volatile BYTE EP2ISOINPKTS;  //! EP2 (if ISO) IN Packets per frame (1-3)
+xdata at 0xE641 volatile BYTE EP4ISOINPKTS;  //! EP4 (if ISO) IN Packets per frame (1-3)
+xdata at 0xE642 volatile BYTE EP6ISOINPKTS;  //! EP6 (if ISO) IN Packets per frame (1-3)
+xdata at 0xE643 volatile BYTE EP8ISOINPKTS;  //! EP8 (if ISO) IN Packets per frame (1-3)
+xdata at 0xE648 volatile BYTE INPKTEND;  //! Force IN Packet End
+xdata at 0xE649 volatile BYTE OUTPKTEND;  //! Force OUT Packet End
 
 // Interrupts
 
-xdata at 0xE650 volatile BYTE EP2FIFOIE;  // Endpoint 2 Flag Interrupt Enable
-xdata at 0xE651 volatile BYTE EP2FIFOIRQ;  // Endpoint 2 Flag Interrupt Request
-xdata at 0xE652 volatile BYTE EP4FIFOIE;  // Endpoint 4 Flag Interrupt Enable
-xdata at 0xE653 volatile BYTE EP4FIFOIRQ;  // Endpoint 4 Flag Interrupt Request
-xdata at 0xE654 volatile BYTE EP6FIFOIE;  // Endpoint 6 Flag Interrupt Enable
-xdata at 0xE655 volatile BYTE EP6FIFOIRQ;  // Endpoint 6 Flag Interrupt Request
-xdata at 0xE656 volatile BYTE EP8FIFOIE;  // Endpoint 8 Flag Interrupt Enable
-xdata at 0xE657 volatile BYTE EP8FIFOIRQ;  // Endpoint 8 Flag Interrupt Request
-xdata at 0xE658 volatile BYTE IBNIE;  // IN-BULK-NAK Interrupt Enable
-xdata at 0xE659 volatile BYTE IBNIRQ;  // IN-BULK-NAK interrupt Request
-xdata at 0xE65A volatile BYTE NAKIE;  // Endpoint Ping NAK interrupt Enable
-xdata at 0xE65B volatile BYTE NAKIRQ;  // Endpoint Ping NAK interrupt Request
-xdata at 0xE65C volatile BYTE USBIE;  // USB Int Enables
-xdata at 0xE65D volatile BYTE USBIRQ;  // USB Interrupt Requests
-xdata at 0xE65E volatile BYTE EPIE;  // Endpoint Interrupt Enables
-xdata at 0xE65F volatile BYTE EPIRQ;  // Endpoint Interrupt Requests
-xdata at 0xE660 volatile BYTE GPIFIE;  // GPIF Interrupt Enable
-xdata at 0xE661 volatile BYTE GPIFIRQ;  // GPIF Interrupt Request
-xdata at 0xE662 volatile BYTE USBERRIE;  // USB Error Interrupt Enables
-xdata at 0xE663 volatile BYTE USBERRIRQ;  // USB Error Interrupt Requests
-xdata at 0xE664 volatile BYTE ERRCNTLIM;  // USB Error counter and limit
-xdata at 0xE665 volatile BYTE CLRERRCNT;  // Clear Error Counter EC[3..0]
-xdata at 0xE666 volatile BYTE INT2IVEC;  // Interupt 2 (USB) Autovector
-xdata at 0xE667 volatile BYTE INT4IVEC;  // Interupt 4 (FIFOS & GPIF) Autovector
-xdata at 0xE668 volatile BYTE INTSETUP;  // Interrupt 2&4 Setup
+xdata at 0xE650 volatile BYTE EP2FIFOIE;  //! Endpoint 2 Flag Interrupt Enable
+xdata at 0xE651 volatile BYTE EP2FIFOIRQ;  //! Endpoint 2 Flag Interrupt Request
+xdata at 0xE652 volatile BYTE EP4FIFOIE;  //! Endpoint 4 Flag Interrupt Enable
+xdata at 0xE653 volatile BYTE EP4FIFOIRQ;  //! Endpoint 4 Flag Interrupt Request
+xdata at 0xE654 volatile BYTE EP6FIFOIE;  //! Endpoint 6 Flag Interrupt Enable
+xdata at 0xE655 volatile BYTE EP6FIFOIRQ;  //! Endpoint 6 Flag Interrupt Request
+xdata at 0xE656 volatile BYTE EP8FIFOIE;  //! Endpoint 8 Flag Interrupt Enable
+xdata at 0xE657 volatile BYTE EP8FIFOIRQ;  //! Endpoint 8 Flag Interrupt Request
+xdata at 0xE658 volatile BYTE IBNIE;  //! IN-BULK-NAK Interrupt Enable
+xdata at 0xE659 volatile BYTE IBNIRQ;  //! IN-BULK-NAK interrupt Request
+xdata at 0xE65A volatile BYTE NAKIE;  //! Endpoint Ping NAK interrupt Enable
+xdata at 0xE65B volatile BYTE NAKIRQ;  //! Endpoint Ping NAK interrupt Request
+xdata at 0xE65C volatile BYTE USBIE;  //! USB Int Enables
+xdata at 0xE65D volatile BYTE USBIRQ;  //! USB Interrupt Requests
+xdata at 0xE65E volatile BYTE EPIE;  //! Endpoint Interrupt Enables
+xdata at 0xE65F volatile BYTE EPIRQ;  //! Endpoint Interrupt Requests
+xdata at 0xE660 volatile BYTE GPIFIE;  //! GPIF Interrupt Enable
+xdata at 0xE661 volatile BYTE GPIFIRQ;  //! GPIF Interrupt Request
+xdata at 0xE662 volatile BYTE USBERRIE;  //! USB Error Interrupt Enables
+xdata at 0xE663 volatile BYTE USBERRIRQ;  //! USB Error Interrupt Requests
+xdata at 0xE664 volatile BYTE ERRCNTLIM;  //! USB Error counter and limit
+xdata at 0xE665 volatile BYTE CLRERRCNT;  //! Clear Error Counter EC[3..0]
+xdata at 0xE666 volatile BYTE INT2IVEC;  //! Interupt 2 (USB) Autovector
+xdata at 0xE667 volatile BYTE INT4IVEC;  //! Interupt 4 (FIFOS & GPIF) Autovector
+xdata at 0xE668 volatile BYTE INTSETUP;  //! Interrupt 2&4 Setup
 
 // Input/Output
 
-xdata at 0xE670 volatile BYTE PORTACFG;  // I/O PORTA Alternate Configuration
-xdata at 0xE671 volatile BYTE PORTCCFG;  // I/O PORTC Alternate Configuration
-xdata at 0xE672 volatile BYTE PORTECFG;  // I/O PORTE Alternate Configuration
-xdata at 0xE678 volatile BYTE I2CS;  // Control & Status
-xdata at 0xE679 volatile BYTE I2DAT;  // Data
-xdata at 0xE67A volatile BYTE I2CTL;  // I2C Control
-xdata at 0xE67B volatile BYTE XAUTODAT1;  // Autoptr1 MOVX access
-xdata at 0xE67C volatile BYTE XAUTODAT2;  // Autoptr2 MOVX access
+xdata at 0xE670 volatile BYTE PORTACFG;  //! I/O PORTA Alternate Configuration
+xdata at 0xE671 volatile BYTE PORTCCFG;  //! I/O PORTC Alternate Configuration
+xdata at 0xE672 volatile BYTE PORTECFG;  //! I/O PORTE Alternate Configuration
+xdata at 0xE678 volatile BYTE I2CS;  //! Control & Status
+xdata at 0xE679 volatile BYTE I2DAT;  //! Data
+xdata at 0xE67A volatile BYTE I2CTL;  //! I2C Control
+xdata at 0xE67B volatile BYTE XAUTODAT1;  //! Autoptr1 MOVX access
+xdata at 0xE67C volatile BYTE XAUTODAT2;  //! Autoptr2 MOVX access
 
 #define EXTAUTODAT1 XAUTODAT1
 #define EXTAUTODAT2 XAUTODAT2
 
 // USB Control
 
-xdata at 0xE680 volatile BYTE USBCS;  // USB Control & Status
-xdata at 0xE681 volatile BYTE SUSPEND;  // Put chip into suspend
-xdata at 0xE682 volatile BYTE WAKEUPCS;  // Wakeup source and polarity
-xdata at 0xE683 volatile BYTE TOGCTL;  // Toggle Control
-xdata at 0xE684 volatile BYTE USBFRAMEH;  // USB Frame count H
-xdata at 0xE685 volatile BYTE USBFRAMEL;  // USB Frame count L
-xdata at 0xE686 volatile BYTE MICROFRAME;  // Microframe count, 0-7
-xdata at 0xE687 volatile BYTE FNADDR;  // USB Function address
+xdata at 0xE680 volatile BYTE USBCS;  //! USB Control & Status
+xdata at 0xE681 volatile BYTE SUSPEND;  //! Put chip into suspend
+xdata at 0xE682 volatile BYTE WAKEUPCS;  //! Wakeup source and polarity
+xdata at 0xE683 volatile BYTE TOGCTL;  //! Toggle Control
+xdata at 0xE684 volatile BYTE USBFRAMEH;  //! USB Frame count H
+xdata at 0xE685 volatile BYTE USBFRAMEL;  //! USB Frame count L
+xdata at 0xE686 volatile BYTE MICROFRAME;  //! Microframe count, 0-7
+xdata at 0xE687 volatile BYTE FNADDR;  //! USB Function address
 
 // Endpoints
 
-xdata at 0xE68A volatile BYTE EP0BCH;  // Endpoint 0 Byte Count H
-xdata at 0xE68B volatile BYTE EP0BCL;  // Endpoint 0 Byte Count L
-xdata at 0xE68D volatile BYTE EP1OUTBC;  // Endpoint 1 OUT Byte Count
-xdata at 0xE68F volatile BYTE EP1INBC;  // Endpoint 1 IN Byte Count
-xdata at 0xE690 volatile BYTE EP2BCH;  // Endpoint 2 Byte Count H
-xdata at 0xE691 volatile BYTE EP2BCL;  // Endpoint 2 Byte Count L
-xdata at 0xE694 volatile BYTE EP4BCH;  // Endpoint 4 Byte Count H
-xdata at 0xE695 volatile BYTE EP4BCL;  // Endpoint 4 Byte Count L
-xdata at 0xE698 volatile BYTE EP6BCH;  // Endpoint 6 Byte Count H
-xdata at 0xE699 volatile BYTE EP6BCL;  // Endpoint 6 Byte Count L
-xdata at 0xE69C volatile BYTE EP8BCH;  // Endpoint 8 Byte Count H
-xdata at 0xE69D volatile BYTE EP8BCL;  // Endpoint 8 Byte Count L
-xdata at 0xE6A0 volatile BYTE EP0CS;  // Endpoint  Control and Status
-xdata at 0xE6A1 volatile BYTE EP1OUTCS;  // Endpoint 1 OUT Control and Status
-xdata at 0xE6A2 volatile BYTE EP1INCS;  // Endpoint 1 IN Control and Status
-xdata at 0xE6A3 volatile BYTE EP2CS;  // Endpoint 2 Control and Status
-xdata at 0xE6A4 volatile BYTE EP4CS;  // Endpoint 4 Control and Status
-xdata at 0xE6A5 volatile BYTE EP6CS;  // Endpoint 6 Control and Status
-xdata at 0xE6A6 volatile BYTE EP8CS;  // Endpoint 8 Control and Status
-xdata at 0xE6A7 volatile BYTE EP2FIFOFLGS;  // Endpoint 2 Flags
-xdata at 0xE6A8 volatile BYTE EP4FIFOFLGS;  // Endpoint 4 Flags
-xdata at 0xE6A9 volatile BYTE EP6FIFOFLGS;  // Endpoint 6 Flags
-xdata at 0xE6AA volatile BYTE EP8FIFOFLGS;  // Endpoint 8 Flags
-xdata at 0xE6AB volatile BYTE EP2FIFOBCH;  // EP2 FIFO total byte count H
-xdata at 0xE6AC volatile BYTE EP2FIFOBCL;  // EP2 FIFO total byte count L
-xdata at 0xE6AD volatile BYTE EP4FIFOBCH;  // EP4 FIFO total byte count H
-xdata at 0xE6AE volatile BYTE EP4FIFOBCL;  // EP4 FIFO total byte count L
-xdata at 0xE6AF volatile BYTE EP6FIFOBCH;  // EP6 FIFO total byte count H
-xdata at 0xE6B0 volatile BYTE EP6FIFOBCL;  // EP6 FIFO total byte count L
-xdata at 0xE6B1 volatile BYTE EP8FIFOBCH;  // EP8 FIFO total byte count H
-xdata at 0xE6B2 volatile BYTE EP8FIFOBCL;  // EP8 FIFO total byte count L
-xdata at 0xE6B3 volatile BYTE SUDPTRH;  // Setup Data Pointer high address byte
-xdata at 0xE6B4 volatile BYTE SUDPTRL;  // Setup Data Pointer low address byte
-xdata at 0xE6B5 volatile BYTE SUDPTRCTL;  // Setup Data Pointer Auto Mode
-xdata at 0xE6B8 volatile BYTE SETUPDAT[8];  // 8 bytes of SETUP data
+xdata at 0xE68A volatile BYTE EP0BCH;  //! Endpoint 0 Byte Count H
+xdata at 0xE68B volatile BYTE EP0BCL;  //! Endpoint 0 Byte Count L
+xdata at 0xE68D volatile BYTE EP1OUTBC;  //! Endpoint 1 OUT Byte Count
+xdata at 0xE68F volatile BYTE EP1INBC;  //! Endpoint 1 IN Byte Count
+xdata at 0xE690 volatile BYTE EP2BCH;  //! Endpoint 2 Byte Count H
+xdata at 0xE691 volatile BYTE EP2BCL;  //! Endpoint 2 Byte Count L
+xdata at 0xE694 volatile BYTE EP4BCH;  //! Endpoint 4 Byte Count H
+xdata at 0xE695 volatile BYTE EP4BCL;  //! Endpoint 4 Byte Count L
+xdata at 0xE698 volatile BYTE EP6BCH;  //! Endpoint 6 Byte Count H
+xdata at 0xE699 volatile BYTE EP6BCL;  //! Endpoint 6 Byte Count L
+xdata at 0xE69C volatile BYTE EP8BCH;  //! Endpoint 8 Byte Count H
+xdata at 0xE69D volatile BYTE EP8BCL;  //! Endpoint 8 Byte Count L
+xdata at 0xE6A0 volatile BYTE EP0CS;  //! Endpoint  Control and Status
+xdata at 0xE6A1 volatile BYTE EP1OUTCS;  //! Endpoint 1 OUT Control and Status
+xdata at 0xE6A2 volatile BYTE EP1INCS;  //! Endpoint 1 IN Control and Status
+xdata at 0xE6A3 volatile BYTE EP2CS;  //! Endpoint 2 Control and Status
+xdata at 0xE6A4 volatile BYTE EP4CS;  //! Endpoint 4 Control and Status
+xdata at 0xE6A5 volatile BYTE EP6CS;  //! Endpoint 6 Control and Status
+xdata at 0xE6A6 volatile BYTE EP8CS;  //! Endpoint 8 Control and Status
+xdata at 0xE6A7 volatile BYTE EP2FIFOFLGS;  //! Endpoint 2 Flags
+xdata at 0xE6A8 volatile BYTE EP4FIFOFLGS;  //! Endpoint 4 Flags
+xdata at 0xE6A9 volatile BYTE EP6FIFOFLGS;  //! Endpoint 6 Flags
+xdata at 0xE6AA volatile BYTE EP8FIFOFLGS;  //! Endpoint 8 Flags
+xdata at 0xE6AB volatile BYTE EP2FIFOBCH;  //! EP2 FIFO total byte count H
+xdata at 0xE6AC volatile BYTE EP2FIFOBCL;  //! EP2 FIFO total byte count L
+xdata at 0xE6AD volatile BYTE EP4FIFOBCH;  //! EP4 FIFO total byte count H
+xdata at 0xE6AE volatile BYTE EP4FIFOBCL;  //! EP4 FIFO total byte count L
+xdata at 0xE6AF volatile BYTE EP6FIFOBCH;  //! EP6 FIFO total byte count H
+xdata at 0xE6B0 volatile BYTE EP6FIFOBCL;  //! EP6 FIFO total byte count L
+xdata at 0xE6B1 volatile BYTE EP8FIFOBCH;  //! EP8 FIFO total byte count H
+xdata at 0xE6B2 volatile BYTE EP8FIFOBCL;  //! EP8 FIFO total byte count L
+xdata at 0xE6B3 volatile BYTE SUDPTRH;  //! Setup Data Pointer high address byte
+xdata at 0xE6B4 volatile BYTE SUDPTRL;  //! Setup Data Pointer low address byte
+xdata at 0xE6B5 volatile BYTE SUDPTRCTL;  //! Setup Data Pointer Auto Mode
+xdata at 0xE6B8 volatile BYTE SETUPDAT[8];  //! 8 bytes of SETUP data
 
 // GPIF
 
-xdata at 0xE6C0 volatile BYTE GPIFWFSELECT;  // Waveform Selector
-xdata at 0xE6C1 volatile BYTE GPIFIDLECS;  // GPIF Done, GPIF IDLE drive mode
-xdata at 0xE6C2 volatile BYTE GPIFIDLECTL;  // Inactive Bus, CTL states
-xdata at 0xE6C3 volatile BYTE GPIFCTLCFG;  // CTL OUT pin drive
-xdata at 0xE6C4 volatile BYTE GPIFADRH;  // GPIF Address H
-xdata at 0xE6C5 volatile BYTE GPIFADRL;  // GPIF Address L
+xdata at 0xE6C0 volatile BYTE GPIFWFSELECT;  //! Waveform Selector
+xdata at 0xE6C1 volatile BYTE GPIFIDLECS;  //! GPIF Done, GPIF IDLE drive mode
+xdata at 0xE6C2 volatile BYTE GPIFIDLECTL;  //! Inactive Bus, CTL states
+xdata at 0xE6C3 volatile BYTE GPIFCTLCFG;  //! CTL OUT pin drive
+xdata at 0xE6C4 volatile BYTE GPIFADRH;  //! GPIF Address H
+xdata at 0xE6C5 volatile BYTE GPIFADRL;  //! GPIF Address L
 
-xdata at 0xE6CE volatile BYTE GPIFTCB3;  // GPIF Transaction Count Byte 3
-xdata at 0xE6CF volatile BYTE GPIFTCB2;  // GPIF Transaction Count Byte 2
-xdata at 0xE6D0 volatile BYTE GPIFTCB1;  // GPIF Transaction Count Byte 1
-xdata at 0xE6D1 volatile BYTE GPIFTCB0;  // GPIF Transaction Count Byte 0
+xdata at 0xE6CE volatile BYTE GPIFTCB3;  //! GPIF Transaction Count Byte 3
+xdata at 0xE6CF volatile BYTE GPIFTCB2;  //! GPIF Transaction Count Byte 2
+xdata at 0xE6D0 volatile BYTE GPIFTCB1;  //! GPIF Transaction Count Byte 1
+xdata at 0xE6D1 volatile BYTE GPIFTCB0;  //! GPIF Transaction Count Byte 0
 
-xdata at 0xE6D2 volatile BYTE EP2GPIFFLGSEL;  // EP2 GPIF Flag select
-xdata at 0xE6D3 volatile BYTE EP2GPIFPFSTOP;  // Stop GPIF EP2 transaction on prog. flag
-xdata at 0xE6D4 volatile BYTE EP2GPIFTRIG;  // EP2 FIFO Trigger
-xdata at 0xE6DA volatile BYTE EP4GPIFFLGSEL;  // EP4 GPIF Flag select
-xdata at 0xE6DB volatile BYTE EP4GPIFPFSTOP;  // Stop GPIF EP4 transaction on prog. flag
-xdata at 0xE6DC volatile BYTE EP4GPIFTRIG;  // EP4 FIFO Trigger
-xdata at 0xE6E2 volatile BYTE EP6GPIFFLGSEL;  // EP6 GPIF Flag select
-xdata at 0xE6E3 volatile BYTE EP6GPIFPFSTOP;  // Stop GPIF EP6 transaction on prog. flag
-xdata at 0xE6E4 volatile BYTE EP6GPIFTRIG;  // EP6 FIFO Trigger
-xdata at 0xE6EA volatile BYTE EP8GPIFFLGSEL;  // EP8 GPIF Flag select
-xdata at 0xE6EB volatile BYTE EP8GPIFPFSTOP;  // Stop GPIF EP8 transaction on prog. flag
-xdata at 0xE6EC volatile BYTE EP8GPIFTRIG;  // EP8 FIFO Trigger
-xdata at 0xE6F0 volatile BYTE XGPIFSGLDATH;  // GPIF Data H (16-bit mode only)
-xdata at 0xE6F1 volatile BYTE XGPIFSGLDATLX;  // Read/Write GPIF Data L & trigger transac
-xdata at 0xE6F2 volatile BYTE XGPIFSGLDATLNOX;  // Read GPIF Data L, no transac trigger
-xdata at 0xE6F3 volatile BYTE GPIFREADYCFG;  // Internal RDY,Sync/Async, RDY5CFG
-xdata at 0xE6F4 volatile BYTE GPIFREADYSTAT;  // RDY pin states
-xdata at 0xE6F5 volatile BYTE GPIFABORT;  // Abort GPIF cycles
+xdata at 0xE6D2 volatile BYTE EP2GPIFFLGSEL;  //! EP2 GPIF Flag select
+xdata at 0xE6D3 volatile BYTE EP2GPIFPFSTOP;  //! Stop GPIF EP2 transaction on prog. flag
+xdata at 0xE6D4 volatile BYTE EP2GPIFTRIG;  //! EP2 FIFO Trigger
+xdata at 0xE6DA volatile BYTE EP4GPIFFLGSEL;  //! EP4 GPIF Flag select
+xdata at 0xE6DB volatile BYTE EP4GPIFPFSTOP;  //! Stop GPIF EP4 transaction on prog. flag
+xdata at 0xE6DC volatile BYTE EP4GPIFTRIG;  //! EP4 FIFO Trigger
+xdata at 0xE6E2 volatile BYTE EP6GPIFFLGSEL;  //! EP6 GPIF Flag select
+xdata at 0xE6E3 volatile BYTE EP6GPIFPFSTOP;  //! Stop GPIF EP6 transaction on prog. flag
+xdata at 0xE6E4 volatile BYTE EP6GPIFTRIG;  //! EP6 FIFO Trigger
+xdata at 0xE6EA volatile BYTE EP8GPIFFLGSEL;  //! EP8 GPIF Flag select
+xdata at 0xE6EB volatile BYTE EP8GPIFPFSTOP;  //! Stop GPIF EP8 transaction on prog. flag
+xdata at 0xE6EC volatile BYTE EP8GPIFTRIG;  //! EP8 FIFO Trigger
+xdata at 0xE6F0 volatile BYTE XGPIFSGLDATH;  //! GPIF Data H (16-bit mode only)
+xdata at 0xE6F1 volatile BYTE XGPIFSGLDATLX;  //! Read/Write GPIF Data L & trigger transac
+xdata at 0xE6F2 volatile BYTE XGPIFSGLDATLNOX;  //! Read GPIF Data L, no transac trigger
+xdata at 0xE6F3 volatile BYTE GPIFREADYCFG;  //! Internal RDY,Sync/Async, RDY5CFG
+xdata at 0xE6F4 volatile BYTE GPIFREADYSTAT;  //! RDY pin states
+xdata at 0xE6F5 volatile BYTE GPIFABORT;  //! Abort GPIF cycles
 
 // UDMA
 
-xdata at 0xE6C6 volatile BYTE FLOWSTATE; //Defines GPIF flow state
-xdata at 0xE6C7 volatile BYTE FLOWLOGIC; //Defines flow/hold decision criteria
-xdata at 0xE6C8 volatile BYTE FLOWEQ0CTL; //CTL states during active flow state
-xdata at 0xE6C9 volatile BYTE FLOWEQ1CTL; //CTL states during hold flow state
+xdata at 0xE6C6 volatile BYTE FLOWSTATE; //!Defines GPIF flow state
+xdata at 0xE6C7 volatile BYTE FLOWLOGIC; //!Defines flow/hold decision criteria
+xdata at 0xE6C8 volatile BYTE FLOWEQ0CTL; //!CTL states during active flow state
+xdata at 0xE6C9 volatile BYTE FLOWEQ1CTL; //!CTL states during hold flow state
 xdata at 0xE6CA volatile BYTE FLOWHOLDOFF;
-xdata at 0xE6CB volatile BYTE FLOWSTB; //CTL/RDY Signal to use as master data strobe 
-xdata at 0xE6CC volatile BYTE FLOWSTBEDGE; //Defines active master strobe edge
-xdata at 0xE6CD volatile BYTE FLOWSTBHPERIOD; //Half Period of output master strobe
-xdata at 0xE60C volatile BYTE GPIFHOLDAMOUNT; //Data delay shift 
-xdata at 0xE67D volatile BYTE UDMACRCH; //CRC Upper byte
-xdata at 0xE67E volatile BYTE UDMACRCL; //CRC Lower byte
-xdata at 0xE67F volatile BYTE UDMACRCQUAL; //UDMA In only, host terminated use only
+xdata at 0xE6CB volatile BYTE FLOWSTB; //!CTL/RDY Signal to use as master data strobe 
+xdata at 0xE6CC volatile BYTE FLOWSTBEDGE; //!Defines active master strobe edge
+xdata at 0xE6CD volatile BYTE FLOWSTBHPERIOD; //!Half Period of output master strobe
+xdata at 0xE60C volatile BYTE GPIFHOLDAMOUNT; //!Data delay shift 
+xdata at 0xE67D volatile BYTE UDMACRCH; //!CRC Upper byte
+xdata at 0xE67E volatile BYTE UDMACRCL; //!CRC Lower byte
+xdata at 0xE67F volatile BYTE UDMACRCQUAL; //!UDMA In only, host terminated use only
 
 // Endpoint Buffers
 
-xdata at 0xE740 volatile BYTE EP0BUF[64];  // EP0 IN-OUT buffer
-xdata at 0xE780 volatile BYTE EP1OUTBUF[64];  // EP1-OUT buffer
-xdata at 0xE7C0 volatile BYTE EP1INBUF[64];  // EP1-IN buffer
-xdata at 0xF000 volatile BYTE EP2FIFOBUF[1024];  // 512/1024-byte EP2 buffer (IN or OUT)
-xdata at 0xF400 volatile BYTE EP4FIFOBUF[1024];  // 512 byte EP4 buffer (IN or OUT)
-xdata at 0xF800 volatile BYTE EP6FIFOBUF[1024];  // 512/1024-byte EP6 buffer (IN or OUT)
-xdata at 0xFC00 volatile BYTE EP8FIFOBUF[1024];  // 512 byte EP8 buffer (IN or OUT)
+xdata at 0xE740 volatile BYTE EP0BUF[64];  //! EP0 IN-OUT buffer
+xdata at 0xE780 volatile BYTE EP1OUTBUF[64];  //! EP1-OUT buffer
+xdata at 0xE7C0 volatile BYTE EP1INBUF[64];  //! EP1-IN buffer
+xdata at 0xF000 volatile BYTE EP2FIFOBUF[1024];  //! 512/1024-byte EP2 buffer (IN or OUT)
+xdata at 0xF400 volatile BYTE EP4FIFOBUF[1024];  //! 512 byte EP4 buffer (IN or OUT)
+xdata at 0xF800 volatile BYTE EP6FIFOBUF[1024];  //! 512/1024-byte EP6 buffer (IN or OUT)
+xdata at 0xFC00 volatile BYTE EP8FIFOBUF[1024];  //! 512 byte EP8 buffer (IN or OUT)
 
 // Error Correction Code (ECC) Registers (FX2LP/FX1 only)
 
-xdata at 0xE628 volatile BYTE ECCCFG;  // ECC Configuration
-xdata at 0xE629 volatile BYTE ECCRESET;  // ECC Reset
-xdata at 0xE62A volatile BYTE ECC1B0;  // ECC1 Byte 0
-xdata at 0xE62B volatile BYTE ECC1B1;  // ECC1 Byte 1
-xdata at 0xE62C volatile BYTE ECC1B2;  // ECC1 Byte 2
-xdata at 0xE62D volatile BYTE ECC2B0;  // ECC2 Byte 0
-xdata at 0xE62E volatile BYTE ECC2B1;  // ECC2 Byte 1
-xdata at 0xE62F volatile BYTE ECC2B2;  // ECC2 Byte 2
+xdata at 0xE628 volatile BYTE ECCCFG;  //! ECC Configuration
+xdata at 0xE629 volatile BYTE ECCRESET;  //! ECC Reset
+xdata at 0xE62A volatile BYTE ECC1B0;  //! ECC1 Byte 0
+xdata at 0xE62B volatile BYTE ECC1B1;  //! ECC1 Byte 1
+xdata at 0xE62C volatile BYTE ECC1B2;  //! ECC1 Byte 2
+xdata at 0xE62D volatile BYTE ECC2B0;  //! ECC2 Byte 0
+xdata at 0xE62E volatile BYTE ECC2B1;  //! ECC2 Byte 1
+xdata at 0xE62F volatile BYTE ECC2B2;  //! ECC2 Byte 2
 
 // Feature Registers  (FX2LP/FX1 only)
-xdata at 0xE50D volatile BYTE GPCR2;  // Chip Features
+xdata at 0xE50D volatile BYTE GPCR2;  //! Chip Features
 
 /**
  * SFRs below

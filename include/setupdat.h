@@ -1,28 +1,29 @@
-/**
- * Copyright (C) 2008 Ubixum, Inc. 
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- **/
+// Copyright (C) 2008 Ubixum, Inc. 
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #ifndef SETUPDAT_H
 #define SETUPDAT_H
 
 #include "fx2regs.h"
 #include "delay.h"
+/** \file setupdat.h
+  Utilities for handling setup data and vendor commands.
 
-/*
+ \verbatim
+
  This module needs initialized with a device descriptor.
  NOTE that your descriptors need to be located in code memory
  to use the SUDPTRH:L to auto transfer the data
@@ -91,6 +92,8 @@ VENDOR COMMANDS
   // ep num (byte 7 is dir 1=IN,0=OUT)
   // client needs to reset the endpoint to default state
   void handle_reset_ep(BYTE ep) { }
+
+  \endverbatim
 */
 
 // for ease functions
@@ -105,9 +108,9 @@ VENDOR COMMANDS
 #define SETUP_LENGTH() MAKEWORD(SETUPDAT[7],SETUPDAT[6]) 
 
 
-// see TRM 2-3
-// here are the usb setup data commands
-// these are the usb spec pretty much
+//! see TRM 2-3
+//! here are the usb setup data commands
+//! these are the usb spec pretty much
 
 typedef enum {
     GET_STATUS,

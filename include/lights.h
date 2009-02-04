@@ -1,19 +1,21 @@
-/**
- * Copyright (C) 2008 Ubixum, Inc. 
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+// Copyright (C) 2008 Ubixum, Inc. 
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+/** \file lights.h
+ * macros for turning lights on the EZ-USB development board on and off.
  **/
 
 #ifndef LIGHTS_H
@@ -35,11 +37,23 @@ extern xdata BYTE light_dummy;
 /**
  * easier to use macros defined below 
 **/
-//void activate_light ( volatile BYTE xdata *light ) ;
 #define activate_light(LIGHT_ADDR) light_dummy=*(LIGHT_ADDR)
 #define activate_light_delay(LIGHT_ADDR,millis) activate_light(LIGHT_ADDR); delay(millis)
-//void activate_light_delay ( volatile BYTE xdata* light, WORD millis );
 
+/**
+ *  Easy to make lights blink with these macros:
+ *  \code
+ *      WORD ct=0;
+ *      BOOL on=FALSE;
+ *      while (TRUE) {
+ *          if (!ct) {
+ *              on=!on;
+ *              if (on) d2on(); else d2off();
+ *          }
+ *          ++ct;
+ *      }
+ *  \endcode
+ **/
 #define d2on() activate_light(&D2ON)
 #define d2off() activate_light(&D2OFF)
 #define d3on() activate_light(&D3ON)

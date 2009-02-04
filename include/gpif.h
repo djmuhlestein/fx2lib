@@ -1,20 +1,26 @@
-/**
- * Copyright (C) 2008 Ubixum, Inc. 
+// Copyright (C) 2008 Ubixum, Inc. 
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+/*! \file 
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- **/
+ * These functions do the same thing that the Cypress gpif designer expored c file does.
+ * Instead of including their file directly in your project, you include just the
+ * generated waveform data.  The gpif2dat script in the utils folder will export your
+ * waveform data to a file that can be included in your project.
+ * */
 
 #ifndef GPIF_H
 #define GPIF_H
@@ -53,7 +59,7 @@ void gpif_setflowstate( BYTE* flowstates, BYTE bank);
 
 
 
-// These defines/functions pretty much out of the TRM 10.4
+//! These defines/functions pretty much out of the TRM 10.4
 #define GPIFTRGWR 0
 #define GPIFTRGRD 4
 typedef enum {

@@ -1,22 +1,23 @@
-/**
- * Copyright (C) 2008 Ubixum, Inc. 
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- **/
+// Copyright (C) 2008 Ubixum, Inc. 
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
-/**
+
+
+/** \file usbjt.h
+ *
  * To use usbjt, you must tell the linker where to put the IN2JT.
  * It must lie on a page boundary or your interrupts won't work right.
  *
@@ -32,16 +33,14 @@
 #include "fx2regs.h"
 
 
-
-
 // this causes usbjt to be included from the lib
 // not used for anything
 extern volatile BYTE INT2JT;
-// enable all interrupts (EA=1) separate from this macro
+//! enable all interrupts (EA=1) separate from this macro
 #define USE_USB_INTS() {BYTE dummy=INT2JT;\
                         EUSB=1;\
                         INTSETUP|=bmAV2EN;}
-// don't use this if you want external pin generated int4 interrupts
+//! don't use this if you want external pin generated int4 interrupts
 #define USE_GPIF_INTS() {BYTE dummy=INT2JT;\
                         EIEX4=1;\
                         INTSETUP|=bmAV4EN|INT4IN;}
@@ -187,7 +186,7 @@ void gpifwf_isr() interrupt GPIFWF_ISR;
 // and for ease, here is a quick section you can copy paste
 // into your own code somewhere
 
-/*
+/**
 void sudav_isr() interrupt SUDAV_ISR {}
 void sof_isr() interrupt SOF_ISR {}
 void sutok_isr() interrupt SUTOK_ISR {}
@@ -230,7 +229,7 @@ void ep6ff_isr() interrupt EP6FF_ISR{}
 void ep8ff_isr() interrupt EP8FF_ISR{}
 void gpifdone_isr() interrupt GPIFDONE_ISR{}
 void gpifwf_isr() interrupt GPIFWF_ISR{}
-*/
+**/
 
 
 #endif
