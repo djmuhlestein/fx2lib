@@ -1,21 +1,25 @@
-Before building this library, you need sdcc installed and in your path.
+Before building this library, you need have sdcc installed and in your path.
 
- http://sdcc.sf.net
+http://sdcc.sf.net
 
-To build this library, run make in the lib folder.
+To build this library, run make
 
-> cd lib
 > make
 
-You get lib/fx2.lib
+This produces lib/fx2.lib.  You can also run make in the lib folder.
 
-To use routines included with this library in your own firmware, 
+You can also build the documentation if you have doxygen installed.
+
+> make docs
+
+To use routines included with this library in your own firmware,
 add the include files to your include path and the lib file to your compile command:
 
-> sdcc -mmcs51 -I<path to includes> <your c file> fx2.lib -L <path to fx2.lib dir> 
+> sdcc -mmcs51 -I<path to includes> <your c file> fx2.lib -L <path to fx2.lib dir>
+
+fx2lib also includes an example program for loading firmware onto your device. 
+See examples/fx2.
 
 Enjoy!
 Comments, Patches, all welcome.
-
-
 

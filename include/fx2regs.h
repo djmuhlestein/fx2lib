@@ -26,6 +26,11 @@
  *
  * */
 
+
+/** \mainpage FX2LIB Documentation
+ *  \verbinclude README
+ **/
+
 #ifndef FX2REGS_H 
 #define FX2REGS_H
 
