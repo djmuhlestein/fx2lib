@@ -36,15 +36,13 @@
     8. Repeat steps 5-7 for each byte until all bytes have been transferred.
     9. Set STOP=1. Wait for STOP = 0 before initiating another transfer.
  **/
-void i2c_write ( BYTE addr, WORD len, BYTE *dat ) {
+BOOL i2c_write ( BYTE addr, WORD len, BYTE *dat ) {
     
     WORD cur_byte;
     //BOOL wait=FALSE; // use timer if needed
     
     // 9. Set STOP=1. Wait for STOP = 0 before initiating another transfer.
-    // not setting STOP here though
-    step9:
-        while ( I2CS & bmSTOP ); // WAIT for STOP = 0 before another transfer
+    while ( I2CS & bmSTOP ); // WAIT for STOP = 0 before another transfer
     
     // 1. Set START=1. If BERR=1, start timer*.
     step1:
@@ -69,7 +67,7 @@ void i2c_write ( BYTE addr, WORD len, BYTE *dat ) {
     if ( !(I2CS & bmACK) ) {
         I2CS |= bmSTOP;
         //printf ( "no ack!\n");
-        goto step9;
+        return FALSE; 
     }
     
     // 8. Repeat steps 5-7 for each byte until all bytes have been transferred.
@@ -81,12 +79,15 @@ void i2c_write ( BYTE addr, WORD len, BYTE *dat ) {
         // 7. If ACK=0, go to step 9.
         if ( !(I2CS & bmACK) ) {
             I2CS |= bmSTOP;
-            goto step9;
+            return FALSE; 
         }
     }
     
     //real step 9
     I2CS |= bmSTOP;
+
+
+    return TRUE;
 
 }
 
@@ -127,7 +128,7 @@ void i2c_write ( BYTE addr, WORD len, BYTE *dat ) {
           9 / 400 (or 100) * (XTAL)
   
 */
-void i2c_read( BYTE addr, WORD len, BYTE* buf) {
+BOOL i2c_read( BYTE addr, WORD len, BYTE* buf) {
     
     
     BYTE tmp;
@@ -142,8 +143,7 @@ void i2c_read( BYTE addr, WORD len, BYTE* buf) {
     
     
     // step 15 1st.
-    step15:
-        while ( I2CS & bmSTOP);
+    while ( I2CS & bmSTOP);
         
     
     // 1. Set START=1. If BERR = 1, start timer*.
@@ -168,7 +168,7 @@ void i2c_read( BYTE addr, WORD len, BYTE* buf) {
     // 4. If ACK=0, set STOP=1 and go to step 15.
         if (!(I2CS&bmACK) ) {
             I2CS |= bmSTOP;
-            goto step15;
+            return FALSE; 
         }
         
     // with only one byte to read, this needs set here.
@@ -205,6 +205,9 @@ void i2c_read( BYTE addr, WORD len, BYTE* buf) {
     // reading I2DAT while the "stop" condition is being generated, the just-received data byte will be
     // retrieved without initiating an extra read transaction (nine more SCL pulses) on the I²Cbus.
         buf[cur_byte] = I2DAT; // use instead of buffer addressing so next instruction reads I2DAT
+
+
+    return TRUE;
 }
 
 
