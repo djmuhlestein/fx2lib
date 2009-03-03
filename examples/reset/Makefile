@@ -12,3 +12,5 @@ fx2_c0.rel: fx2_c0.c
 clean:
 	rm -f *.{asm,ihx,lnk,lst,map,mem,rel,rst,sym,adb,cdb,bix}
 
+$(BASENAME).bix:
+	objcopy -I ihex -O binary $(BASENAME).ihx $(BASENAME).bix
