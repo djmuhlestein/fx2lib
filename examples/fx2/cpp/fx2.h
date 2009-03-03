@@ -49,7 +49,7 @@ class fx2 {
          * level n = 0-3
          */
         void set_debug_level(int n);
-        int do_usb_command(char* buf, int size, unsigned char type, unsigned char request, unsigned short value, unsigned short index, unsigned short length );
+        int do_usb_command(char* buf, int size, unsigned char type, unsigned char request, unsigned short value, unsigned short index, unsigned short length, int timeout=1000 );
         int clear_halt(char ep);
         int reset();
         int set_configuration(int config);

@@ -73,7 +73,7 @@ void fx2::close() {
 }
 
 
-int fx2::do_usb_command(char* buf, int size, unsigned char type, unsigned char request, unsigned short value, unsigned short index, unsigned short length ) {
+int fx2::do_usb_command(char* buf, int size, unsigned char type, unsigned char request, unsigned short value, unsigned short index, unsigned short length, int timeout ) {
  assert(dev_handle);
  return libusb_control_transfer (
     dev_handle,
@@ -83,7 +83,7 @@ int fx2::do_usb_command(char* buf, int size, unsigned char type, unsigned char r
     index,
     (unsigned char*)buf,
     length,
-    1000);
+    timeout);
 }
 
 int fx2::clear_halt(char ep) {

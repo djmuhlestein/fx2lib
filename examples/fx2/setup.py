@@ -13,6 +13,7 @@ setup(
  name='fx2',
  version='0.1',
  ext_modules=[fx2_mod],
+ scripts=['scripts/fx2load'],
  packages=['fx2load','fx2'],
  package_dir={'fx2':'cpp'}
 )
