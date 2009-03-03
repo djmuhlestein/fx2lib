@@ -27,8 +27,8 @@ BOOL i2c_write ( BYTE addr, WORD len, BYTE* buf);
 
 BOOL i2c_read ( BYTE addr, WORD len, BYTE* buf);
 
-void eeprom_read( BYTE prom_addr, WORD addr, WORD len, BYTE* buf);
+BOOL eeprom_read( BYTE prom_addr, WORD addr, WORD len, BYTE* buf);
 
-void eeprom_write( BYTE prom_addr, WORD addr, WORD len, BYTE* buf);
+BOOL eeprom_write( BYTE prom_addr, WORD addr, WORD len, BYTE* buf);
 
 #endif

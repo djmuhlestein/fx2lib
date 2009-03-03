@@ -24,6 +24,15 @@
 #include <delay.h>
 
 
+//#define DEBUG_I2C 1
+
+#ifdef DEBUG_I2C
+#define i2c_printf(...) printf(__VA_ARGS__)
+#else
+#define i2c_printf(...)
+#endif
+
+
 /**
  *
     1. Set START=1. If BERR=1, start timer*.
@@ -41,6 +50,7 @@ BOOL i2c_write ( BYTE addr, WORD len, BYTE *dat ) {
     WORD cur_byte;
     //BOOL wait=FALSE; // use timer if needed
     
+    step9:
     // 9. Set STOP=1. Wait for STOP = 0 before initiating another transfer.
     while ( I2CS & bmSTOP ); // WAIT for STOP = 0 before another transfer
     
@@ -49,7 +59,7 @@ BOOL i2c_write ( BYTE addr, WORD len, BYTE *dat ) {
         cur_byte=0;
         I2CS |= bmSTART;
         if ( I2CS & bmBERR ) {
-            printf ( "Woops.. need to do the timer\n" );
+            i2c_printf ( "Woops.. need to do the timer\n" );
             delay(10); // way too long
             goto step1;
             }
@@ -60,14 +70,16 @@ BOOL i2c_write ( BYTE addr, WORD len, BYTE *dat ) {
     // 3. Wait for DONE=1 or for timer to expire*. If BERR=1, go to step 1.
         while ( !(I2CS & bmDONE) );
         if (I2CS&bmBERR) {
+            i2c_printf ( "bmBERR, going to step 1\n" );
             goto step1;
         }
         
     // 4. If ACK=0, go to step 9.
     if ( !(I2CS & bmACK) ) {
         I2CS |= bmSTOP;
-        //printf ( "no ack!\n");
-        return FALSE; 
+        i2c_printf ( "No ack after writing address.! Fail\n");
+        goto step9;
+ //       return FALSE; 
     }
     
     // 8. Repeat steps 5-7 for each byte until all bytes have been transferred.
@@ -75,10 +87,14 @@ BOOL i2c_write ( BYTE addr, WORD len, BYTE *dat ) {
         // 5. Load I2DAT with a data byte.
         I2DAT = dat[cur_byte++];
         // 6. Wait for DONE=1*. If BERR=1, go to step 1.
-        while (!(I2CS&bmDONE)); if ( I2CS&bmBERR ) goto step1;
+        while (!(I2CS&bmDONE)); if ( I2CS&bmBERR ) {
+         i2c_printf ( "bmBERR on byte %d. Going to step 1\n" , cur_byte-1 );
+         goto step1;
+        }
         // 7. If ACK=0, go to step 9.
         if ( !(I2CS & bmACK) ) {
             I2CS |= bmSTOP;
+            i2c_printf ( "No Ack after byte %d. Fail\n", cur_byte-1 );
             return FALSE; 
         }
     }
@@ -212,7 +228,7 @@ BOOL i2c_read( BYTE addr, WORD len, BYTE* buf) {
 
 
 
-void eeprom_write(BYTE prom_addr, WORD addr, WORD length, BYTE* buf) {
+BOOL eeprom_write(BYTE prom_addr, WORD addr, WORD length, BYTE* buf) {
     BYTE addr_len=0;
     // 1st bytes of buffer are address and next byte is value
     BYTE data_buffer[3];
@@ -224,15 +240,19 @@ void eeprom_write(BYTE prom_addr, WORD addr, WORD length, BYTE* buf) {
             data_buffer[addr_len++] = MSB(addr);
         data_buffer[addr_len++] = LSB(addr);
         data_buffer[addr_len++] = buf[cur_byte++];
+
+        i2c_printf ( "%02x " , data_buffer[addr_len-1] );
         
-        i2c_write ( prom_addr, addr_len, data_buffer );
+        if ( ! i2c_write ( prom_addr, addr_len, data_buffer ) ) return FALSE;
         ++addr; // next byte goes to next address
     }
+
+    return TRUE;
     
 }
 
 
-void eeprom_read (BYTE prom_addr, WORD addr, WORD length, BYTE *buf)
+BOOL eeprom_read (BYTE prom_addr, WORD addr, WORD length, BYTE *buf)
 {
 
     BYTE eeprom_addr[2];
@@ -244,9 +264,11 @@ void eeprom_read (BYTE prom_addr, WORD addr, WORD length, BYTE *buf)
 
     // write the address we want to read to the prom
     //printf ("Starting Addr Write with addr len %d\n", addr_len);
-    i2c_write( prom_addr, addr_len, eeprom_addr );
+    if ( !i2c_write( prom_addr, addr_len, eeprom_addr ) ) return FALSE;
     //printf ( "Starting read\n" );
-    i2c_read ( prom_addr, length, buf );
+    if ( !i2c_read ( prom_addr, length, buf ) ) return FALSE;
+
+    return TRUE;
     
 }
 
