@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  **/
 
-#define DEBUG_SETUPDAT
+//#define DEBUG_SETUPDAT
 
 #ifdef DEBUG_SETUPDAT
 #include <stdio.h> // NOTE this needs deleted
