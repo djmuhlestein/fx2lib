@@ -157,6 +157,7 @@ BOOL handle_get_status() {
     
     switch ( SETUPDAT[0] ) {
 
+        case 0: // sometimes we get a 0 status too
         case GS_INTERFACE:  // NOTE  this falls through only because GS_DEVICE is returning 0
                             // in all cases right now.  If Device changes, make this always 
                             // return two 0 bytes.
@@ -331,6 +332,11 @@ void handle_get_descriptor() {
             // assumes this is a high speed capable device
             SUDPTRH = MSB((WORD)&dev_qual_dscr);
             SUDPTRL = LSB((WORD)&dev_qual_dscr);
+            break;
+        case DSCR_OTHERSPD_TYPE:
+            printf ( "Other Speed Descriptor\n");
+            SUDPTRH = MSB(pOtherConfig);
+            SUDPTRL = LSB(pOtherConfig);
             break;
         default:
             printf ( "Unhandled Get Descriptor: %02x\n", SETUPDAT[3]);
