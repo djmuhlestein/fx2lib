@@ -17,7 +17,7 @@
 SOURCES = serial.c i2c.c delay.c lights.c setupdat.c gpif.c eputils.c
 FX2_OBJS = $(patsubst %.c,%.rel, $(SOURCES)) usbjt.rel
 INCLUDES = -I../include
-SDCC = sdcc -mmcs51
+SDCC = sdcc -mmcs51 $(SDCCFLAGS)
 LIBS = fx2.lib
 
 all: $(LIBS)
