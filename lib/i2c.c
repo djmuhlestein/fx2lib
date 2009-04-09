@@ -167,7 +167,7 @@ BOOL i2c_read( BYTE addr, WORD len, BYTE* buf) {
         cur_byte=0;        
         I2CS |= bmSTART;
         if ( I2CS & bmBERR ) {            
-            printf ( "Woops, step1 BERR, need to do timeout\n");
+            i2c_printf ( "Woops, step1 BERR, need to do timeout\n");
             delay(10); // NOTE way too long
             goto start;
         }
