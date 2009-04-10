@@ -58,7 +58,7 @@ typedef enum { CLK_12M =0, CLK_24M, CLK_48M} CLK_SPD;
 /**
  * \brief Cause the device to disconnect and reconnect to the USB bus.
  **/
-#define RENUMERATE() USBCS|=bmDISCON|bmRENUM;delay(1500);USBCS &= ~bmDISCON
+#define RENUMERATE() if(!(USBCS&bmRENUM)) {USBCS|=bmDISCON|bmRENUM;delay(1500);USBCS &= ~bmDISCON;}
 
 
 // interrupts
