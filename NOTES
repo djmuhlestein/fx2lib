@@ -2,15 +2,15 @@ Notes on Various things I've learned about SDCC and the FX2
 
 * libusb on Linux
 * cycfx2prog: http://www.triplespark.net/elec/periph/USB-FX2/software/index.html
+ - most of this functionality is now in the fx2load package for python
+ - which is in examples/fx2
 * sdcc has sdcc/support/scripts/keil2sdcc.pl which I used to create the fx2regs.h file from the keil header. 
 * sdcc is little endian, keil is big endian (important if doing usb communication)
-* xdata needs to start at 0x4000 (I think this is correct anyway.. 16k c/d memory then xdata)
-  - what about pdata?
-  - It seems the number can actually vary depending on the size of the image
-  - can sdcc not automatically figure that out?
+* xdata can go up to 64k on the EZ-USB development board but
+  - the fx2 chip itself only has 16k (end at 0x4000) Firmware written for other than the dev board
+  - should use --xram-size --xram-loc etc to make sure it isn't using memory beyond 16k.
 * linux has objcopy, which can be used in place of Hex2bix for bix files 
   - objcopy -I ihex -O binary --pad-to=8192 input [output]
-  - this probably doesn't work for iic though.
 
 
 Memory
@@ -25,6 +25,7 @@ Memory
   - epbuffers and control at 0xe200-0xffff (data memory only)
   
    Only the on chip 16k and 512 bytes can be uploaded w/ eeprom or downloaded to host with SETUPPTR
+   Might be possible to load the descriptors to the scratch ram instead of code ram area?
 
 sdcc data types
   data/near=direct addressable internal memory (default for model-small)
@@ -34,9 +35,7 @@ sdcc data types
   code=code memory, study this more.
   bit=uses lower 128 bit area
   
-  
 
 TODO:
- * what is CKCON and bmSTRETCH
- * need to implemenent sleep/resume in final firmware
+ * Possibly add CKCON and bmSTRETCH customization
 
