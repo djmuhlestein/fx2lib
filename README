@@ -12,6 +12,15 @@ You can also build the documentation if you have doxygen installed.
 
 > make docs
 
+** Firmware framework Quickstart
+
+> cd fw
+> make
+
+You can copy the fw directory to your own directory and customize it as needed.
+
+** More custom firmware
+
 To use routines included with this library in your own firmware,
 add the include files to your include path and the lib file to your compile command:
 
@@ -19,6 +28,7 @@ add the include files to your include path and the lib file to your compile comm
 
 fx2lib also includes an example program for loading firmware onto your device. 
 See examples/fx2.
+
 
 Enjoy!
 Comments, Patches, all welcome.
