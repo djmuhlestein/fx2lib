@@ -1,4 +1,4 @@
-; Copyright (C) 2008 Ubixum, Inc. 
+; Copyright (C) 2009 Ubixum, Inc. 
 ;
 ; This library is free software; you can redistribute it and/or
 ; modify it under the terms of the GNU Lesser General Public
@@ -46,7 +46,7 @@ ENDPOINT_TYPE_INT=3
 ; These need to be in code memory.  If
 ; they aren't you'll have to manully copy them somewhere
 ; in code memory otherwise SUDPTRH:L don't work right
-    .area	CSEG	(CODE)
+    .area	DSCR_AREA	(CODE)
 
 _dev_dscr:
 	.db	dev_dscr_end-_dev_dscr    ; len
