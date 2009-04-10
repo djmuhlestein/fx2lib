@@ -39,6 +39,18 @@
  **/
 
 /**
+ * Stalls EP0.
+ **/
+#define STALLEP0() EP0CS |= bmEPSTALL
+
+/**
+ * \brief Reset the toggle on an endpoint.
+ * To use this, the endpoint needs bit 8 to be IN=1,OUT=0
+ **/
+#define RESETTOGGLE(ep) TOGCTL = (ep&0x0F) + ((ep&0x80)>>3); TOGCTL |= bmRESETTOGGLE
+
+
+/**
  * RESETFIFO should not use 0x80|epnum for IN endpoints
  * Only use 0x02, 0x04, 0x06, 0x06 for ep value
  **/

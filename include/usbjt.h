@@ -33,6 +33,7 @@
 #include "fx2regs.h"
 
 
+
 // this causes usbjt to be included from the lib
 // not used for anything
 extern volatile BYTE INT2JT;

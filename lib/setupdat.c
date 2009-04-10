@@ -27,6 +27,7 @@
 
 #include <fx2regs.h>
 #include <fx2macros.h>
+#include <eputils.h>
 #include <setupdat.h>
 
 
@@ -153,19 +154,25 @@ xdata BYTE* ep_addr(BYTE ep) { // bit 8 of ep_num is the direction
 #define GS_ENDPOINT 0x82
 
 
+volatile BOOL self_powered=FALSE;
+volatile BOOL remote_wakeup_allowed=FALSE;
+
 BOOL handle_get_status() {
     
     switch ( SETUPDAT[0] ) {
 
-        case 0: // sometimes we get a 0 status too
-        case GS_INTERFACE:  // NOTE  this falls through only because GS_DEVICE is returning 0
-                            // in all cases right now.  If Device changes, make this always 
-                            // return two 0 bytes.
+//        case 0: // sometimes we get a 0 status too
+        case GS_INTERFACE: 
+            EP0BUF[0] = 0;
+            EP0BUF[1] = 0;
+            EP0BCH=0;
+            EP0BCL=2;
+            break;
         case GS_DEVICE:
 
             // two byte response
             // byte 0 bit 0 = self powered bit 1 = remote wakeup
-            EP0BUF[0] = 0; // currently lib supports neither
+            EP0BUF[0] = (remote_wakeup_allowed << 1) | self_powered;
             // byte 1 = 0
             EP0BUF[1] = 0;
             EP0BCH = 0;
@@ -199,9 +206,11 @@ BOOL handle_clear_feature() {
  //printf ( "Clear Feature\n" );
  switch ( SETUPDAT[0] ) {
    case GF_DEVICE:
-    printf ( "(Clear) Remote Wakeup not supported.\n" );
-    STALLEP0(); // not currently supporting remote wakeup
-    break;
+    if (SETUPDAT[2] == 1) {
+        remote_wakeup_allowed=FALSE;
+        break;
+    }
+    return FALSE;
    case GF_ENDPOINT:
     if (SETUPDAT[2] == 0) { // ep stall feature
         xdata BYTE* pep=ep_addr(SETUPDAT[4]);
@@ -209,8 +218,9 @@ BOOL handle_clear_feature() {
         *pep &= ~bmEPSTALL;        
     } else {
         printf ( "unsupported ep feature %02x", SETUPDAT[2] );
-        STALLEP0(); // unsupported feature
+        return FALSE;
     }
+
     break;
    default:
     return handle_vendorcommand(SETUPDAT[1]);
@@ -223,8 +233,11 @@ BOOL handle_set_feature() {
  switch ( SETUPDAT[0] ) {
   case GF_DEVICE:
     if (SETUPDAT[2] == 2) break; // this is TEST_MODE and we simply need to return the handshake
-    printf ( "(Set) Remote Wakeup not supported.\n" );
-    return FALSE;// everything else (remote wakeup) not currently supported    
+    if (SETUPDAT[2] == 1) {
+       remote_wakeup_allowed=TRUE; 
+       break;
+    }
+    return FALSE;
   case GF_ENDPOINT:
     if ( SETUPDAT[2] == 0 ) { // ep stall feature
         // set TRM 2.3.2
@@ -266,10 +279,15 @@ extern code WORD dev_strings;
 WORD pDevConfig = (WORD)&fullspd_dscr;
 WORD pOtherConfig = (WORD)&highspd_dscr;
 
-void handle_hispeed() __critical {
- printf ( "Hi Speed Interrupt\n" );
- pDevConfig=(WORD)&highspd_dscr;
- pOtherConfig=(WORD)&fullspd_dscr;
+void handle_hispeed(BOOL highspeed) {
+ printf ( "Hi Speed or reset Interrupt\n" );
+ if (highspeed) {
+     pDevConfig=(WORD)&highspd_dscr;
+     pOtherConfig=(WORD)&fullspd_dscr;
+ } else {
+    pDevConfig=(WORD)&fullspd_dscr;
+    pDevConfig=(WORD)&highspd_dscr;
+ }
 }
 
 /**

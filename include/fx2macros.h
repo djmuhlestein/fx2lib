@@ -46,7 +46,7 @@ typedef enum { CLK_12M =0, CLK_24M, CLK_48M} CLK_SPD;
 #define I2CFREQ ((I2CTL & bm400KHZ) ? 400000L : 100000L)
 
 
-// endpoints 
+
 #define IFFREQ (IFCONFIG & bm3048MHZ ? 48000000L : 30000000L)
 #define SETIF30MHZ() IFCONFIG &= ~bm3048MHZ
 #define SETIF48MHZ() IFCONFIG |= bm3048MHZ
@@ -55,5 +55,21 @@ typedef enum { CLK_12M =0, CLK_24M, CLK_48M} CLK_SPD;
 // eeprom stuff
 #define EEPROM_TWO_BYTE (I2CS & bmBIT4)
 
+/**
+ * \brief Cause the device to disconnect and reconnect to the USB bus.
+ **/
+#define RENUMERATE() USBCS|=bmDISCON|bmRENUM;delay(1500);USBCS &= ~bmDISCON
+
+
+// interrupts
+// USB interrupts are in usbjt.h
+
+#define RESUME_ISR 6
+#define ENABLE_RESUME() ERESI = 1 
+#define CLEAR_RESUME() RESI=0;
+
+
+// did a remote wakeup occure
+#define REMOTE_WAKEUP() (((WAKEUPCS & bmWU) && (WAKEUPCS & bmWUEN)) || ((WAKEUPCS & bmWU2) && (WAKEUPCS & bmWU2EN)))
 
 #endif

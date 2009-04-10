@@ -96,18 +96,25 @@ VENDOR COMMANDS
   \endverbatim
 */
 
-// for ease functions
-
-#define STALLEP0() EP0CS |= bmEPSTALL
-// to use this, the endpoint needs bit 8 to be IN=1,OUT=0
-#define RESETTOGGLE(ep) TOGCTL = (ep&0x0F) + ((ep&0x80)>>3); TOGCTL |= bmRESETTOGGLE
-#define RENUMERATE() USBCS|=bmDISCON|bmRENUM;delay(1500);USBCS &= ~bmDISCON
 
 #define SETUP_VALUE() MAKEWORD(SETUPDAT[3],SETUPDAT[2])
 #define SETUP_INDEX() MAKEWORD(SETUPDAT[5],SETUPDAT[4])
 #define SETUP_LENGTH() MAKEWORD(SETUPDAT[7],SETUPDAT[6]) 
 #define SETUP_TYPE SETUPDAT[0]
 
+/**
+ * self_powered is set to FALSE by default.  It is 
+ * used for GET_FEATURE requests.  Firmware can set it to 
+ * TRUE if the device is not powered by the USB bus.
+ **/
+extern volatile BOOL self_powered;
+
+/**
+ * remote_wakeup_allowed defaults to FALSE but can be
+ * set to TRUE with SET_FEATURE from the host. (firmware shouldn't 
+ * set this.)
+ **/
+extern volatile BOOL remote_wakeup_allowed;
 
 //! see TRM 2-3
 //! here are the usb setup data commands
@@ -151,9 +158,14 @@ void handle_setupdata();
      and it should since the fx2lp is a high speed capable device
     )
     enable both USBRESET and HISPEED interrupts and
-    call this function to switch the descriptors
+    call this function to switch the descriptors.  Don't call this function
+    from the interrupts, rather set a variable and call from the main loop.
+
+    \param highspeed Call the function with highspeed = TRUE if 
+        calling because the highspeed interrupt was received.
+        If calling from usbreset, call with highspeed=false
 **/
-void handle_hispeed();
+void handle_hispeed( BOOL highspeed );
 
 
 /* descriptor types */
@@ -203,6 +215,8 @@ typedef struct {
     BYTE dsc_type;
     BYTE pstr;
 } STRING_DSCR;
+
+
 
 
 #endif
