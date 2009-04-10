@@ -23,7 +23,7 @@ FX2LIB = $(FX2LIBDIR)/lib/fx2.lib
 LIBS = fx2.lib -L$(FX2LIBDIR)/lib
 
 # change to be your own vid/pid if needed
-VID=0x0x04b4 # default Cypress
+VID=0x04b4 # default Cypress
 PID=0x0082 # default EZ-USB
 
 # possible env flags
@@ -67,7 +67,7 @@ $(BASENAME).bix: $(BASENAME).ihx
 	objcopy -I ihex -O binary $(BASENAME).hex $(BASENAME).bix
 
 $(BASENAME).iic: $(BASENAME).ihx
-	hex2bix -IC -F 0xc2 -M 16000 -V $(VID) -P $(PID) -O $(BASENAME).iic $(BASENAME).ihx
+	$(FX2LIBDIR)/utils/ihx2iic.py -v $(VID) -p $(PID) $(BASENAME).ihx $(BASENAME).iic
 
 clean:
 	rm -f *.{asm,ihx,lnk,lst,map,mem,rel,rst,sym,adb,cdb,bix,iic}
