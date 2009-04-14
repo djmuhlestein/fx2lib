@@ -233,11 +233,20 @@ BOOL eeprom_write(BYTE prom_addr, WORD addr, WORD length, BYTE* buf) {
     // 1st bytes of buffer are address and next byte is value
     BYTE data_buffer[3];
     WORD cur_byte=0;
+
+#ifdef DEBUG_I2C
+    if ( EEPROM_TWO_BYTE ) {
+        i2c_printf ( "Two Byte EEProm Address detected.\n" );
+    } else {
+        i2c_printf ( "Single Byte EEProm address detected.\n" );
+    }
+#endif
     
     while ( cur_byte<length ) {
         addr_len=0;
-        if (EEPROM_TWO_BYTE)
+        if (EEPROM_TWO_BYTE) {
             data_buffer[addr_len++] = MSB(addr);
+        }
         data_buffer[addr_len++] = LSB(addr);
         data_buffer[addr_len++] = buf[cur_byte++];
 
