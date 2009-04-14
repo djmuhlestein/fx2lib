@@ -160,11 +160,11 @@ void sof_isr() interrupt SOF_ISR {}
 void sutok_isr() interrupt SUTOK_ISR {}
 void suspend_isr() interrupt SUSPEND_ISR {}
 void usbreset_isr() interrupt USBRESET_ISR {
- handle_hispeed();
+ handle_hispeed(FALSE);
  CLEAR_USBRESET();
 }
 void hispeed_isr() interrupt HISPEED_ISR {
- handle_hispeed();
+ handle_hispeed(TRUE);
  CLEAR_HISPEED();
 }
 void ep0ack_isr() interrupt EP0ACK_ISR {}
