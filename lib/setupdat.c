@@ -280,13 +280,15 @@ WORD pDevConfig = (WORD)&fullspd_dscr;
 WORD pOtherConfig = (WORD)&highspd_dscr;
 
 void handle_hispeed(BOOL highspeed) {
- printf ( "Hi Speed or reset Interrupt\n" );
- if (highspeed) {
-     pDevConfig=(WORD)&highspd_dscr;
-     pOtherConfig=(WORD)&fullspd_dscr;
- } else {
-    pDevConfig=(WORD)&fullspd_dscr;
-    pDevConfig=(WORD)&highspd_dscr;
+ __critical { 
+     printf ( "Hi Speed or reset Interrupt\n" );
+     if (highspeed) {
+         pDevConfig=(WORD)&highspd_dscr;
+         pOtherConfig=(WORD)&fullspd_dscr;
+     } else {
+        pDevConfig=(WORD)&fullspd_dscr;
+        pDevConfig=(WORD)&highspd_dscr;
+     }
  }
 }
 

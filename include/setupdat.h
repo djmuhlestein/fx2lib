@@ -158,8 +158,9 @@ void handle_setupdata();
      and it should since the fx2lp is a high speed capable device
     )
     enable both USBRESET and HISPEED interrupts and
-    call this function to switch the descriptors.  Don't call this function
-    from the interrupts, rather set a variable and call from the main loop.
+    call this function to switch the descriptors.  This function uses
+    a __critical section to switch the descriptors and is safe to call
+    from the hispeed or reset interrupt.  See \ref fw.c
 
     \param highspeed Call the function with highspeed = TRUE if 
         calling because the highspeed interrupt was received.

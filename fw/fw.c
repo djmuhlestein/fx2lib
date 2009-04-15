@@ -32,8 +32,6 @@
 
 
 volatile bit dosud=FALSE;
-volatile bit dohispeed=FALSE;
-volatile bit doreset=FALSE;
 volatile bit dosuspend=FALSE;
 
 // custom functions
@@ -72,17 +70,11 @@ void main() {
  
  while(TRUE) {
 
+     main_loop();
+
      if (dosud) {
        dosud=FALSE;
        handle_setupdata();
-     }
-     if (dohispeed) {
-       dohispeed=FALSE;
-       handle_hispeed(TRUE);
-     }
-     if (doreset) {
-       doreset=FALSE;
-       handle_hispeed(FALSE);
      }
 
      if (dosuspend) {
@@ -115,7 +107,6 @@ void main() {
 
      }
 
-     main_loop();
  } // end while
 
 } // end main
@@ -129,11 +120,11 @@ void sudav_isr() interrupt SUDAV_ISR {
  CLEAR_SUDAV();
 }
 void usbreset_isr() interrupt USBRESET_ISR {
- doreset=TRUE;
+ handle_hispeed(FALSE);
  CLEAR_USBRESET();
 }
 void hispeed_isr() interrupt HISPEED_ISR {
- dohispeed=TRUE;
+ handle_hispeed(TRUE);
  CLEAR_HISPEED();
 }
 
