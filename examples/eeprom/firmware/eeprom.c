@@ -43,7 +43,7 @@ void main() {
  
  REVCTL = 0x03; // DYN_OUT=1, ENH_PKT=1
  
- RENUMERATE();
+ RENUMERATE_UNCOND();
  
 
  SETCPUFREQ(CLK_48M);
