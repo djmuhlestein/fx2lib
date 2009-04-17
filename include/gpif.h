@@ -28,6 +28,8 @@
 #include "fx2types.h"
 
 #define GPIFDONE (GPIFTRIG&0x80)
+#define GPIFTC16 (MAKEWORD(GPIFTCB1,GPIFTCB0))
+#define GPIFTC32 (MAKEDWORD(MAKEWORD(GPIFTCB3,GPIFTCB2),MAKEWORD(GPIFTCB1,GPIFTCB0)))
 
 
 /**
@@ -70,10 +72,17 @@ typedef enum {
 } GPIF_EP_NUM;
 
 /**
- * Simple function to help set the transaction count for gpif
+ * \brief Simple function to help set the transaction count for gpif
  * transactions.
+ * \param tc 32 bit Transaction Count
  **/
-void gpif_set_tc(DWORD tc);
+void gpif_set_tc32(DWORD tc);
+/**
+ * \brief Simple function to set transaction count for gpif transactions.
+ * \param tc 16 bit Transaction Count
+ **/
+void gpif_set_tc16(WORD tc);
+
 
 /**
  * Use the gpif to read a single word at a time.

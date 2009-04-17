@@ -132,7 +132,7 @@ void gpif_setflowstate( BYTE* flowstates, BYTE bank) {
   FLOWSTBHPERIOD = flowstates[ base+7 ];
 }
 
-void gpif_set_tc(DWORD tc) {
+void gpif_set_tc32(DWORD tc) {
     GPIFTCB3 = MSB(MSW(tc));
     SYNCDELAY();
     GPIFTCB2 = LSB(MSW(tc));
@@ -141,6 +141,12 @@ void gpif_set_tc(DWORD tc) {
     SYNCDELAY();
     GPIFTCB0 = LSB(LSW(tc));
 }
+void gpif_set_tc16(WORD tc) {
+    GPIFTCB1= MSB(tc);
+    SYNCDELAY();
+    GPIFTCB0= LSB(tc);
+}
+
 
 void gpif_single_read16( WORD* res, WORD len ){
     BYTE c;    
