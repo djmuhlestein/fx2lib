@@ -25,11 +25,8 @@ all: $(LIBS)
 $(LIBS): $(FX2_OBJS)
 	sdcclib fx2.lib $?
 
-usbjt.rel: usbjt.asm
-	asx8051 -logs usbjt.asm
-
-usbjt.asm: usbjt_asm
-	cp usbjt_asm usbjt.asm
+usbjt.rel: usbjt.a51
+	asx8051 -logs usbjt.a51
 
 %.rel: %.c
 	$(SDCC) $(INCLUDES) -c $?
