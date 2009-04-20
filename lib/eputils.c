@@ -23,6 +23,11 @@
 
 #include <fx2regs.h>
 
+#ifdef DEBUG_EPUTILS
+#include <stdio.h>
+#else
+#define printf(...)
+#endif
 
 void readep0( BYTE* dst, WORD len) {
     WORD read = 0; // n bytes read
@@ -36,5 +41,20 @@ void readep0( BYTE* dst, WORD len) {
         for (c=0;c<avail;++c)
             dst[read+c] = EP0BUF[c];
         read += avail;
+    }
+}
+
+
+void writeep0( BYTE* src, WORD len) {
+    WORD written = 0;
+    BYTE c;
+    while ( written < len ) {
+        while ( EP0CS & bmEPBUSY ); // wait
+        for (c=0;c<64 && written<len;++c ) {
+            EP0BUF[c] = src[written++];
+        }
+        EP0BCH = 0;
+        EP0BCL= c;
+        printf ( "Write %d bytes\n", c );
     }
 }

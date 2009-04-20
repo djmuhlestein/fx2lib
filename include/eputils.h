@@ -75,5 +75,12 @@
 void readep0( BYTE* dst, WORD len );
 
 
+/**
+ * Write bytes from src to ep0, allowing host to transfer data
+ * between 64 byte blocks.
+ **/
+void writeep0 ( BYTE* src, WORD len );
+
+
 
 #endif
