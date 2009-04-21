@@ -38,4 +38,5 @@ sdcc data types
 
 TODO:
  * Possibly add CKCON and bmSTRETCH customization
-
+ * IN2CLR and INT4CLR registers can be used intead of explicitly clearing int2 and int4 interrupts. (Faster)
+   See (15.5)
