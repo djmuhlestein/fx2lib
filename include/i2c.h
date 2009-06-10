@@ -23,7 +23,23 @@
 
 #include "fx2types.h"
 
-BOOL i2c_write ( BYTE addr, WORD len, BYTE* buf);
+/**
+ * \brief write data to i2c bus.
+ *
+ *  Writes data from addr buffer 1st, then data buffer. 
+ *  Either buffer can be NULL (as long as you set lenN to 0).
+ *  
+ *  Two buffers allows writing data all in one i2c write command without
+ *  having to write a hardware address and a data byte with each 
+ *  i2c transaction.
+ *
+ * \param addr i2c address
+ * \param len1 length of addr data
+ * \param addr_buf addr data
+ * \param len2 length of data
+ * \param data_buf data bytes
+ **/
+BOOL i2c_write ( BYTE addr, WORD len1, BYTE* addr_buf, WORD len2, BYTE* data_buf );
 
 BOOL i2c_read ( BYTE addr, WORD len, BYTE* buf);
 

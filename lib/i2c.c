@@ -45,9 +45,10 @@
     8. Repeat steps 5-7 for each byte until all bytes have been transferred.
     9. Set STOP=1. Wait for STOP = 0 before initiating another transfer.
  **/
-BOOL i2c_write ( BYTE addr, WORD len, BYTE *dat ) {
+BOOL i2c_write ( BYTE addr, WORD len, BYTE *addr_buf, WORD len2, BYTE* data_buf ) {
     
     WORD cur_byte;
+    WORD total_bytes = len+len2; // NOTE overflow error?
     //BOOL wait=FALSE; // use timer if needed
     
     step9:
@@ -83,9 +84,10 @@ BOOL i2c_write ( BYTE addr, WORD len, BYTE *dat ) {
     }
     
     // 8. Repeat steps 5-7 for each byte until all bytes have been transferred.
-    while ( cur_byte < len ) {
+    while ( cur_byte < total_bytes ) {
         // 5. Load I2DAT with a data byte.
-        I2DAT = dat[cur_byte++];
+        I2DAT = cur_byte < len ? addr_buf[cur_byte] : data_buf[cur_byte-len];
+        ++cur_byte;
         // 6. Wait for DONE=1*. If BERR=1, go to step 1.
         while (!(I2CS&bmDONE)); if ( I2CS&bmBERR ) {
          i2c_printf ( "bmBERR on byte %d. Going to step 1\n" , cur_byte-1 );
@@ -252,7 +254,7 @@ BOOL eeprom_write(BYTE prom_addr, WORD addr, WORD length, BYTE* buf) {
 
         i2c_printf ( "%02x " , data_buffer[addr_len-1] );
         
-        if ( ! i2c_write ( prom_addr, addr_len, data_buffer ) ) return FALSE;
+        if ( ! i2c_write ( prom_addr, addr_len, data_buffer, 0, NULL ) ) return FALSE;
         ++addr; // next byte goes to next address
     }
 
@@ -273,7 +275,7 @@ BOOL eeprom_read (BYTE prom_addr, WORD addr, WORD length, BYTE *buf)
 
     // write the address we want to read to the prom
     //printf ("Starting Addr Write with addr len %d\n", addr_len);
-    if ( !i2c_write( prom_addr, addr_len, eeprom_addr ) ) return FALSE;
+    if ( !i2c_write( prom_addr, addr_len, eeprom_addr, 0, NULL ) ) return FALSE;
     //printf ( "Starting read\n" );
     if ( !i2c_read ( prom_addr, length, buf ) ) return FALSE;
 
