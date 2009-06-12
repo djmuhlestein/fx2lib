@@ -287,7 +287,7 @@ void handle_hispeed(BOOL highspeed) {
          pOtherConfig=(WORD)&fullspd_dscr;
      } else {
         pDevConfig=(WORD)&fullspd_dscr;
-        pDevConfig=(WORD)&highspd_dscr;
+        pOtherConfig=(WORD)&highspd_dscr;
      }
  }
 }
