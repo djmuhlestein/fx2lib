@@ -54,7 +54,7 @@ void eeprom_write_local(BYTE prom_addr, WORD addr, WORD length, BYTE* buf) {
         data_buffer[addr_len++] = MSB(addr);
         data_buffer[addr_len++] = LSB(addr);
         data_buffer[addr_len++] = buf[cur_byte++];
-        i2c_write ( prom_addr, addr_len, data_buffer );
+        i2c_write ( prom_addr, addr_len, data_buffer, 0, NULL );
         ++addr; // next byte goes to next address
     }
     

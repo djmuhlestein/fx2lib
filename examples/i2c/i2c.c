@@ -84,7 +84,7 @@ void main(void) {
 		}
 		if(display)
 		{
-            i2c_write ( LED_ADDR, 1, &digits[num] );
+            i2c_write ( LED_ADDR, 1, &digits[num], 0, NULL );
 			display = 0;
 		}
     }
