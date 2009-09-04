@@ -31,6 +31,10 @@
  *  \verbinclude README
  **/
 
+/** \example fw.c
+ * The firmware framework allows for easily beginning a new firware project.
+ **/
+
 #ifndef FX2REGS_H 
 #define FX2REGS_H
 

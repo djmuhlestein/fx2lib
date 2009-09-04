@@ -13,3 +13,5 @@
 *.kpf
 *.swp
 *.iic
+docs/html
+build
