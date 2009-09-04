@@ -10,9 +10,8 @@ DSCR = dscr.rel
 $(BASENAME).ihx: $(BASENAME).c $(DSCR)
 	$(CC) $(INCLUDES) $(BASENAME).c $(DSCR) $(LIBS)
 
-$(DSCR): dscr_asm
-	cp dscr_asm dscr.asm
-	asx8051 -logs dscr.asm
+$(DSCR): dscr.a51
+	asx8051 -logs dscr.a51
 
 $(BASENAME).bix: $(BASENAME).ihx
 	objcopy -I ihex -O binary $(BASENAME).ihx $(BASENAME).bix
