@@ -1,0 +1,23 @@
+0.2
+ * Change I2C routines to return FALSE intead of infinite loop possibility.
+ * Addition of fx2load script to load eeprom information.
+ * EEprom upload/download example.
+ * New SETUP_TYPE macro
+ * Removed printfs from setupdat module.
+ * Add usb "other speed" descriptor handling to setupdat
+ * Support for usb suspend/wakeup
+ * Enhanced renumerate macro to handle properly when loading from eeprom
+ * Addition of framework files.  Allows quick starting of new firmware projects.
+ * ihx2iic helper script.  Allows easy converting of ihx files to iic for 
+   loading to eeprom.
+ * New GPIF macros to set TC with 16 or 32 bit values.
+ * Addtional enable/disable macros for endpoint interrupts.
+ * Additional ep0 utilities (writeep0)
+ * Additional i2c write functionality for i2c parts requiring different
+   address width's or even no address data.
+ * Correct fx2 register documentation.
+ * Addition of serial io example.
+ * Various other minor bug fixes/optimizations.
+
+0.1
+ * Initial Release.
