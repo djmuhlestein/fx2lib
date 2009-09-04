@@ -38,3 +38,7 @@ reset:
  on the dev board and you can use this program to reset your board back to the default 
  state if you happen to write a non-working iic file to the device.  You shouldn't 
  probably use this on a real board unless you really know what you're doing :)
+
+
+serial:
+ A simple terminal echo firmware.  Echos whatever you type back to the serial terminal.
