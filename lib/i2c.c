@@ -52,6 +52,7 @@ BOOL i2c_write ( BYTE addr, WORD len, BYTE *addr_buf, WORD len2, BYTE* data_buf 
     
     WORD cur_byte;
     WORD total_bytes = len+len2; // NOTE overflow error?
+    BYTE retry_count=2; // two tries to write address/read ack
     cancel_i2c_trans=FALSE;
     //BOOL wait=FALSE; // use timer if needed
 
@@ -62,7 +63,7 @@ BOOL i2c_write ( BYTE addr, WORD len, BYTE *addr_buf, WORD len2, BYTE* data_buf 
         I2CS |= bmSTART;
         if ( I2CS & bmBERR ) {
             i2c_printf ( "Woops.. need to do the timer\n" );
-            delay(10); // way too long
+            delay(10); // way too long probably
             goto step1;
             }
    
@@ -81,10 +82,16 @@ BOOL i2c_write ( BYTE addr, WORD len, BYTE *addr_buf, WORD len2, BYTE* data_buf 
         
     // 4. If ACK=0, go to step 9.
     if ( !(I2CS & bmACK) ) {
-        i2c_printf ( "No ack after writing address.! Fail\n");
         I2CS |= bmSTOP;
         while ( (I2CS & bmSTOP) && !cancel_i2c_trans);
-        return FALSE;
+        CHECK_I2C_CANCEL();
+        --retry_count;
+        if (!retry_count){
+            i2c_printf ( "No ack after writing address.! Fail\n");
+            return FALSE;
+        }
+        delay(10);
+        goto step1;
     }
     
     // 8. Repeat steps 5-7 for each byte until all bytes have been transferred.
