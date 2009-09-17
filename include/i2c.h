@@ -24,6 +24,14 @@
 #include "fx2types.h"
 
 /**
+ * i2c_write and i2c_read set this to FALSE at the beginning of a 
+ * transaction.  If for some reason, the read/write is taking too
+ * long or not returning, firmware can set this to TRUE to cause the
+ * routine to abort.  (Usually done via an interrupt).
+ **/
+extern volatile xdata BOOL cancel_i2c_trans;
+
+/**
  * \brief write data to i2c bus.
  *
  *  Writes data from addr buffer 1st, then data buffer. 

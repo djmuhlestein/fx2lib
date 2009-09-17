@@ -33,6 +33,9 @@
 #endif
 
 
+volatile xdata BOOL cancel_i2c_trans;
+#define CHECK_I2C_CANCEL() if (cancel_i2c_trans) return FALSE
+
 /**
  *
     1. Set START=1. If BERR=1, start timer*.
@@ -49,14 +52,12 @@ BOOL i2c_write ( BYTE addr, WORD len, BYTE *addr_buf, WORD len2, BYTE* data_buf 
     
     WORD cur_byte;
     WORD total_bytes = len+len2; // NOTE overflow error?
+    cancel_i2c_trans=FALSE;
     //BOOL wait=FALSE; // use timer if needed
-    
-    step9:
-    // 9. Set STOP=1. Wait for STOP = 0 before initiating another transfer.
-    while ( I2CS & bmSTOP ); // WAIT for STOP = 0 before another transfer
-    
+
     // 1. Set START=1. If BERR=1, start timer*.
     step1:
+        CHECK_I2C_CANCEL();
         cur_byte=0;
         I2CS |= bmSTART;
         if ( I2CS & bmBERR ) {
@@ -64,23 +65,26 @@ BOOL i2c_write ( BYTE addr, WORD len, BYTE *addr_buf, WORD len2, BYTE* data_buf 
             delay(10); // way too long
             goto step1;
             }
+   
     
     // 2. Write the 7-bit peripheral address and the direction bit (0 for a write) to I2DAT.
         I2DAT = addr << 1;
         
     // 3. Wait for DONE=1 or for timer to expire*. If BERR=1, go to step 1.
-        while ( !(I2CS & bmDONE) );
+        while ( !(I2CS & bmDONE) && !cancel_i2c_trans);
+        CHECK_I2C_CANCEL();
         if (I2CS&bmBERR) {
             i2c_printf ( "bmBERR, going to step 1\n" );
             goto step1;
         }
+    
         
     // 4. If ACK=0, go to step 9.
     if ( !(I2CS & bmACK) ) {
-        I2CS |= bmSTOP;
         i2c_printf ( "No ack after writing address.! Fail\n");
-        goto step9;
- //       return FALSE; 
+        I2CS |= bmSTOP;
+        while ( (I2CS & bmSTOP) && !cancel_i2c_trans);
+        return FALSE;
     }
     
     // 8. Repeat steps 5-7 for each byte until all bytes have been transferred.
@@ -89,21 +93,27 @@ BOOL i2c_write ( BYTE addr, WORD len, BYTE *addr_buf, WORD len2, BYTE* data_buf 
         I2DAT = cur_byte < len ? addr_buf[cur_byte] : data_buf[cur_byte-len];
         ++cur_byte;
         // 6. Wait for DONE=1*. If BERR=1, go to step 1.
-        while (!(I2CS&bmDONE)); if ( I2CS&bmBERR ) {
+        while (!(I2CS&bmDONE) && !cancel_i2c_trans); CHECK_I2C_CANCEL();
+        if ( I2CS&bmBERR ) {
          i2c_printf ( "bmBERR on byte %d. Going to step 1\n" , cur_byte-1 );
          goto step1;
+         //return FALSE;
         }
         // 7. If ACK=0, go to step 9.
         if ( !(I2CS & bmACK) ) {
             I2CS |= bmSTOP;
+            while ( (I2CS&bmSTOP) && !cancel_i2c_trans);
             i2c_printf ( "No Ack after byte %d. Fail\n", cur_byte-1 );
             return FALSE; 
         }
     }
+
     
+    // 9. Set STOP=1. Wait for STOP = 0 before initiating another transfer.
     //real step 9
     I2CS |= bmSTOP;
-
+    while ( (I2CS & bmSTOP) && !cancel_i2c_trans);
+    CHECK_I2C_CANCEL();
 
     return TRUE;
 
@@ -151,22 +161,14 @@ BOOL i2c_read( BYTE addr, WORD len, BYTE* buf) {
     
     BYTE tmp;
     WORD cur_byte;
+    cancel_i2c_trans=FALSE;
     //WORD timeout_cycles = (WORD)(9.0 * XTAL / I2CFREQ );
-    
-    /*printf ( "I2C: %04x%04x\nXTAL: %04x%04x\ntimeout cycles: %d\n",
-            (WORD)(I2CFREQ>>16), (WORD)(I2CFREQ&0xffff),
-            (WORD)(XTAL>>16),
-            (WORD)(XTAL&0xffff),
-            timeout_cycles ); */
-    
-    
-    // step 15 1st.
-    while ( I2CS & bmSTOP);
-        
     
     // 1. Set START=1. If BERR = 1, start timer*.
     start:
+        CHECK_I2C_CANCEL();
         cur_byte=0;        
+
         I2CS |= bmSTART;
         if ( I2CS & bmBERR ) {            
             i2c_printf ( "Woops, step1 BERR, need to do timeout\n");
@@ -179,13 +181,14 @@ BOOL i2c_read( BYTE addr, WORD len, BYTE* buf) {
     
     // 3. Wait for DONE=1 or for timer to expire*. If BERR=1, go to step 1.
                 
-        while ( !(I2CS & bmDONE) );        
+        while ( !(I2CS & bmDONE) && !cancel_i2c_trans ); CHECK_I2C_CANCEL();
         if ( I2CS & bmBERR )
             goto start;
             
     // 4. If ACK=0, set STOP=1 and go to step 15.
         if (!(I2CS&bmACK) ) {
             I2CS |= bmSTOP;
+            while ( (I2CS&bmSTOP) && !cancel_i2c_trans );
             return FALSE; 
         }
         
@@ -201,7 +204,8 @@ BOOL i2c_read( BYTE addr, WORD len, BYTE* buf) {
         
         // 6. Wait for DONE=1. If BERR=1, go to step 1.
         // 9. Wait for DONE=1. If BERR=1, go to step 1.
-        while (!(I2CS&bmDONE)); if ( I2CS&bmBERR ) goto start;
+        while (!(I2CS&bmDONE) && !cancel_i2c_trans); CHECK_I2C_CANCEL(); 
+        if ( I2CS&bmBERR ) goto start;
 
         // 10. Before reading the second-to-last I2DAT byte, set LASTRD=1.
         if (len==cur_byte+2) // 2nd to last byte
@@ -216,7 +220,8 @@ BOOL i2c_read( BYTE addr, WORD len, BYTE* buf) {
     }
     
     //12. Wait for DONE=1. If BERR=1, go to step 1.
-        while (!(I2CS&bmDONE)); if ( I2CS&bmBERR ) goto start;
+        while (!(I2CS&bmDONE) && !cancel_i2c_trans); CHECK_I2C_CANCEL();
+        if ( I2CS&bmBERR ) goto start;
     // 13. Set STOP=1.
         I2CS |= bmSTOP;
     // 14. Read the final byte from I2DAT immediately (the next instruction) after setting the STOP bit. By
@@ -224,6 +229,7 @@ BOOL i2c_read( BYTE addr, WORD len, BYTE* buf) {
     // retrieved without initiating an extra read transaction (nine more SCL pulses) on the I²Cbus.
         buf[cur_byte] = I2DAT; // use instead of buffer addressing so next instruction reads I2DAT
 
+    while ( (I2CS&bmSTOP) && !cancel_i2c_trans); CHECK_I2C_CANCEL();
 
     return TRUE;
 }
