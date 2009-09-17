@@ -17,6 +17,8 @@
    address width's or even no address data.
  * Correct fx2 register documentation.
  * Addition of serial io example.
+ * Added cancel_i2c_trans extern bool to allow canceling a blocked i2c transaction.
+ * FX1 development board debug light addresses.
  * Various other minor bug fixes/optimizations.
 
 0.1
