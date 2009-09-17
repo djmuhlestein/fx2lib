@@ -14,7 +14,7 @@
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
-SOURCES = serial.c i2c.c delay.c lights.c setupdat.c gpif.c eputils.c
+SOURCES = serial.c i2c.c delay.c setupdat.c gpif.c eputils.c
 FX2_OBJS = $(patsubst %.c,%.rel, $(SOURCES)) usbjt.rel
 INCLUDES = -I../include
 SDCC = sdcc -mmcs51 $(SDCCFLAGS)

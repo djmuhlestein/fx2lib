@@ -24,6 +24,16 @@
 #include "fx2types.h"
 #include "delay.h"
 
+#ifdef FX1
+volatile xdata at 0x8000 BYTE D2ON;
+volatile xdata at 0x8100 BYTE D2OFF;
+volatile xdata at 0x9000 BYTE D3ON;
+volatile xdata at 0x9100 BYTE D3OFF;
+volatile xdata at 0xA000 BYTE D4ON;
+volatile xdata at 0xA100 BYTE D4OFF;
+volatile xdata at 0xB000 BYTE D5ON;
+volatile xdata at 0xB100 BYTE D5OFF;
+#else
 volatile xdata at 0x8800 BYTE D2ON;
 volatile xdata at 0x8000 BYTE D2OFF;
 volatile xdata at 0x9800 BYTE D3ON;
@@ -32,12 +42,12 @@ volatile xdata at 0xA800 BYTE D4ON;
 volatile xdata at 0xA000 BYTE D4OFF;
 volatile xdata at 0xB800 BYTE D5ON;
 volatile xdata at 0xB000 BYTE D5OFF;
-extern xdata BYTE light_dummy;
+#endif
 
 /**
  * easier to use macros defined below 
 **/
-#define activate_light(LIGHT_ADDR) light_dummy=*(LIGHT_ADDR)
+#define activate_light(LIGHT_ADDR) {BYTE tmp=*(LIGHT_ADDR);}
 #define activate_light_delay(LIGHT_ADDR,millis) activate_light(LIGHT_ADDR); delay(millis)
 
 /**
