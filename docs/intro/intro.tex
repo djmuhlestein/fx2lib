@@ -1,0 +1,80 @@
+
+\documentclass[12pt]{article}
+\usepackage[pdftex,bookmarks=true,linktocpage=true,pdfborder={0 0 0 0}]{hyperref}
+\usepackage{amsmath}
+
+\newcommand{\itwoc}{$\text{I}^{2}\text{C}$ }
+
+
+\title{Fx2lib Introduction}
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Introduction}
+Fx2lib is an open source library for the Cypress EZ-USB Fx2 8051 and variants.
+It is written in C and can be compiled with \href{http://sdcc.sourceforge.net}{SDCC}.
+Fx2lib contains libraries for performing common tasks with the Fx2 chip as well as a framework for starting new firmware projects.
+There are also a number of utilities for performing common firmware development tasks.
+
+\section{Fx2lib Features}
+
+Fx2lib provides libaries for the following common firmware tasks:
+
+\begin{itemize}
+ \item Serial IO.  Ease of setting BAUD rate and reading and writing from serial ports. 
+ \item Vendor Commands.  Handling of required USB vendor commands and ease of implementing your own vendor command handlers. 
+ \item USB interrupts.  Ease of enabling/disabling USB interrupts and adding your own interrupt handlers.
+ \item \itwoc IO.  Ease of reading and writing to \itwoc devices. EEprom functions are also included. 
+ \item GPIF.  Functions for setting up the GPIF as well as performing single and fifo reads/writes.
+ \item Endpoints.  Simplify reading/writing with endpoint 0.
+ \item Other definitions and macros.  All Fx2 SFR, sbit and registers defined as well as other macros for common fx2 tasks.
+\end{itemize}
+
+Detailed  documentation for the library API is available online or with your downloaded fx2lib copy. 
+
+\section{Fx2lib Utilities}
+
+\begin{itemize}
+ \item gpif2dat.  Takes the output from the Cypress GPIF designer (the .c file) and creates an sdcc compatible c file with only the waveforms and initialization structures needed for use with the Fx2lib GPIF functions.
+ \item ihx2iic.  Creates a compressed iic from your firmware ihx file.  Used for storing your firmware on an eeprom.
+ \item fx2load.  Command line interface and Python bindings for loading firmware onto an Fx2 device and for doing basic device IO. 
+\end{itemize}
+
+\section{Getting Started}
+
+\begin{enumerate}
+\item Obtain Fx2lib. 
+
+ Fx2lib can be compiled from sources or is available as a pre-compiled library.
+ If you choose to compile Fx2lib from sources, simply make sure sdcc is in your path and run make in the fx2lib root folder.  
+ Whether you have downloaded a pre-compiled version or build your own Fx2lib library, you should have fx2lib/lib/fx2.lib available for the examples and your own firmware.
+\item Install the drivers.
+
+ Fx2lib uses \href{http://libusb.sourceforge.net}{libusb} to handle low level USB communication with the underlying operating system.
+ Each operating system has different requirements for driver installation.
+ See the Fx2lib driver guide for details on installing USB drivers for your specific operating system.
+ You'll need to install the drivers specifically for the device you plan on doing the Fx2 development with.
+ 
+\item Running Example Firmware. 
+
+ Each firmware example has a Makefile and a load script.
+ Simply run make to create the associated .ihx file and then run make load to load the firmware onto your device.
+ The examples/NOTES contains more details on each examples firmware.
+
+ The default load targets use the Cypress vendor id with the development board product ID.
+ Depending on your hardware, you'll need to change these appropriately.
+\item Starting your own firmware.
+
+ Fx2lib provides a quick start firmware framework in the fx2lib/fw directory.
+ Simply copy this directory to your own location and begin modifying the files to start your own firmware.
+
+\end{enumerate}
+
+
+\section{Where Next}
+
+ \begin{itemize}
+  \item \href{http://fx2lib.sourceforge.net/docs/}{Fx2lib API documentation}
+ \end{itemize}
+
+\end{document}
