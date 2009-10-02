@@ -22,18 +22,17 @@
 #define LIGHTS_H
 
 #include "fx2types.h"
-#include "delay.h"
 
-#ifdef FX1
-volatile xdata at 0x8000 BYTE D2ON;
-volatile xdata at 0x8100 BYTE D2OFF;
-volatile xdata at 0x9000 BYTE D3ON;
-volatile xdata at 0x9100 BYTE D3OFF;
-volatile xdata at 0xA000 BYTE D4ON;
-volatile xdata at 0xA100 BYTE D4OFF;
-volatile xdata at 0xB000 BYTE D5ON;
-volatile xdata at 0xB100 BYTE D5OFF;
-#else
+#ifndef FX1
+// FX2 Dev board lights
+#define D2ONH #0x88 // assembly high byte of light addr 
+#define D2OFFH #0x80 
+#define D3ONH #0x98 
+#define D3OFFH #0x90 
+#define D4ONH #0xA8 
+#define D4OFFH #0xA0 
+#define D5ONH #0xB8 
+#define D5OFFH #0xB0 
 volatile xdata at 0x8800 BYTE D2ON;
 volatile xdata at 0x8000 BYTE D2OFF;
 volatile xdata at 0x9800 BYTE D3ON;
@@ -42,13 +41,34 @@ volatile xdata at 0xA800 BYTE D4ON;
 volatile xdata at 0xA000 BYTE D4OFF;
 volatile xdata at 0xB800 BYTE D5ON;
 volatile xdata at 0xB000 BYTE D5OFF;
+#else
+// FX1 dev board lights
+#define D2ONH #0x80 // assembly high byte of light addr 
+#define D2OFFH #0x81 
+#define D3ONH #0x90 
+#define D3OFFH #0x91 
+#define D4ONH #0xA0 
+#define D4OFFH #0xA1 
+#define D5ONH #0xB0 
+#define D5OFFH #0xB1 
+volatile xdata at 0x8000 BYTE D2ON;
+volatile xdata at 0x8100 BYTE D2OFF;
+volatile xdata at 0x9000 BYTE D3ON;
+volatile xdata at 0x9100 BYTE D3OFF;
+volatile xdata at 0xA000 BYTE D4ON;
+volatile xdata at 0xA100 BYTE D4OFF;
+volatile xdata at 0xB000 BYTE D5ON;
+volatile xdata at 0xB100 BYTE D5OFF;
 #endif
 
 /**
- * easier to use macros defined below 
+ * Easier to use macros defined below 
 **/
-#define activate_light(LIGHT_ADDR) {BYTE tmp=*(LIGHT_ADDR);}
-#define activate_light_delay(LIGHT_ADDR,millis) activate_light(LIGHT_ADDR); delay(millis)
+#define activate_light(LIGHT_ADDR) __asm \
+ mov __XPAGE, LIGHT_ADDR \
+ __endasm; __asm \
+ movx a, @r0 \
+__endasm \
 
 /**
  *  Easy to make lights blink with these macros:
@@ -64,13 +84,13 @@ volatile xdata at 0xB000 BYTE D5OFF;
  *      }
  *  \endcode
  **/
-#define d2on() activate_light(&D2ON)
-#define d2off() activate_light(&D2OFF)
-#define d3on() activate_light(&D3ON)
-#define d3off() activate_light(&D3OFF)
-#define d4on() activate_light(&D4ON)
-#define d4off() activate_light(&D4OFF)
-#define d5on() activate_light(&D5ON)
-#define d5off() activate_light(&D5OFF)
+#define d2on() activate_light(D2ONH)
+#define d2off() activate_light(D2OFFH)
+#define d3on() activate_light(D3ONH)
+#define d3off() activate_light(D3OFFH)
+#define d4on() activate_light(D4ONH)
+#define d4off() activate_light(D4OFFH)
+#define d5on() activate_light(D5ONH)
+#define d5off() activate_light(D5OFFH)
 
 #endif

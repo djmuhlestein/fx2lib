@@ -204,7 +204,7 @@ void sof_isr () interrupt SOF_ISR using 1 {
     ++sofct;
     if(sofct==8000) { // about 8000 sof interrupts per second at high speed
         on5=!on5;
-        if (on5) d5on(); else d5off();
+        if (on5) {d5on();} else {d5off();}
         sofct=0;
     }
     CLEAR_SOF();

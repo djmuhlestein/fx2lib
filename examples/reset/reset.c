@@ -74,7 +74,7 @@ void main() {
  
  while (1) {
     delay(1000);
-    if (on) d5on(); else d5off();
+    if (on) {d5on();} else {d5off();}
     on = !on;    
  }
  
