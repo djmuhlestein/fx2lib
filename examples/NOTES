@@ -1,3 +1,6 @@
+The examples here show various firmware examples and also various ways to
+start communicating with your device.
+
 You can move up the food chain of programming languages pretty quickly if you like:
 
       C:    Program Your Firmware
@@ -7,8 +10,13 @@ You can move up the food chain of programming languages pretty quickly if you li
 fx2:
  An example firmware loader and basic firmware terminal using the above strategy.
  Requires libusb-1.0, Python 2.5
- use fx2load.py w/ reset_bix function to load firmware onto a device.
 
+ Installation:
+  cd fx2
+  python setup.py install
+
+
+ Use the fx2load w/ reset_bix function to load firmware onto a device.
  Example:
   python
   > from fx2load import *
@@ -17,7 +25,8 @@ fx2:
   > f.do_usb_command (.....
   > f.ep_bulk(......
  
- At this point, the source is the documentation!
+ There is also an fx2load script for doing the same thing with the command line.
+
 
 lights:
  A really simple program that cycles the lights on the CY3864 development board.
