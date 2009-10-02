@@ -1,22 +1,7 @@
-INCLUDES = -I../../include
-LIBS = fx2.lib -L ../../lib/
-CC = sdcc -mmcs51
+FX2LIBDIR=../..
 BASENAME = i2c
+SOURCES=i2c.c
 
-$(BASENAME).ihx: $(BASENAME).c
-	$(CC) $(INCLUDES) $(BASENAME).c $(LIBS)
-
-$(BASENAME).bix: $(BASENAME).ihx
-	objcopy -I ihex -O binary $(BASENAME).ihx $(BASENAME).bix
-
-clean:
-	rm -f $(BASENAME).{asm,ihx,lnk,lst,map,mem,rel,rst,sym,adb,cdb,bix}
-
-.PHONY:run bix
-run: $(BASENAME).bix
-	python load.py
-
-bix: $(BASENAME).bix
-	
+include ../fx2.mk	
 
 

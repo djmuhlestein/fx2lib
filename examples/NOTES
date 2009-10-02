@@ -1,5 +1,10 @@
 The examples here show various firmware examples and also various ways to
-start communicating with your device.
+start new firmware projects as well as various ways to start communicating with your device.
+In addition, you can look at the fx2.mk include and the example project Makefiles
+to see how you might set up your own project.
+
+For simple examples, you can ignore the link warnings. (Those pertain to the usb jump table
+and device descriptor areas and are not used for all examples)
 
 You can move up the food chain of programming languages pretty quickly if you like:
 
@@ -26,6 +31,10 @@ fx2:
   > f.ep_bulk(......
  
  There is also an fx2load script for doing the same thing with the command line.
+
+eeprom:
+ Simple firmware for reading and writing information from the eeprom.  The client.py
+ file contains a function to read an existing prom image.
 
 
 lights:
