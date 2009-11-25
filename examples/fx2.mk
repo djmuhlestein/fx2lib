@@ -46,9 +46,12 @@ ihx: $(BASENAME).ihx
 bix: $(BASENAME).bix
 iic: $(BASENAME).iic
 
-$(BASENAME).ihx: $(SOURCES) $(A51_SOURCES)
-	# can't use default target %.rel because there is no way
-	# to differentiate the dependency.  (Is it %.rel: %.c or %.a51)
+$(FX2LIBDIR)/lib/fx2.lib: $(FX2LIBDIR)/lib/*.c $(FX2LIBDIR)/lib/*.a51
+	make -C $(FX2LIBDIR)/lib
+
+$(BASENAME).ihx: $(SOURCES) $(A51_SOURCES) $(FX2LIBDIR)/lib/fx2.lib
+# can't use default target %.rel because there is no way
+# to differentiate the dependency.  (Is it %.rel: %.c or %.a51)
 	for a in $(A51_SOURCES); do \
 	 asx8051 -logs $$a; done
 	for s in $(SOURCES); do \
@@ -66,3 +69,4 @@ load: $(BASENAME).bix
 	
 clean:
 	rm -f *.{asm,ihx,lnk,lst,map,mem,rel,rst,sym,adb,cdb,bix}
+	make -C $(FX2LIBDIR)/lib clean
