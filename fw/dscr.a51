@@ -159,6 +159,7 @@ highspd_dscr_end:
 	.db	0x00				; polling interval
 highspd_dscr_realend:
 
+.even
 _fullspd_dscr:
 	.db	fullspd_dscr_end-_fullspd_dscr      ; dscr len
 	.db	DSCR_CONFIG_TYPE
@@ -240,6 +241,7 @@ fullspd_dscr_end:
 	.db	0x00				; polling interval
 fullspd_dscr_realend:
 
+.even
 _dev_strings:
 ; sample string
 _string0:
