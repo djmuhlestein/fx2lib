@@ -49,10 +49,49 @@ extern volatile xdata BOOL cancel_i2c_trans;
  **/
 BOOL i2c_write ( BYTE addr, WORD len1, BYTE* addr_buf, WORD len2, BYTE* data_buf );
 
+/**
+ * \brief read data on the i2c bus.
+ *
+ * \param addr i2c address
+ * \param len number of bytes to read
+ * \param buf buffer to store data
+ **/
 BOOL i2c_read ( BYTE addr, WORD len, BYTE* buf);
 
+/**
+ * \brief read data from an attached eeprom.
+ *
+ * Writes the address of the data to read then reads len bytes into buf.
+ * This function checks the I2CS register to determine if a one or two
+ * byte address eepom was detected on the i2c bus.  Reading from proms
+ * at non-standard addresses my require using the i2c_read/write commands
+ * explicitly.
+ *
+ * \param prom_addr eeprom i2c address
+ * \param addr address of bytes to start reading
+ * \param len number of bytes to read
+ * \param buf data buffer
+ **/
 BOOL eeprom_read( BYTE prom_addr, WORD addr, WORD len, BYTE* buf);
 
+/**
+ * \brief write data to the eeprom
+ *
+ * This function checks the I2CS register to determin if a one or two
+ * two byte eeprom is detected.  If the prom is not detected at boot time
+ * or is connected to alternate addresses, the i2c_read/write commands should
+ * be used explicitly insread of using this function.
+ *
+ * For each byte in buf, the address is written and then the data byte. Many 
+ * proms support writing multiple bytes at the same time.  For these, it is
+ * also better to use i2c_read/write explicitly.  This function is rather slow
+ * but is effective.
+ *
+ * \param prom_addr eeprom i2c address
+ * \param addr address of bytes to start writing
+ * \param len number of bytes to write
+ * \param buf data buffer
+ **/
 BOOL eeprom_write( BYTE prom_addr, WORD addr, WORD len, BYTE* buf);
 
 #endif
