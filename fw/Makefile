@@ -18,61 +18,10 @@
 
 # change location of fx2libdir if needed
 FX2LIBDIR = ../
-INCLUDES = -I$(FX2LIBDIR)/include
-FX2LIB = $(FX2LIBDIR)/lib/fx2.lib
-LIBS = fx2.lib -L$(FX2LIBDIR)/lib
-
-# change to be your own vid/pid if needed
-VID=0x04b4 # default Cypress
-PID=0x0082 # default EZ-USB
-
-# possible env flags
-# -D DEBUG_FIRMWARE - enable stdio & printf on sio-0 (57600 buad)
-# -D NORENUM - don't renumerate when firmware loads.  Used for iic load.
-SDCCFLAGS := $(SDCCFLAGS)
-CC = sdcc -mmcs51 \
-	$(SDCCFLAGS) \
-   --xram-size 0x0800 \
-   --code-size 0x2e00 \
-    --xram-loc 0x3200 \
-	-Wl"-b DSCR_AREA = 0x2e00" \
-	-Wl"-b INT2JT = 0x3000" \
-
-BASENAME = firmware
-
-# add additional sources
-SOURCES = fw.c \
-		  device.c
-
-OBJS = $(patsubst %.c,%.rel, $(SOURCES)) dscr.rel 
-
-.PHONY: all iic bix
-all: $(BASENAME).ihx
-
-%.rel: %.c
-	$(CC) -c $(INCLUDES) $?
-
-$(FX2LIB):
-	make -C $(FX2LIB)/lib/
-
-$(BASENAME).ihx: $(OBJS) $(FX2LIB)
-	$(CC) $(OBJS) $(LIBS) -o $(BASENAME).ihx
-
-dscr.rel: dscr.a51
-	asx8051 -logs dscr.a51
+SOURCES=fw.c device.c
+A51_SOURCES=dscr.a51
+BASENAME=firmware
 
 
-$(BASENAME).bix: $(BASENAME).ihx
-	packihx $(BASENAME).ihx > $(BASENAME).hex
-	objcopy -I ihex -O binary $(BASENAME).hex $(BASENAME).bix
-
-$(BASENAME).iic: $(BASENAME).ihx
-	$(FX2LIBDIR)/utils/ihx2iic.py -v $(VID) -p $(PID) $(BASENAME).ihx $(BASENAME).iic
-
-clean:
-	rm -f *.{asm,ihx,lnk,lst,map,mem,rel,rst,sym,adb,cdb,bix,iic}
-
-bix: $(BASENAME).bix
-iic: $(BASENAME).iic
-
+include $(FX2LIBDIR)/lib/fx2.mk
 
