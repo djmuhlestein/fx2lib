@@ -6,6 +6,18 @@
 # BASENAME: name of your firmware file, i.e., myfirmware, but not myfirmware.c
 # FX2LIBDIR: top directory of fx2lib.  Contains lib and include dirs
 #
+# Leave these alone or redefine as necessary to customize firmware.
+# (Redefine after including this makefile)
+# VID vendor id
+# PID product id
+# SDCC build/link options
+#  CODE_SIZE:    Default --code-size 0x3c00
+#  XRAM_SIZE:    Default --xram-size 0x0200
+#  XRAM_LOC:     Default --xram-loc 0x3c00
+# These two can be changed to be blank if no device descriptor is being used.
+#  DSCR_AREA:    Default -Wl"-b DSCR_AREA=0x3e00"
+#  INT2JT:		Default -Wl"-b INT2JT=0x3f00"
+#
 # Provided targets:
 #
 # default target: creates $(BASENAME).ihx
@@ -19,12 +31,15 @@
 #
 #
 
-ifndef VID
 VID=0x04b4
-endif
-ifndef PID
 PID=0x8613
-endif
+
+DSCR_AREA=-Wl"-b DSCR_AREA=0x3e00"
+INT2JT=-Wl"-b INT2JT=0x3f00"
+CODE_SIZE=--code-size 0x3c00
+XRAM_SIZE=--xram-size 0x0200
+XRAM_LOC=--xram-loc 0x3c00
+
 
 RELS=$(SOURCES:.c=.rel) $(A51_SOURCES:.a51=.rel)
 # these are pretty good settings for most firmwares.  
@@ -32,11 +47,11 @@ RELS=$(SOURCES:.c=.rel) $(A51_SOURCES:.a51=.rel)
 # firmwares that require more xram etc.
 CC = sdcc -mmcs51 \
 	$(SDCCFLAGS) \
-   --code-size 0x3c00 \
-   --xram-size 0x0200 \
-    --xram-loc 0x3c00 \
-	-Wl"-b DSCR_AREA = 0x3e00" \
-	-Wl"-b INT2JT = 0x3f00" \
+    $(CODE_SIZE) \
+    $(XRAM_SIZE) \
+    $(XRAM_LOC) \
+	$(DSCR_AREA) \
+	$(INT2JT)
 
 
 .PHONY: ihx iic bix load clean clean-all
