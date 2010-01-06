@@ -39,7 +39,7 @@ CC = sdcc -mmcs51 \
 	-Wl"-b INT2JT = 0x3f00" \
 
 
-.PHONY: ihx iic bix load clean
+.PHONY: ihx iic bix load clean clean-all
 
 
 ihx: $(BASENAME).ihx
@@ -69,4 +69,7 @@ load: $(BASENAME).bix
 	
 clean:
 	rm -f *.{asm,ihx,lnk,lst,map,mem,rel,rst,sym,adb,cdb,bix}
+
+clean-all: clean
 	make -C $(FX2LIBDIR)/lib clean
+
