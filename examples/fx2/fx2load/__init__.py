@@ -22,8 +22,8 @@ f=fx2.fx2()
 
 # use this functions 1st
 
-def openfx2(vid=0x04b4,pid=0x0082):
-    f.open(vid,pid)
+def openfx2(vid=0x04b4,pid=0x0082,idx=0):
+    f.open(vid,pid,idx)
 
 def reset_device(reset):
  print reset and "Put device in reset" or "Set device to run"

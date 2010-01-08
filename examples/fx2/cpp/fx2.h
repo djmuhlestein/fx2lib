@@ -38,10 +38,11 @@ class fx2 {
          * open
          * vid = vendor id
          * pid = product id
+         * idx = nth device if there are more than one.
          *
          * Opens device with vid,pid and claims alt 0 of interface 0
          **/
-        void open(int vid=VID,int pid=PID);
+        void open(int vid=VID,int pid=PID, int idx=0);
         void set_interface(int interface, int alt_setting);
         bool isopen() { return dev_handle != NULL; }
         void close();
