@@ -17,7 +17,7 @@
  **/
 
 #include <fx2macros.h>
-#include <usbjt.h>
+#include <autovector.h>
 #include <delay.h>
 #include <setupdat.h>
 

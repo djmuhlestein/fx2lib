@@ -1,4 +1,4 @@
-# Copyright (C) 2009 Ubixum, Inc. 
+# Copyright (C) 2010 Ubixum, Inc. 
 # 
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -17,7 +17,7 @@
 
 
 # change location of fx2libdir if needed
-FX2LIBDIR = ../
+FX2LIBDIR = ..
 SOURCES=fw.c device.c
 A51_SOURCES=dscr.a51
 BASENAME=firmware

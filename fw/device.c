@@ -17,7 +17,7 @@
  **/
 
 #include <fx2macros.h>
-#include <usbjt.h>
+#include <autovector.h>
 
 #ifdef DEBUG_FIRMWARE
 #include <stdio.h>
