@@ -10,6 +10,7 @@
 # (Redefine after including this makefile)
 # VID vendor id
 # PID product id
+# LIBS optional additional libraries to link with the firmware.
 # SDCC build/link options
 #  CODE_SIZE:    Default --code-size 0x3c00
 #  XRAM_SIZE:    Default --xram-size 0x0200
@@ -71,7 +72,7 @@ $(BASENAME).ihx: $(SOURCES) $(A51_SOURCES) $(FX2LIBDIR)/lib/fx2.lib
 	 asx8051 -logs $$a; done
 	for s in $(SOURCES); do \
 	 $(CC) -c -I $(FX2LIBDIR)/include $$s; done
-	$(CC) -o $(BASENAME).ihx $(RELS) fx2.lib -L $(FX2LIBDIR)/lib
+	$(CC) -o $(BASENAME).ihx $(RELS) fx2.lib -L $(FX2LIBDIR)/lib $(LIBS)
 
 
 $(BASENAME).bix: $(BASENAME).ihx
