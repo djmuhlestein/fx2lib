@@ -1,4 +1,4 @@
-; Copyright (C) 2009 Ubixum, Inc. 
+; Copyright (C) 2010 Ubixum, Inc. 
 ;
 ; This library is free software; you can redistribute it and/or
 ; modify it under the terms of the GNU Lesser General Public
@@ -14,27 +14,14 @@
 ; License along with this library; if not, write to the Free Software
 ; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
-.module INT2JT ; jump table for usb auto vector
+.module INT2AV ; jump table for usb auto vector
 
-; these are to help make sure 
-; this assembly gets stuck in the right place 
-; and I guess you could read INT2/4AV for kicks too
-; read one of them to a dummy location causes this module to
-; get linked in
-.globl _INT2AV
-.globl _INT4AV
 .globl _INT2JT ; defined as global so this assembly gets included in project 
 
-.area INT2JV (ABS,OVR)
+.area INT2AV (ABS,OVR)
 .org    0x43 ; this is where USBINT ( interrupt 8 ) jumps to
 _INT2AV = #. + 2 ; two bytes for ljmp (auto set by INT2IVEC)
     ljmp _INT2JT
-
-.area INT4JV (ABS,OVR)
-.org    0x53 ; where INT4 jumps to 
-_INT4AV = #. + 2
-    ljmp _INT2JT ; the addr gets replaced so this really goes to int4jt locations
-
 
 ; INT2 Jump Table
 

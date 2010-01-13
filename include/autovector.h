@@ -1,4 +1,4 @@
-// Copyright (C) 2009 Ubixum, Inc. 
+// Copyright (C) 2010 Ubixum, Inc. 
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -24,7 +24,12 @@
  * example:
  * -Wl"-b INT2JT = 0x1A00"
  *
- * Make sure that INT2JT doesn't overlap your other stuff!
+ * Make sure that INT2JT doesn't overlap your other code!
+ *
+ * Unlike the standard fx2 interrupts (\ref fx2ints.h), the autovectored
+ * interrupts are defined in assemply and have pre-written function names.
+ * Be sure to override the functions defined in this header or your 
+ * interrupt handler will not be called.
  **/
 
 #ifndef USBJT_H
@@ -37,12 +42,30 @@
 // this causes usbjt to be included from the lib
 // not used for anything
 extern volatile BYTE INT2JT;
-//! enable all interrupts (EA=1) separate from this macro
+extern volatile BYTE INT4JT;
+/**
+ * Enable all interrupts (EA=1) separate from this macro.
+ * This macro causes the autovector assembly for int2 interrupts
+ * to be overlayed at 0x43.  In addition, the jump table for the
+ * interrupts will be included in the firmware.  The jump table
+ * must lie on a page boundary.  This is done by passing the linker
+ * arguments to sdcc.
+ *
+ * \code
+ *   sdcc <files> -Wl"-b INT2JT = 0xaddr"
+ * \endcode
+ **/
 #define USE_USB_INTS() {BYTE dummy=INT2JT;\
                         EUSB=1;\
                         INTSETUP|=bmAV2EN;}
-//! don't use this if you want external pin generated int4 interrupts
-#define USE_GPIF_INTS() {BYTE dummy=INT2JT;\
+/** This macro causes the autovector assemby for int4 to be overlayed
+ * at 0x53.  Don't use this if you want external pin generated int4 interrupts
+ * and want to define your own interrupt handler.  It is possible to use
+ * usb interrupts with autovectoring and not use GPIF interrupts but GPIF
+ * interrupts require the USB jump table.  (You can't USE your own usb interrupt
+ * handler if you want to enable GPIF interrupts.)
+ **/
+#define USE_GPIF_INTS() {BYTE dummy=INT4JT;\
                         EIEX4=1;\
                         INTSETUP|=bmAV4EN|INT4IN;}
              
@@ -190,56 +213,6 @@ void ep6ff_isr() interrupt EP6FF_ISR;
 void ep8ff_isr() interrupt EP8FF_ISR;
 void gpifdone_isr() interrupt GPIFDONE_ISR;
 void gpifwf_isr() interrupt GPIFWF_ISR;
-
-
-// and for ease, here is a quick section you can copy paste
-// into your own code somewhere
-
-/**
-void sudav_isr() interrupt SUDAV_ISR {}
-void sof_isr() interrupt SOF_ISR {}
-void sutok_isr() interrupt SUTOK_ISR {}
-void suspend_isr() interrupt SUSPEND_ISR {}
-void usbreset_isr() interrupt USBRESET_ISR {}
-void hispeed_isr() interrupt HISPEED_ISR {}
-void ep0ack_isr() interrupt EP0ACK_ISR {}
-void ep0in_isr() interrupt EP0IN_ISR {}
-void ep0out_isr() interrupt EP0OUT_ISR {}
-void ep1in_isr() interrupt EP1IN_ISR {}
-void ep1out_isr() interrupt EP1OUT_ISR {}
-void ep2_isr() interrupt EP2_ISR {}
-void ep4_isr() interrupt EP4_ISR {}
-void ep6_isr() interrupt EP6_ISR {}
-void ep8_isr() interrupt EP8_ISR {}
-void ibn_isr() interrupt IBN_ISR {}
-void ep0ping_isr() interrupt EP0PING_ISR {}
-void ep1ping_isr() interrupt EP1PING_ISR {}
-void ep2ping_isr() interrupt EP2PING_ISR {}
-void ep4ping_isr() interrupt EP4PING_ISR {}
-void ep6ping_isr() interrupt EP6PING_ISR {}
-void ep8ping_isr() interrupt EP8PING_ISR {}
-void errlimit_isr() interrupt ERRLIMIT_ISR {}
-void ep2isoerr_isr() interrupt EP2ISOERR_ISR {}
-void ep4isoerr_isr() interrupt EP4ISOERR_ISR {}
-void ep6isoerr_isr() interrupt EP6ISOERR_ISR {}
-void ep8isoerr_isr() interrupt EP8ISOERR_ISR {}
-void spare_isr() interrupt RESERVED_ISR {}
-void ep2pf_isr() interrupt EP2PF_ISR{}
-void ep4pf_isr() interrupt EP4PF_ISR{}
-void ep6pf_isr() interrupt EP6PF_ISR{}
-void ep8pf_isr() interrupt EP8PF_ISR{}
-void ep2ef_isr() interrupt EP2EF_ISR{}
-void ep4ef_isr() interrupt EP4EF_ISR{}
-void ep6ef_isr() interrupt EP6EF_ISR{}
-void ep8ef_isr() interrupt EP8EF_ISR{}
-void ep2ff_isr() interrupt EP2FF_ISR{}
-void ep4ff_isr() interrupt EP4FF_ISR{}
-void ep6ff_isr() interrupt EP6FF_ISR{}
-void ep8ff_isr() interrupt EP8FF_ISR{}
-void gpifdone_isr() interrupt GPIFDONE_ISR{}
-void gpifwf_isr() interrupt GPIFWF_ISR{}
-**/
-
 
 #endif
 

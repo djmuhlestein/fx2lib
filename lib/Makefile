@@ -15,7 +15,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 SOURCES = serial.c i2c.c delay.c setupdat.c gpif.c eputils.c
-FX2_OBJS = $(patsubst %.c,%.rel, $(SOURCES)) usbjt.rel
+FX2_OBJS = $(patsubst %.c,%.rel, $(SOURCES)) usbav.rel int4av.rel
 INCLUDES = -I../include
 SDCC = sdcc -mmcs51 $(SDCCFLAGS)
 LIBS = fx2.lib
@@ -25,8 +25,11 @@ all: $(LIBS)
 $(LIBS): $(FX2_OBJS)
 	sdcclib fx2.lib $?
 
-usbjt.rel: usbjt.a51
-	asx8051 -logs usbjt.a51
+usbav.rel: usbav.a51
+	asx8051 -logs usbav.a51
+
+int4av.rel: int4av.a51
+	asx8051 -logs int4av.a51
 
 %.rel: %.c
 	$(SDCC) $(INCLUDES) -c $?

@@ -108,29 +108,20 @@ typedef enum { CLK_12M =0, CLK_24M, CLK_48M} CLK_SPD;
 // USB interrupts are in usbjt.h
 
 
+
+
 /**
  * \brief TRUE if the FX2 has transitioned to high speed on the USB bus..
  **/
 #define HISPEED (USBCS&bmHSM)
 
 
-#define RESUME_ISR 6
-
-/**
- * \brief Enable the Resume Interrupt.  Requires EA=1 separately.
- **/
-#define ENABLE_RESUME() ERESI = 1 
-
-/**
- * \brief Clear the resume interrupt.  Use within the resume
- *  interrupt handler.
- **/
-#define CLEAR_RESUME() RESI=0;
 
 
 /**
  * \brief Evaluates to TRUE if a remote wakeup event has occurred.
  **/
 #define REMOTE_WAKEUP() (((WAKEUPCS & bmWU) && (WAKEUPCS & bmWUEN)) || ((WAKEUPCS & bmWU2) && (WAKEUPCS & bmWU2EN)))
+
 
 #endif
