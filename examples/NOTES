@@ -60,3 +60,8 @@ reset:
 
 serial:
  A simple terminal echo firmware.  Echos whatever you type back to the serial terminal.
+
+timers:
+ Demonstrates setting up timers t0, t1, and t2 to be 16 bit counters and also demonstrates
+ installing interrupts to process the timer overlow.
+

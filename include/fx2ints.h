@@ -59,6 +59,36 @@ typedef enum {
 
 
 /**
+ * \brief Enable the timer 0 interrupt.
+ *
+ * There is not CLEAR_TIMER0 because the timer interrupt flag 
+ * is automatically cleared when the isr is called.
+ **/
+#define ENABLE_TIMER0() ET0=1
+
+/**
+ * \brief Enable timer 1 interrupt
+ * There is no CLEAR_TIMER1 because the timer interrupt flag
+ * is automatically cleared when the isr is called.
+ **/
+#define ENABLE_TIMER1() ET1=1
+
+
+/**
+ * \brief Enable timer 2 interrupt
+ *
+ * This is the same interrupt whether timer 2 overflowed or 
+ * for the external EXF2 flag.
+ **/
+#define ENABLE_TIMER2() ET2=1
+/**
+ *  \brief Clear timer 2 interrupt
+ *
+ *  Clears both the TF2 AND EXF2 flag
+ **/
+#define CLEAR_TIMER2() TF2=0;EXF2=0;
+
+/**
  * \brief Enable the Resume Interrupt.  Requires EA=1 separately.
  **/
 #define ENABLE_RESUME() ERESI = 1 
