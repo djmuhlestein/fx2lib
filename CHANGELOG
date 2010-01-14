@@ -20,6 +20,10 @@
  * Added cancel_i2c_trans extern bool to allow canceling a blocked i2c transaction.
  * FX1 development board debug light addresses.
  * Various other minor bug fixes/optimizations.
+ * remove usbjt.h.  In place, use autovector.h.  jump table routines no longer
+   need defined in your firmware.  fx2.lib contains default routines.  Override 
+   them with interrupt handlers you want to handle.
+ * added fx2ints.h.  Interrupt numbers/macros for standard fx2 interrupts.
 
 0.1
  * Initial Release.
