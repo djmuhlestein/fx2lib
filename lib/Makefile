@@ -36,4 +36,5 @@ int4av.rel: int4av.a51
 
 clean:
 	rm -f *.{asm,ihx,lnk,lst,map,mem,rel,rst,sym,adb,cdb,lib}
+	rm -f interrupts/*.{asm,ihx,lnk,lst,map,mem,rel,rst,sym,adb,dcb,lib}
 
