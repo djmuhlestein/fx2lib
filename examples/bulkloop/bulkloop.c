@@ -21,7 +21,7 @@
 #include <fx2macros.h>
 #include <serial.h>
 #include <delay.h>
-#include <usbjt.h>
+#include <autovector.h>
 #include <lights.h>
 #include <setupdat.h>
 #include <eputils.h>
@@ -42,6 +42,8 @@ bit on;
 
 void main() {
 
+ REVCTL=0; // not using advanced endpoint controls
+
  d2off();
  on=0;
  lcount=0;
@@ -51,7 +53,7 @@ void main() {
  bytes=0;
 
  // renumerate
- RENUMERATE(); 
+ RENUMERATE_UNCOND(); 
  
 
  SETCPUFREQ(CLK_48M);
@@ -210,8 +212,6 @@ void sof_isr () interrupt SOF_ISR using 1 {
     CLEAR_SOF();
 }
 
-void sutok_isr() interrupt SUTOK_ISR {}
-void suspend_isr() interrupt SUSPEND_ISR {}
 void usbreset_isr() interrupt USBRESET_ISR {
     handle_hispeed(FALSE);
     CLEAR_USBRESET();
@@ -220,39 +220,4 @@ void hispeed_isr() interrupt HISPEED_ISR {
     handle_hispeed(TRUE);
     CLEAR_HISPEED();
 }
-void ep0ack_isr() interrupt EP0ACK_ISR {}
-void ep0in_isr() interrupt EP0IN_ISR {}
-void ep0out_isr() interrupt EP0OUT_ISR {}
-void ep1in_isr() interrupt EP1IN_ISR {}
-void ep1out_isr() interrupt EP1OUT_ISR {}
-void ep2_isr() interrupt EP2_ISR {}
-void ep4_isr() interrupt EP4_ISR {}
-void ep6_isr() interrupt EP6_ISR {}
-void ep8_isr() interrupt EP8_ISR {}
-void ibn_isr() interrupt IBN_ISR {}
-void ep0ping_isr() interrupt EP0PING_ISR {}
-void ep1ping_isr() interrupt EP1PING_ISR {}
-void ep2ping_isr() interrupt EP2PING_ISR {}
-void ep4ping_isr() interrupt EP4PING_ISR {}
-void ep6ping_isr() interrupt EP6PING_ISR {}
-void ep8ping_isr() interrupt EP8PING_ISR {}
-void errlimit_isr() interrupt ERRLIMIT_ISR {}
-void ep2isoerr_isr() interrupt EP2ISOERR_ISR {}
-void ep4isoerr_isr() interrupt EP4ISOERR_ISR {}
-void ep6isoerr_isr() interrupt EP6ISOERR_ISR {}
-void ep8isoerr_isr() interrupt EP8ISOERR_ISR {}
-void spare_isr() interrupt RESERVED_ISR {}
-void ep2pf_isr() interrupt EP2PF_ISR{}
-void ep4pf_isr() interrupt EP4PF_ISR{}
-void ep6pf_isr() interrupt EP6PF_ISR{}
-void ep8pf_isr() interrupt EP8PF_ISR{}
-void ep2ef_isr() interrupt EP2EF_ISR{}
-void ep4ef_isr() interrupt EP4EF_ISR{}
-void ep6ef_isr() interrupt EP6EF_ISR{}
-void ep8ef_isr() interrupt EP8EF_ISR{}
-void ep2ff_isr() interrupt EP2FF_ISR{}
-void ep4ff_isr() interrupt EP4FF_ISR{}
-void ep6ff_isr() interrupt EP6FF_ISR{}
-void ep8ff_isr() interrupt EP8FF_ISR{}
-void gpifdone_isr() interrupt GPIFDONE_ISR{}
-void gpifwf_isr() interrupt GPIFWF_ISR{}
+
