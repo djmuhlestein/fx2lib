@@ -42,7 +42,7 @@ XRAM_SIZE=--xram-size 0x0200
 XRAM_LOC=--xram-loc 0x3c00
 
 
-RELS=$(SOURCES:.c=.rel) $(A51_SOURCES:.a51=.rel)
+RELS=$(addsuffix .rel, $(basename $(SOURCES) $(A51_SOURCES)))
 # these are pretty good settings for most firmwares.  
 # Have to be careful with memory locations for 
 # firmwares that require more xram etc.
@@ -71,7 +71,7 @@ $(BASENAME).ihx: $(SOURCES) $(A51_SOURCES) $(FX2LIBDIR)/lib/fx2.lib
 	for a in $(A51_SOURCES); do \
 	 asx8051 -logs $$a; done
 	for s in $(SOURCES); do \
-	 THISREL=`echo "$$s" | sed -e 's/\.c$$/\.rel/'`; \
+	 THISREL=$$(basename `echo "$$s" | sed -e 's/\.c$$/\.rel/'`); \
 	 $(CC) -c -I $(FX2LIBDIR)/include $$s -o $$THISREL ; done
 	$(CC) -o $(BASENAME).ihx $(RELS) fx2.lib -L $(FX2LIBDIR)/lib $(LIBS)
 
