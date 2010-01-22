@@ -71,7 +71,8 @@ $(BASENAME).ihx: $(SOURCES) $(A51_SOURCES) $(FX2LIBDIR)/lib/fx2.lib
 	for a in $(A51_SOURCES); do \
 	 asx8051 -logs $$a; done
 	for s in $(SOURCES); do \
-	 $(CC) -c -I $(FX2LIBDIR)/include $$s; done
+	 THISREL=`echo "$$s" | sed -e 's/\.c$$/\.rel/'`; \
+	 $(CC) -c -I $(FX2LIBDIR)/include $$s -o $$THISREL ; done
 	$(CC) -o $(BASENAME).ihx $(RELS) fx2.lib -L $(FX2LIBDIR)/lib $(LIBS)
 
 
