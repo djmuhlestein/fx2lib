@@ -32,7 +32,7 @@ int4av.rel: int4av.a51
 	asx8051 -logs int4av.a51
 
 %.rel: %.c
-	$(SDCC) $(INCLUDES) -c $? -o $@
+	$(SDCC) $(INCLUDES) -c $< -o $@
 
 clean:
 	rm -f *.{asm,ihx,lnk,lst,map,mem,rel,rst,sym,adb,cdb,lib}
