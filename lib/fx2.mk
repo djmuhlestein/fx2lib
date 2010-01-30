@@ -45,7 +45,7 @@ XRAM_SIZE=--xram-size 0x0200
 XRAM_LOC=--xram-loc 0x3c00
 
 
-RELS=$(addsuffix .rel, $(basename $(SOURCES) $(A51_SOURCES)))
+RELS=$(addsuffix .rel, $(notdir $(basename $(SOURCES) $(A51_SOURCES))))
 # these are pretty good settings for most firmwares.  
 # Have to be careful with memory locations for 
 # firmwares that require more xram etc.
