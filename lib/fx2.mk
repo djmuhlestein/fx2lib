@@ -3,6 +3,9 @@
 # In your Makefile, define:
 # SOURCES: list of c files to compile
 # A51_SOURCES: list of any a51 files.
+# DEPS: list of any depedancies (like auto-generated header files) that need
+#       generated prior to compiling. You must provide the target definition
+#       for any DEPS you define.
 # BASENAME: name of your firmware file, i.e., myfirmware, but not myfirmware.c
 # FX2LIBDIR: top directory of fx2lib.  Contains lib and include dirs
 #
@@ -65,7 +68,7 @@ iic: $(BASENAME).iic
 $(FX2LIBDIR)/lib/fx2.lib: $(FX2LIBDIR)/lib/*.c $(FX2LIBDIR)/lib/*.a51
 	make -C $(FX2LIBDIR)/lib
 
-$(BASENAME).ihx: $(SOURCES) $(A51_SOURCES) $(FX2LIBDIR)/lib/fx2.lib
+$(BASENAME).ihx: $(SOURCES) $(A51_SOURCES) $(FX2LIBDIR)/lib/fx2.lib $(DEPS)
 # can't use default target %.rel because there is no way
 # to differentiate the dependency.  (Is it %.rel: %.c or %.a51)
 	for a in $(A51_SOURCES); do \
@@ -83,7 +86,7 @@ $(BASENAME).iic: $(BASENAME).ihx
 
 load: $(BASENAME).bix
 	fx2load -v $(VID) -p $(PID) $(BASENAME).bix
-	
+
 clean:
 	rm -f *.{asm,ihx,lnk,lst,map,mem,rel,rst,sym,adb,cdb,bix}
 
