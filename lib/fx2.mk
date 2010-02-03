@@ -78,7 +78,7 @@ $(BUILDDIR)/$(BASENAME).ihx: $(BUILDDIR) $(SOURCES) $(A51_SOURCES) $(FX2LIBDIR)/
 # to differentiate the dependency.  (Is it %.rel: %.c or %.a51)
 	for a in $(A51_SOURCES); do \
 	 cp $$a $(BUILDDIR)/; \
-	 cd $(BUILDDIR) && asx8051 -logs $$a && cd ..; done
+	 cd $(BUILDDIR) && asx8051 -logs `basename $$a` && cd ..; done
 	for s in $(SOURCES); do \
 	 THISREL=$$(basename `echo "$$s" | sed -e 's/\.c$$/\.rel/'`); \
 	 $(CC) -c -I $(FX2LIBDIR)/include $$s -o $(BUILDDIR)/$$THISREL ; done
