@@ -7,7 +7,6 @@
 #       generated prior to compiling. You must provide the target definition
 #       for any DEPS you define.
 # BASENAME: name of your firmware file, i.e., myfirmware, but not myfirmware.c
-# FX2LIBDIR: top directory of fx2lib.  Contains lib and include dirs
 #
 # Leave these alone or redefine as necessary to customize firmware.
 # (Redefine after including this makefile)
@@ -36,16 +35,17 @@
 #
 #
 
-VID=0x04b4
-PID=0x8613
+VID?=0x04b4
+PID?=0x8613
 
-DSCR_AREA=-Wl"-b DSCR_AREA=0x3e00"
-INT2JT=-Wl"-b INT2JT=0x3f00"
-CODE_SIZE=--code-size 0x3c00
-XRAM_SIZE=--xram-size 0x0200
-XRAM_LOC=--xram-loc 0x3c00
-BUILDDIR=build
+DSCR_AREA?=-Wl"-b DSCR_AREA=0x3e00"
+INT2JT?=-Wl"-b INT2JT=0x3f00"
+CODE_SIZE?=--code-size 0x3c00
+XRAM_SIZE?=--xram-size 0x0200
+XRAM_LOC?=--xram-loc 0x3c00
+BUILDDIR?=build
 
+FX2LIBDIR?=$(dir $(lastword $(MAKEFILE_LIST)))../
 
 RELS=$(addprefix $(BUILDDIR)/, $(addsuffix .rel, $(notdir $(basename $(SOURCES) $(A51_SOURCES)))))
 # these are pretty good settings for most firmwares.  

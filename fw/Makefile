@@ -17,11 +17,10 @@
 
 
 # change location of fx2libdir if needed
-FX2LIBDIR = ..
 SOURCES=fw.c device.c
 A51_SOURCES=dscr.a51
 BASENAME=firmware
 
 
-include $(FX2LIBDIR)/lib/fx2.mk
+include ../lib/fx2.mk
 
