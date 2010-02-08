@@ -70,8 +70,8 @@ iic: $(BUILDDIR)/$(BASENAME).iic
 $(FX2LIBDIR)/lib/fx2.lib: $(FX2LIBDIR)/lib/*.c $(FX2LIBDIR)/lib/*.a51
 	make -C $(FX2LIBDIR)/lib
 
-$(BUILDDIR):	
-	mkdir $(BUILDDIR)
+$(BUILDDIR):
+	mkdir -p $(BUILDDIR)
 
 $(BUILDDIR)/$(BASENAME).ihx: $(BUILDDIR) $(SOURCES) $(A51_SOURCES) $(FX2LIBDIR)/lib/fx2.lib $(DEPS) 
 # can't use default target %.rel because there is no way
