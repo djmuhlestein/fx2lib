@@ -24,6 +24,9 @@
    need defined in your firmware.  fx2.lib contains default routines.  Override 
    them with interrupt handlers you want to handle.
  * added fx2ints.h.  Interrupt numbers/macros for standard fx2 interrupts.
+ * added timer example
+ * Moved examples and firmwware framework to use common lib/fx2.mk Makefile.
+   fx2.mk can be easily adapted for any firmware project.
 
 0.1
  * Initial Release.
