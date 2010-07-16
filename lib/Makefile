@@ -14,6 +14,7 @@
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
+AS8051?=asx8051
 SOURCES = serial.c i2c.c delay.c setupdat.c gpif.c eputils.c $(wildcard interrupts/*.c)
 FX2_OBJS = $(patsubst %.c,%.rel, $(SOURCES)) usbav.rel int4av.rel
 INCLUDES = -I../include
@@ -26,10 +27,10 @@ $(LIBS): $(FX2_OBJS)
 	sdcclib fx2.lib $?
 
 usbav.rel: usbav.a51
-	asx8051 -logs usbav.a51
+	$(AS8051) -logs usbav.a51
 
 int4av.rel: int4av.a51
-	asx8051 -logs int4av.a51
+	$(AS8051) -logs int4av.a51
 
 %.rel: %.c
 	$(SDCC) $(INCLUDES) -c $< -o $@
