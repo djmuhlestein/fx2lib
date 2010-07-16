@@ -134,7 +134,7 @@ void handle_setupdata() {
     
 }
 
-xdata BYTE* ep_addr(BYTE ep) { // bit 8 of ep_num is the direction
+__xdata BYTE* ep_addr(BYTE ep) { // bit 8 of ep_num is the direction
  BYTE ep_num = ep&~0x80; // mask the direction
  switch (ep_num) {
   case 0: return &EP0CS;
@@ -180,7 +180,7 @@ BOOL handle_get_status() {
             break;
         case GS_ENDPOINT:
             {
-                xdata BYTE* pep=ep_addr(SETUPDAT[4]);
+                __xdata BYTE* pep=ep_addr(SETUPDAT[4]);
                 if ( !pep ) return FALSE;
                 // byte 0 bit 0 = stall bit
                 EP0BUF[0] = *pep & bmEPSTALL ? 1 : 0;
@@ -213,7 +213,7 @@ BOOL handle_clear_feature() {
     return FALSE;
    case GF_ENDPOINT:
     if (SETUPDAT[2] == 0) { // ep stall feature
-        xdata BYTE* pep=ep_addr(SETUPDAT[4]);
+        __xdata BYTE* pep=ep_addr(SETUPDAT[4]);
         printf ( "unstall endpoint %02X\n" , SETUPDAT[4] );
         *pep &= ~bmEPSTALL;        
     } else {
@@ -242,7 +242,7 @@ BOOL handle_set_feature() {
     if ( SETUPDAT[2] == 0 ) { // ep stall feature
         // set TRM 2.3.2
         // stall and endpoint
-        xdata BYTE* pep = ep_addr(SETUPDAT[4]);
+        __xdata BYTE* pep = ep_addr(SETUPDAT[4]);
         printf ( "Stall ep %d\n", SETUPDAT[4] );
         if (!pep) {            
             return FALSE;
@@ -270,11 +270,11 @@ BOOL handle_set_feature() {
 /* these are devined in dscr.asm
    and need to be customized then
    linked in by the firmware manually */
-extern code WORD dev_dscr;
-extern code WORD dev_qual_dscr;
-extern code WORD highspd_dscr;
-extern code WORD fullspd_dscr;
-extern code WORD dev_strings;
+extern __code WORD dev_dscr;
+extern __code WORD dev_qual_dscr;
+extern __code WORD highspd_dscr;
+extern __code WORD fullspd_dscr;
+extern __code WORD dev_strings;
 
 WORD pDevConfig = (WORD)&fullspd_dscr;
 WORD pOtherConfig = (WORD)&highspd_dscr;

@@ -40,221 +40,221 @@
 
 #include "fx2types.h"
 
-xdata at 0xE400 volatile BYTE GPIF_WAVE_DATA;
-xdata at 0xE480 volatile BYTE RES_WAVEDATA_END;
+__xdata __at 0xE400 volatile BYTE GPIF_WAVE_DATA;
+__xdata __at 0xE480 volatile BYTE RES_WAVEDATA_END;
 
 // General Configuration
 
-xdata at 0xE600 volatile BYTE CPUCS;  ///< Control & Status
-xdata at 0xE601 volatile BYTE IFCONFIG;  ///< Interface Configuration
-xdata at 0xE602 volatile BYTE PINFLAGSAB;  ///< FIFO FLAGA and FLAGB Assignments
-xdata at 0xE603 volatile BYTE PINFLAGSCD;  ///< FIFO FLAGC and FLAGD Assignments
-xdata at 0xE604 volatile BYTE FIFORESET;  ///< Restore FIFOS to default state
-xdata at 0xE605 volatile BYTE BREAKPT;  ///< Breakpoint
-xdata at 0xE606 volatile BYTE BPADDRH;  ///< Breakpoint Address H
-xdata at 0xE607 volatile BYTE BPADDRL;  ///< Breakpoint Address L
-xdata at 0xE608 volatile BYTE UART230;  ///< 230 Kbaud clock for T0,T1,T2
-xdata at 0xE609 volatile BYTE FIFOPINPOLAR;  ///< FIFO polarities
-xdata at 0xE60A volatile BYTE REVID;  ///< Chip Revision
-xdata at 0xE60B volatile BYTE REVCTL;  ///< Chip Revision Control
+__xdata __at 0xE600 volatile BYTE CPUCS;  ///< Control & Status
+__xdata __at 0xE601 volatile BYTE IFCONFIG;  ///< Interface Configuration
+__xdata __at 0xE602 volatile BYTE PINFLAGSAB;  ///< FIFO FLAGA and FLAGB Assignments
+__xdata __at 0xE603 volatile BYTE PINFLAGSCD;  ///< FIFO FLAGC and FLAGD Assignments
+__xdata __at 0xE604 volatile BYTE FIFORESET;  ///< Restore FIFOS to default state
+__xdata __at 0xE605 volatile BYTE BREAKPT;  ///< Breakpoint
+__xdata __at 0xE606 volatile BYTE BPADDRH;  ///< Breakpoint Address H
+__xdata __at 0xE607 volatile BYTE BPADDRL;  ///< Breakpoint Address L
+__xdata __at 0xE608 volatile BYTE UART230;  ///< 230 Kbaud clock for T0,T1,T2
+__xdata __at 0xE609 volatile BYTE FIFOPINPOLAR;  ///< FIFO polarities
+__xdata __at 0xE60A volatile BYTE REVID;  ///< Chip Revision
+__xdata __at 0xE60B volatile BYTE REVCTL;  ///< Chip Revision Control
 
 // Endpoint Configuration
 
-xdata at 0xE610 volatile BYTE EP1OUTCFG;  ///< Endpoint 1-OUT Configuration
-xdata at 0xE611 volatile BYTE EP1INCFG;  ///< Endpoint 1-IN Configuration
-xdata at 0xE612 volatile BYTE EP2CFG;  ///< Endpoint 2 Configuration
-xdata at 0xE613 volatile BYTE EP4CFG;  ///< Endpoint 4 Configuration
-xdata at 0xE614 volatile BYTE EP6CFG;  ///< Endpoint 6 Configuration
-xdata at 0xE615 volatile BYTE EP8CFG;  ///< Endpoint 8 Configuration
-xdata at 0xE618 volatile BYTE EP2FIFOCFG;  ///< Endpoint 2 FIFO configuration
-xdata at 0xE619 volatile BYTE EP4FIFOCFG;  ///< Endpoint 4 FIFO configuration
-xdata at 0xE61A volatile BYTE EP6FIFOCFG;  ///< Endpoint 6 FIFO configuration
-xdata at 0xE61B volatile BYTE EP8FIFOCFG;  ///< Endpoint 8 FIFO configuration
-xdata at 0xE620 volatile BYTE EP2AUTOINLENH;  ///< Endpoint 2 Packet Length H (IN only)
-xdata at 0xE621 volatile BYTE EP2AUTOINLENL;  ///< Endpoint 2 Packet Length L (IN only)
-xdata at 0xE622 volatile BYTE EP4AUTOINLENH;  ///< Endpoint 4 Packet Length H (IN only)
-xdata at 0xE623 volatile BYTE EP4AUTOINLENL;  ///< Endpoint 4 Packet Length L (IN only)
-xdata at 0xE624 volatile BYTE EP6AUTOINLENH;  ///< Endpoint 6 Packet Length H (IN only)
-xdata at 0xE625 volatile BYTE EP6AUTOINLENL;  ///< Endpoint 6 Packet Length L (IN only)
-xdata at 0xE626 volatile BYTE EP8AUTOINLENH;  ///< Endpoint 8 Packet Length H (IN only)
-xdata at 0xE627 volatile BYTE EP8AUTOINLENL;  ///< Endpoint 8 Packet Length L (IN only)
-xdata at 0xE630 volatile BYTE EP2FIFOPFH;  ///< EP2 Programmable Flag trigger H
-xdata at 0xE631 volatile BYTE EP2FIFOPFL;  ///< EP2 Programmable Flag trigger L
-xdata at 0xE632 volatile BYTE EP4FIFOPFH;  ///< EP4 Programmable Flag trigger H
-xdata at 0xE633 volatile BYTE EP4FIFOPFL;  ///< EP4 Programmable Flag trigger L
-xdata at 0xE634 volatile BYTE EP6FIFOPFH;  ///< EP6 Programmable Flag trigger H
-xdata at 0xE635 volatile BYTE EP6FIFOPFL;  ///< EP6 Programmable Flag trigger L
-xdata at 0xE636 volatile BYTE EP8FIFOPFH;  ///< EP8 Programmable Flag trigger H
-xdata at 0xE637 volatile BYTE EP8FIFOPFL;  ///< EP8 Programmable Flag trigger L
-xdata at 0xE640 volatile BYTE EP2ISOINPKTS;  ///< EP2 (if ISO) IN Packets per frame (1-3)
-xdata at 0xE641 volatile BYTE EP4ISOINPKTS;  ///< EP4 (if ISO) IN Packets per frame (1-3)
-xdata at 0xE642 volatile BYTE EP6ISOINPKTS;  ///< EP6 (if ISO) IN Packets per frame (1-3)
-xdata at 0xE643 volatile BYTE EP8ISOINPKTS;  ///< EP8 (if ISO) IN Packets per frame (1-3)
-xdata at 0xE648 volatile BYTE INPKTEND;  ///< Force IN Packet End
-xdata at 0xE649 volatile BYTE OUTPKTEND;  ///< Force OUT Packet End
+__xdata __at 0xE610 volatile BYTE EP1OUTCFG;  ///< Endpoint 1-OUT Configuration
+__xdata __at 0xE611 volatile BYTE EP1INCFG;  ///< Endpoint 1-IN Configuration
+__xdata __at 0xE612 volatile BYTE EP2CFG;  ///< Endpoint 2 Configuration
+__xdata __at 0xE613 volatile BYTE EP4CFG;  ///< Endpoint 4 Configuration
+__xdata __at 0xE614 volatile BYTE EP6CFG;  ///< Endpoint 6 Configuration
+__xdata __at 0xE615 volatile BYTE EP8CFG;  ///< Endpoint 8 Configuration
+__xdata __at 0xE618 volatile BYTE EP2FIFOCFG;  ///< Endpoint 2 FIFO configuration
+__xdata __at 0xE619 volatile BYTE EP4FIFOCFG;  ///< Endpoint 4 FIFO configuration
+__xdata __at 0xE61A volatile BYTE EP6FIFOCFG;  ///< Endpoint 6 FIFO configuration
+__xdata __at 0xE61B volatile BYTE EP8FIFOCFG;  ///< Endpoint 8 FIFO configuration
+__xdata __at 0xE620 volatile BYTE EP2AUTOINLENH;  ///< Endpoint 2 Packet Length H (IN only)
+__xdata __at 0xE621 volatile BYTE EP2AUTOINLENL;  ///< Endpoint 2 Packet Length L (IN only)
+__xdata __at 0xE622 volatile BYTE EP4AUTOINLENH;  ///< Endpoint 4 Packet Length H (IN only)
+__xdata __at 0xE623 volatile BYTE EP4AUTOINLENL;  ///< Endpoint 4 Packet Length L (IN only)
+__xdata __at 0xE624 volatile BYTE EP6AUTOINLENH;  ///< Endpoint 6 Packet Length H (IN only)
+__xdata __at 0xE625 volatile BYTE EP6AUTOINLENL;  ///< Endpoint 6 Packet Length L (IN only)
+__xdata __at 0xE626 volatile BYTE EP8AUTOINLENH;  ///< Endpoint 8 Packet Length H (IN only)
+__xdata __at 0xE627 volatile BYTE EP8AUTOINLENL;  ///< Endpoint 8 Packet Length L (IN only)
+__xdata __at 0xE630 volatile BYTE EP2FIFOPFH;  ///< EP2 Programmable Flag trigger H
+__xdata __at 0xE631 volatile BYTE EP2FIFOPFL;  ///< EP2 Programmable Flag trigger L
+__xdata __at 0xE632 volatile BYTE EP4FIFOPFH;  ///< EP4 Programmable Flag trigger H
+__xdata __at 0xE633 volatile BYTE EP4FIFOPFL;  ///< EP4 Programmable Flag trigger L
+__xdata __at 0xE634 volatile BYTE EP6FIFOPFH;  ///< EP6 Programmable Flag trigger H
+__xdata __at 0xE635 volatile BYTE EP6FIFOPFL;  ///< EP6 Programmable Flag trigger L
+__xdata __at 0xE636 volatile BYTE EP8FIFOPFH;  ///< EP8 Programmable Flag trigger H
+__xdata __at 0xE637 volatile BYTE EP8FIFOPFL;  ///< EP8 Programmable Flag trigger L
+__xdata __at 0xE640 volatile BYTE EP2ISOINPKTS;  ///< EP2 (if ISO) IN Packets per frame (1-3)
+__xdata __at 0xE641 volatile BYTE EP4ISOINPKTS;  ///< EP4 (if ISO) IN Packets per frame (1-3)
+__xdata __at 0xE642 volatile BYTE EP6ISOINPKTS;  ///< EP6 (if ISO) IN Packets per frame (1-3)
+__xdata __at 0xE643 volatile BYTE EP8ISOINPKTS;  ///< EP8 (if ISO) IN Packets per frame (1-3)
+__xdata __at 0xE648 volatile BYTE INPKTEND;  ///< Force IN Packet End
+__xdata __at 0xE649 volatile BYTE OUTPKTEND;  ///< Force OUT Packet End
 
 // Interrupts
 
-xdata at 0xE650 volatile BYTE EP2FIFOIE;  ///< Endpoint 2 Flag Interrupt Enable
-xdata at 0xE651 volatile BYTE EP2FIFOIRQ;  ///< Endpoint 2 Flag Interrupt Request
-xdata at 0xE652 volatile BYTE EP4FIFOIE;  ///< Endpoint 4 Flag Interrupt Enable
-xdata at 0xE653 volatile BYTE EP4FIFOIRQ;  ///< Endpoint 4 Flag Interrupt Request
-xdata at 0xE654 volatile BYTE EP6FIFOIE;  ///< Endpoint 6 Flag Interrupt Enable
-xdata at 0xE655 volatile BYTE EP6FIFOIRQ;  ///< Endpoint 6 Flag Interrupt Request
-xdata at 0xE656 volatile BYTE EP8FIFOIE;  ///< Endpoint 8 Flag Interrupt Enable
-xdata at 0xE657 volatile BYTE EP8FIFOIRQ;  ///< Endpoint 8 Flag Interrupt Request
-xdata at 0xE658 volatile BYTE IBNIE;  ///< IN-BULK-NAK Interrupt Enable
-xdata at 0xE659 volatile BYTE IBNIRQ;  ///< IN-BULK-NAK interrupt Request
-xdata at 0xE65A volatile BYTE NAKIE;  ///< Endpoint Ping NAK interrupt Enable
-xdata at 0xE65B volatile BYTE NAKIRQ;  ///< Endpoint Ping NAK interrupt Request
-xdata at 0xE65C volatile BYTE USBIE;  ///< USB Int Enables
-xdata at 0xE65D volatile BYTE USBIRQ;  ///< USB Interrupt Requests
-xdata at 0xE65E volatile BYTE EPIE;  ///< Endpoint Interrupt Enables
-xdata at 0xE65F volatile BYTE EPIRQ;  ///< Endpoint Interrupt Requests
-xdata at 0xE660 volatile BYTE GPIFIE;  ///< GPIF Interrupt Enable
-xdata at 0xE661 volatile BYTE GPIFIRQ;  ///< GPIF Interrupt Request
-xdata at 0xE662 volatile BYTE USBERRIE;  ///< USB Error Interrupt Enables
-xdata at 0xE663 volatile BYTE USBERRIRQ;  ///< USB Error Interrupt Requests
-xdata at 0xE664 volatile BYTE ERRCNTLIM;  ///< USB Error counter and limit
-xdata at 0xE665 volatile BYTE CLRERRCNT;  ///< Clear Error Counter EC[3..0]
-xdata at 0xE666 volatile BYTE INT2IVEC;  ///< Interupt 2 (USB) Autovector
-xdata at 0xE667 volatile BYTE INT4IVEC;  ///< Interupt 4 (FIFOS & GPIF) Autovector
-xdata at 0xE668 volatile BYTE INTSETUP;  ///< Interrupt 2&4 Setup
+__xdata __at 0xE650 volatile BYTE EP2FIFOIE;  ///< Endpoint 2 Flag Interrupt Enable
+__xdata __at 0xE651 volatile BYTE EP2FIFOIRQ;  ///< Endpoint 2 Flag Interrupt Request
+__xdata __at 0xE652 volatile BYTE EP4FIFOIE;  ///< Endpoint 4 Flag Interrupt Enable
+__xdata __at 0xE653 volatile BYTE EP4FIFOIRQ;  ///< Endpoint 4 Flag Interrupt Request
+__xdata __at 0xE654 volatile BYTE EP6FIFOIE;  ///< Endpoint 6 Flag Interrupt Enable
+__xdata __at 0xE655 volatile BYTE EP6FIFOIRQ;  ///< Endpoint 6 Flag Interrupt Request
+__xdata __at 0xE656 volatile BYTE EP8FIFOIE;  ///< Endpoint 8 Flag Interrupt Enable
+__xdata __at 0xE657 volatile BYTE EP8FIFOIRQ;  ///< Endpoint 8 Flag Interrupt Request
+__xdata __at 0xE658 volatile BYTE IBNIE;  ///< IN-BULK-NAK Interrupt Enable
+__xdata __at 0xE659 volatile BYTE IBNIRQ;  ///< IN-BULK-NAK interrupt Request
+__xdata __at 0xE65A volatile BYTE NAKIE;  ///< Endpoint Ping NAK interrupt Enable
+__xdata __at 0xE65B volatile BYTE NAKIRQ;  ///< Endpoint Ping NAK interrupt Request
+__xdata __at 0xE65C volatile BYTE USBIE;  ///< USB Int Enables
+__xdata __at 0xE65D volatile BYTE USBIRQ;  ///< USB Interrupt Requests
+__xdata __at 0xE65E volatile BYTE EPIE;  ///< Endpoint Interrupt Enables
+__xdata __at 0xE65F volatile BYTE EPIRQ;  ///< Endpoint Interrupt Requests
+__xdata __at 0xE660 volatile BYTE GPIFIE;  ///< GPIF Interrupt Enable
+__xdata __at 0xE661 volatile BYTE GPIFIRQ;  ///< GPIF Interrupt Request
+__xdata __at 0xE662 volatile BYTE USBERRIE;  ///< USB Error Interrupt Enables
+__xdata __at 0xE663 volatile BYTE USBERRIRQ;  ///< USB Error Interrupt Requests
+__xdata __at 0xE664 volatile BYTE ERRCNTLIM;  ///< USB Error counter and limit
+__xdata __at 0xE665 volatile BYTE CLRERRCNT;  ///< Clear Error Counter EC[3..0]
+__xdata __at 0xE666 volatile BYTE INT2IVEC;  ///< Interupt 2 (USB) Autovector
+__xdata __at 0xE667 volatile BYTE INT4IVEC;  ///< Interupt 4 (FIFOS & GPIF) Autovector
+__xdata __at 0xE668 volatile BYTE INTSETUP;  ///< Interrupt 2&4 Setup
 
 // Input/Output
 
-xdata at 0xE670 volatile BYTE PORTACFG;  ///< I/O PORTA Alternate Configuration
-xdata at 0xE671 volatile BYTE PORTCCFG;  ///< I/O PORTC Alternate Configuration
-xdata at 0xE672 volatile BYTE PORTECFG;  ///< I/O PORTE Alternate Configuration
-xdata at 0xE678 volatile BYTE I2CS;  ///< Control & Status
-xdata at 0xE679 volatile BYTE I2DAT;  ///< Data
-xdata at 0xE67A volatile BYTE I2CTL;  ///< I2C Control
-xdata at 0xE67B volatile BYTE XAUTODAT1;  ///< Autoptr1 MOVX access
-xdata at 0xE67C volatile BYTE XAUTODAT2;  ///< Autoptr2 MOVX access
+__xdata __at 0xE670 volatile BYTE PORTACFG;  ///< I/O PORTA Alternate Configuration
+__xdata __at 0xE671 volatile BYTE PORTCCFG;  ///< I/O PORTC Alternate Configuration
+__xdata __at 0xE672 volatile BYTE PORTECFG;  ///< I/O PORTE Alternate Configuration
+__xdata __at 0xE678 volatile BYTE I2CS;  ///< Control & Status
+__xdata __at 0xE679 volatile BYTE I2DAT;  ///< Data
+__xdata __at 0xE67A volatile BYTE I2CTL;  ///< I2C Control
+__xdata __at 0xE67B volatile BYTE XAUTODAT1;  ///< Autoptr1 MOVX access
+__xdata __at 0xE67C volatile BYTE XAUTODAT2;  ///< Autoptr2 MOVX access
 
 #define EXTAUTODAT1 XAUTODAT1
 #define EXTAUTODAT2 XAUTODAT2
 
 // USB Control
 
-xdata at 0xE680 volatile BYTE USBCS;  ///< USB Control & Status
-xdata at 0xE681 volatile BYTE SUSPEND;  ///< Put chip into suspend
-xdata at 0xE682 volatile BYTE WAKEUPCS;  ///< Wakeup source and polarity
-xdata at 0xE683 volatile BYTE TOGCTL;  ///< Toggle Control
-xdata at 0xE684 volatile BYTE USBFRAMEH;  ///< USB Frame count H
-xdata at 0xE685 volatile BYTE USBFRAMEL;  ///< USB Frame count L
-xdata at 0xE686 volatile BYTE MICROFRAME;  ///< Microframe count, 0-7
-xdata at 0xE687 volatile BYTE FNADDR;  ///< USB Function address
+__xdata __at 0xE680 volatile BYTE USBCS;  ///< USB Control & Status
+__xdata __at 0xE681 volatile BYTE SUSPEND;  ///< Put chip into suspend
+__xdata __at 0xE682 volatile BYTE WAKEUPCS;  ///< Wakeup source and polarity
+__xdata __at 0xE683 volatile BYTE TOGCTL;  ///< Toggle Control
+__xdata __at 0xE684 volatile BYTE USBFRAMEH;  ///< USB Frame count H
+__xdata __at 0xE685 volatile BYTE USBFRAMEL;  ///< USB Frame count L
+__xdata __at 0xE686 volatile BYTE MICROFRAME;  ///< Microframe count, 0-7
+__xdata __at 0xE687 volatile BYTE FNADDR;  ///< USB Function address
 
 // Endpoints
 
-xdata at 0xE68A volatile BYTE EP0BCH;  ///< Endpoint 0 Byte Count H
-xdata at 0xE68B volatile BYTE EP0BCL;  ///< Endpoint 0 Byte Count L
-xdata at 0xE68D volatile BYTE EP1OUTBC;  ///< Endpoint 1 OUT Byte Count
-xdata at 0xE68F volatile BYTE EP1INBC;  ///< Endpoint 1 IN Byte Count
-xdata at 0xE690 volatile BYTE EP2BCH;  ///< Endpoint 2 Byte Count H
-xdata at 0xE691 volatile BYTE EP2BCL;  ///< Endpoint 2 Byte Count L
-xdata at 0xE694 volatile BYTE EP4BCH;  ///< Endpoint 4 Byte Count H
-xdata at 0xE695 volatile BYTE EP4BCL;  ///< Endpoint 4 Byte Count L
-xdata at 0xE698 volatile BYTE EP6BCH;  ///< Endpoint 6 Byte Count H
-xdata at 0xE699 volatile BYTE EP6BCL;  ///< Endpoint 6 Byte Count L
-xdata at 0xE69C volatile BYTE EP8BCH;  ///< Endpoint 8 Byte Count H
-xdata at 0xE69D volatile BYTE EP8BCL;  ///< Endpoint 8 Byte Count L
-xdata at 0xE6A0 volatile BYTE EP0CS;  ///< Endpoint  Control and Status
-xdata at 0xE6A1 volatile BYTE EP1OUTCS;  ///< Endpoint 1 OUT Control and Status
-xdata at 0xE6A2 volatile BYTE EP1INCS;  ///< Endpoint 1 IN Control and Status
-xdata at 0xE6A3 volatile BYTE EP2CS;  ///< Endpoint 2 Control and Status
-xdata at 0xE6A4 volatile BYTE EP4CS;  ///< Endpoint 4 Control and Status
-xdata at 0xE6A5 volatile BYTE EP6CS;  ///< Endpoint 6 Control and Status
-xdata at 0xE6A6 volatile BYTE EP8CS;  ///< Endpoint 8 Control and Status
-xdata at 0xE6A7 volatile BYTE EP2FIFOFLGS;  ///< Endpoint 2 Flags
-xdata at 0xE6A8 volatile BYTE EP4FIFOFLGS;  ///< Endpoint 4 Flags
-xdata at 0xE6A9 volatile BYTE EP6FIFOFLGS;  ///< Endpoint 6 Flags
-xdata at 0xE6AA volatile BYTE EP8FIFOFLGS;  ///< Endpoint 8 Flags
-xdata at 0xE6AB volatile BYTE EP2FIFOBCH;  ///< EP2 FIFO total byte count H
-xdata at 0xE6AC volatile BYTE EP2FIFOBCL;  ///< EP2 FIFO total byte count L
-xdata at 0xE6AD volatile BYTE EP4FIFOBCH;  ///< EP4 FIFO total byte count H
-xdata at 0xE6AE volatile BYTE EP4FIFOBCL;  ///< EP4 FIFO total byte count L
-xdata at 0xE6AF volatile BYTE EP6FIFOBCH;  ///< EP6 FIFO total byte count H
-xdata at 0xE6B0 volatile BYTE EP6FIFOBCL;  ///< EP6 FIFO total byte count L
-xdata at 0xE6B1 volatile BYTE EP8FIFOBCH;  ///< EP8 FIFO total byte count H
-xdata at 0xE6B2 volatile BYTE EP8FIFOBCL;  ///< EP8 FIFO total byte count L
-xdata at 0xE6B3 volatile BYTE SUDPTRH;  ///< Setup Data Pointer high address byte
-xdata at 0xE6B4 volatile BYTE SUDPTRL;  ///< Setup Data Pointer low address byte
-xdata at 0xE6B5 volatile BYTE SUDPTRCTL;  ///< Setup Data Pointer Auto Mode
-xdata at 0xE6B8 volatile BYTE SETUPDAT[8];  ///< 8 bytes of SETUP data
+__xdata __at 0xE68A volatile BYTE EP0BCH;  ///< Endpoint 0 Byte Count H
+__xdata __at 0xE68B volatile BYTE EP0BCL;  ///< Endpoint 0 Byte Count L
+__xdata __at 0xE68D volatile BYTE EP1OUTBC;  ///< Endpoint 1 OUT Byte Count
+__xdata __at 0xE68F volatile BYTE EP1INBC;  ///< Endpoint 1 IN Byte Count
+__xdata __at 0xE690 volatile BYTE EP2BCH;  ///< Endpoint 2 Byte Count H
+__xdata __at 0xE691 volatile BYTE EP2BCL;  ///< Endpoint 2 Byte Count L
+__xdata __at 0xE694 volatile BYTE EP4BCH;  ///< Endpoint 4 Byte Count H
+__xdata __at 0xE695 volatile BYTE EP4BCL;  ///< Endpoint 4 Byte Count L
+__xdata __at 0xE698 volatile BYTE EP6BCH;  ///< Endpoint 6 Byte Count H
+__xdata __at 0xE699 volatile BYTE EP6BCL;  ///< Endpoint 6 Byte Count L
+__xdata __at 0xE69C volatile BYTE EP8BCH;  ///< Endpoint 8 Byte Count H
+__xdata __at 0xE69D volatile BYTE EP8BCL;  ///< Endpoint 8 Byte Count L
+__xdata __at 0xE6A0 volatile BYTE EP0CS;  ///< Endpoint  Control and Status
+__xdata __at 0xE6A1 volatile BYTE EP1OUTCS;  ///< Endpoint 1 OUT Control and Status
+__xdata __at 0xE6A2 volatile BYTE EP1INCS;  ///< Endpoint 1 IN Control and Status
+__xdata __at 0xE6A3 volatile BYTE EP2CS;  ///< Endpoint 2 Control and Status
+__xdata __at 0xE6A4 volatile BYTE EP4CS;  ///< Endpoint 4 Control and Status
+__xdata __at 0xE6A5 volatile BYTE EP6CS;  ///< Endpoint 6 Control and Status
+__xdata __at 0xE6A6 volatile BYTE EP8CS;  ///< Endpoint 8 Control and Status
+__xdata __at 0xE6A7 volatile BYTE EP2FIFOFLGS;  ///< Endpoint 2 Flags
+__xdata __at 0xE6A8 volatile BYTE EP4FIFOFLGS;  ///< Endpoint 4 Flags
+__xdata __at 0xE6A9 volatile BYTE EP6FIFOFLGS;  ///< Endpoint 6 Flags
+__xdata __at 0xE6AA volatile BYTE EP8FIFOFLGS;  ///< Endpoint 8 Flags
+__xdata __at 0xE6AB volatile BYTE EP2FIFOBCH;  ///< EP2 FIFO total byte count H
+__xdata __at 0xE6AC volatile BYTE EP2FIFOBCL;  ///< EP2 FIFO total byte count L
+__xdata __at 0xE6AD volatile BYTE EP4FIFOBCH;  ///< EP4 FIFO total byte count H
+__xdata __at 0xE6AE volatile BYTE EP4FIFOBCL;  ///< EP4 FIFO total byte count L
+__xdata __at 0xE6AF volatile BYTE EP6FIFOBCH;  ///< EP6 FIFO total byte count H
+__xdata __at 0xE6B0 volatile BYTE EP6FIFOBCL;  ///< EP6 FIFO total byte count L
+__xdata __at 0xE6B1 volatile BYTE EP8FIFOBCH;  ///< EP8 FIFO total byte count H
+__xdata __at 0xE6B2 volatile BYTE EP8FIFOBCL;  ///< EP8 FIFO total byte count L
+__xdata __at 0xE6B3 volatile BYTE SUDPTRH;  ///< Setup Data Pointer high address byte
+__xdata __at 0xE6B4 volatile BYTE SUDPTRL;  ///< Setup Data Pointer low address byte
+__xdata __at 0xE6B5 volatile BYTE SUDPTRCTL;  ///< Setup Data Pointer Auto Mode
+__xdata __at 0xE6B8 volatile BYTE SETUPDAT[8];  ///< 8 bytes of SETUP data
 
 // GPIF
 
-xdata at 0xE6C0 volatile BYTE GPIFWFSELECT;  ///< Waveform Selector
-xdata at 0xE6C1 volatile BYTE GPIFIDLECS;  ///< GPIF Done, GPIF IDLE drive mode
-xdata at 0xE6C2 volatile BYTE GPIFIDLECTL;  ///< Inactive Bus, CTL states
-xdata at 0xE6C3 volatile BYTE GPIFCTLCFG;  ///< CTL OUT pin drive
-xdata at 0xE6C4 volatile BYTE GPIFADRH;  ///< GPIF Address H
-xdata at 0xE6C5 volatile BYTE GPIFADRL;  ///< GPIF Address L
+__xdata __at 0xE6C0 volatile BYTE GPIFWFSELECT;  ///< Waveform Selector
+__xdata __at 0xE6C1 volatile BYTE GPIFIDLECS;  ///< GPIF Done, GPIF IDLE drive mode
+__xdata __at 0xE6C2 volatile BYTE GPIFIDLECTL;  ///< Inactive Bus, CTL states
+__xdata __at 0xE6C3 volatile BYTE GPIFCTLCFG;  ///< CTL OUT pin drive
+__xdata __at 0xE6C4 volatile BYTE GPIFADRH;  ///< GPIF Address H
+__xdata __at 0xE6C5 volatile BYTE GPIFADRL;  ///< GPIF Address L
 
-xdata at 0xE6CE volatile BYTE GPIFTCB3;  ///< GPIF Transaction Count Byte 3
-xdata at 0xE6CF volatile BYTE GPIFTCB2;  ///< GPIF Transaction Count Byte 2
-xdata at 0xE6D0 volatile BYTE GPIFTCB1;  ///< GPIF Transaction Count Byte 1
-xdata at 0xE6D1 volatile BYTE GPIFTCB0;  ///< GPIF Transaction Count Byte 0
+__xdata __at 0xE6CE volatile BYTE GPIFTCB3;  ///< GPIF Transaction Count Byte 3
+__xdata __at 0xE6CF volatile BYTE GPIFTCB2;  ///< GPIF Transaction Count Byte 2
+__xdata __at 0xE6D0 volatile BYTE GPIFTCB1;  ///< GPIF Transaction Count Byte 1
+__xdata __at 0xE6D1 volatile BYTE GPIFTCB0;  ///< GPIF Transaction Count Byte 0
 
-xdata at 0xE6D2 volatile BYTE EP2GPIFFLGSEL;  ///< EP2 GPIF Flag select
-xdata at 0xE6D3 volatile BYTE EP2GPIFPFSTOP;  ///< Stop GPIF EP2 transaction on prog. flag
-xdata at 0xE6D4 volatile BYTE EP2GPIFTRIG;  ///< EP2 FIFO Trigger
-xdata at 0xE6DA volatile BYTE EP4GPIFFLGSEL;  ///< EP4 GPIF Flag select
-xdata at 0xE6DB volatile BYTE EP4GPIFPFSTOP;  ///< Stop GPIF EP4 transaction on prog. flag
-xdata at 0xE6DC volatile BYTE EP4GPIFTRIG;  ///< EP4 FIFO Trigger
-xdata at 0xE6E2 volatile BYTE EP6GPIFFLGSEL;  ///< EP6 GPIF Flag select
-xdata at 0xE6E3 volatile BYTE EP6GPIFPFSTOP;  ///< Stop GPIF EP6 transaction on prog. flag
-xdata at 0xE6E4 volatile BYTE EP6GPIFTRIG;  ///< EP6 FIFO Trigger
-xdata at 0xE6EA volatile BYTE EP8GPIFFLGSEL;  ///< EP8 GPIF Flag select
-xdata at 0xE6EB volatile BYTE EP8GPIFPFSTOP;  ///< Stop GPIF EP8 transaction on prog. flag
-xdata at 0xE6EC volatile BYTE EP8GPIFTRIG;  ///< EP8 FIFO Trigger
-xdata at 0xE6F0 volatile BYTE XGPIFSGLDATH;  ///< GPIF Data H (16-bit mode only)
-xdata at 0xE6F1 volatile BYTE XGPIFSGLDATLX;  ///< Read/Write GPIF Data L & trigger transac
-xdata at 0xE6F2 volatile BYTE XGPIFSGLDATLNOX;  ///< Read GPIF Data L, no transac trigger
-xdata at 0xE6F3 volatile BYTE GPIFREADYCFG;  ///< Internal RDY,Sync/Async, RDY5CFG
-xdata at 0xE6F4 volatile BYTE GPIFREADYSTAT;  ///< RDY pin states
-xdata at 0xE6F5 volatile BYTE GPIFABORT;  ///< Abort GPIF cycles
+__xdata __at 0xE6D2 volatile BYTE EP2GPIFFLGSEL;  ///< EP2 GPIF Flag select
+__xdata __at 0xE6D3 volatile BYTE EP2GPIFPFSTOP;  ///< Stop GPIF EP2 transaction on prog. flag
+__xdata __at 0xE6D4 volatile BYTE EP2GPIFTRIG;  ///< EP2 FIFO Trigger
+__xdata __at 0xE6DA volatile BYTE EP4GPIFFLGSEL;  ///< EP4 GPIF Flag select
+__xdata __at 0xE6DB volatile BYTE EP4GPIFPFSTOP;  ///< Stop GPIF EP4 transaction on prog. flag
+__xdata __at 0xE6DC volatile BYTE EP4GPIFTRIG;  ///< EP4 FIFO Trigger
+__xdata __at 0xE6E2 volatile BYTE EP6GPIFFLGSEL;  ///< EP6 GPIF Flag select
+__xdata __at 0xE6E3 volatile BYTE EP6GPIFPFSTOP;  ///< Stop GPIF EP6 transaction on prog. flag
+__xdata __at 0xE6E4 volatile BYTE EP6GPIFTRIG;  ///< EP6 FIFO Trigger
+__xdata __at 0xE6EA volatile BYTE EP8GPIFFLGSEL;  ///< EP8 GPIF Flag select
+__xdata __at 0xE6EB volatile BYTE EP8GPIFPFSTOP;  ///< Stop GPIF EP8 transaction on prog. flag
+__xdata __at 0xE6EC volatile BYTE EP8GPIFTRIG;  ///< EP8 FIFO Trigger
+__xdata __at 0xE6F0 volatile BYTE XGPIFSGLDATH;  ///< GPIF Data H (16-bit mode only)
+__xdata __at 0xE6F1 volatile BYTE XGPIFSGLDATLX;  ///< Read/Write GPIF Data L & trigger transac
+__xdata __at 0xE6F2 volatile BYTE XGPIFSGLDATLNOX;  ///< Read GPIF Data L, no transac trigger
+__xdata __at 0xE6F3 volatile BYTE GPIFREADYCFG;  ///< Internal RDY,Sync/Async, RDY5CFG
+__xdata __at 0xE6F4 volatile BYTE GPIFREADYSTAT;  ///< RDY pin states
+__xdata __at 0xE6F5 volatile BYTE GPIFABORT;  ///< Abort GPIF cycles
 
 // UDMA
 
-xdata at 0xE6C6 volatile BYTE FLOWSTATE; ///<Defines GPIF flow state
-xdata at 0xE6C7 volatile BYTE FLOWLOGIC; ///<Defines flow/hold decision criteria
-xdata at 0xE6C8 volatile BYTE FLOWEQ0CTL; ///<CTL states during active flow state
-xdata at 0xE6C9 volatile BYTE FLOWEQ1CTL; ///<CTL states during hold flow state
-xdata at 0xE6CA volatile BYTE FLOWHOLDOFF;
-xdata at 0xE6CB volatile BYTE FLOWSTB; ///<CTL/RDY Signal to use as master data strobe 
-xdata at 0xE6CC volatile BYTE FLOWSTBEDGE; ///<Defines active master strobe edge
-xdata at 0xE6CD volatile BYTE FLOWSTBHPERIOD; ///<Half Period of output master strobe
-xdata at 0xE60C volatile BYTE GPIFHOLDAMOUNT; ///<Data delay shift 
-xdata at 0xE67D volatile BYTE UDMACRCH; ///<CRC Upper byte
-xdata at 0xE67E volatile BYTE UDMACRCL; ///<CRC Lower byte
-xdata at 0xE67F volatile BYTE UDMACRCQUAL; ///<UDMA In only, host terminated use only
+__xdata __at 0xE6C6 volatile BYTE FLOWSTATE; ///<Defines GPIF flow state
+__xdata __at 0xE6C7 volatile BYTE FLOWLOGIC; ///<Defines flow/hold decision criteria
+__xdata __at 0xE6C8 volatile BYTE FLOWEQ0CTL; ///<CTL states during active flow state
+__xdata __at 0xE6C9 volatile BYTE FLOWEQ1CTL; ///<CTL states during hold flow state
+__xdata __at 0xE6CA volatile BYTE FLOWHOLDOFF;
+__xdata __at 0xE6CB volatile BYTE FLOWSTB; ///<CTL/RDY Signal to use as master data strobe 
+__xdata __at 0xE6CC volatile BYTE FLOWSTBEDGE; ///<Defines active master strobe edge
+__xdata __at 0xE6CD volatile BYTE FLOWSTBHPERIOD; ///<Half Period of output master strobe
+__xdata __at 0xE60C volatile BYTE GPIFHOLDAMOUNT; ///<Data delay shift 
+__xdata __at 0xE67D volatile BYTE UDMACRCH; ///<CRC Upper byte
+__xdata __at 0xE67E volatile BYTE UDMACRCL; ///<CRC Lower byte
+__xdata __at 0xE67F volatile BYTE UDMACRCQUAL; ///<UDMA In only, host terminated use only
 
 // Endpoint Buffers
 
-xdata at 0xE740 volatile BYTE EP0BUF[64];  ///< EP0 IN-OUT buffer
-xdata at 0xE780 volatile BYTE EP1OUTBUF[64];  ///< EP1-OUT buffer
-xdata at 0xE7C0 volatile BYTE EP1INBUF[64];  ///< EP1-IN buffer
-xdata at 0xF000 volatile BYTE EP2FIFOBUF[1024];  ///< 512/1024-byte EP2 buffer (IN or OUT)
-xdata at 0xF400 volatile BYTE EP4FIFOBUF[1024];  ///< 512 byte EP4 buffer (IN or OUT)
-xdata at 0xF800 volatile BYTE EP6FIFOBUF[1024];  ///< 512/1024-byte EP6 buffer (IN or OUT)
-xdata at 0xFC00 volatile BYTE EP8FIFOBUF[1024];  ///< 512 byte EP8 buffer (IN or OUT)
+__xdata __at 0xE740 volatile BYTE EP0BUF[64];  ///< EP0 IN-OUT buffer
+__xdata __at 0xE780 volatile BYTE EP1OUTBUF[64];  ///< EP1-OUT buffer
+__xdata __at 0xE7C0 volatile BYTE EP1INBUF[64];  ///< EP1-IN buffer
+__xdata __at 0xF000 volatile BYTE EP2FIFOBUF[1024];  ///< 512/1024-byte EP2 buffer (IN or OUT)
+__xdata __at 0xF400 volatile BYTE EP4FIFOBUF[1024];  ///< 512 byte EP4 buffer (IN or OUT)
+__xdata __at 0xF800 volatile BYTE EP6FIFOBUF[1024];  ///< 512/1024-byte EP6 buffer (IN or OUT)
+__xdata __at 0xFC00 volatile BYTE EP8FIFOBUF[1024];  ///< 512 byte EP8 buffer (IN or OUT)
 
 // Error Correction Code (ECC) Registers (FX2LP/FX1 only)
 
-xdata at 0xE628 volatile BYTE ECCCFG;  ///< ECC Configuration
-xdata at 0xE629 volatile BYTE ECCRESET;  ///< ECC Reset
-xdata at 0xE62A volatile BYTE ECC1B0;  ///< ECC1 Byte 0
-xdata at 0xE62B volatile BYTE ECC1B1;  ///< ECC1 Byte 1
-xdata at 0xE62C volatile BYTE ECC1B2;  ///< ECC1 Byte 2
-xdata at 0xE62D volatile BYTE ECC2B0;  ///< ECC2 Byte 0
-xdata at 0xE62E volatile BYTE ECC2B1;  ///< ECC2 Byte 1
-xdata at 0xE62F volatile BYTE ECC2B2;  ///< ECC2 Byte 2
+__xdata __at 0xE628 volatile BYTE ECCCFG;  ///< ECC Configuration
+__xdata __at 0xE629 volatile BYTE ECCRESET;  ///< ECC Reset
+__xdata __at 0xE62A volatile BYTE ECC1B0;  ///< ECC1 Byte 0
+__xdata __at 0xE62B volatile BYTE ECC1B1;  ///< ECC1 Byte 1
+__xdata __at 0xE62C volatile BYTE ECC1B2;  ///< ECC1 Byte 2
+__xdata __at 0xE62D volatile BYTE ECC2B0;  ///< ECC2 Byte 0
+__xdata __at 0xE62E volatile BYTE ECC2B1;  ///< ECC2 Byte 1
+__xdata __at 0xE62F volatile BYTE ECC2B2;  ///< ECC2 Byte 2
 
 // Feature Registers  (FX2LP/FX1 only)
-xdata at 0xE50D volatile BYTE GPCR2;  ///< Chip Features
+__xdata __at 0xE50D volatile BYTE GPCR2;  ///< Chip Features
 
 /**
  * SFRs below
@@ -265,189 +265,189 @@ xdata at 0xE50D volatile BYTE GPCR2;  ///< Chip Features
  *  All others have to move a byte to the SRF address
  **/
 
-sfr at 0x80 IOA;
+__sfr __at 0x80 IOA;
          /*  IOA  */
-         sbit at 0x80 + 0 PA0;
-         sbit at 0x80 + 1 PA1;
-         sbit at 0x80 + 2 PA2;
-         sbit at 0x80 + 3 PA3;
-         sbit at 0x80 + 4 PA4;
-         sbit at 0x80 + 5 PA5;
-         sbit at 0x80 + 6 PA6;
-         sbit at 0x80 + 7 PA7;
-sfr at 0x81 SP;
-sfr at 0x82 DPL;
-sfr at 0x83 DPH;
-sfr at 0x84 DPL1;
-sfr at 0x85 DPH1;
-sfr at 0x86 DPS;
-sfr at 0x87 PCON;
-sfr at 0x88 TCON;
+         __sbit __at 0x80 + 0 PA0;
+         __sbit __at 0x80 + 1 PA1;
+         __sbit __at 0x80 + 2 PA2;
+         __sbit __at 0x80 + 3 PA3;
+         __sbit __at 0x80 + 4 PA4;
+         __sbit __at 0x80 + 5 PA5;
+         __sbit __at 0x80 + 6 PA6;
+         __sbit __at 0x80 + 7 PA7;
+__sfr __at 0x81 SP;
+__sfr __at 0x82 DPL;
+__sfr __at 0x83 DPH;
+__sfr __at 0x84 DPL1;
+__sfr __at 0x85 DPH1;
+__sfr __at 0x86 DPS;
+__sfr __at 0x87 PCON;
+__sfr __at 0x88 TCON;
          /*  TCON  */
-         sbit at 0x88+0 IT0;
-         sbit at 0x88+1 IE0;
-         sbit at 0x88+2 IT1;
-         sbit at 0x88+3 IE1;
-         sbit at 0x88+4 TR0;
-         sbit at 0x88+5 TF0;
-         sbit at 0x88+6 TR1;
-         sbit at 0x88+7 TF1;
-sfr at 0x89 TMOD;
-sfr at 0x8A TL0;
-sfr at 0x8B TL1;
-sfr at 0x8C TH0;
-sfr at 0x8D TH1;
-sfr at 0x8E CKCON;
-sfr at 0x90 IOB;
+         __sbit __at 0x88+0 IT0;
+         __sbit __at 0x88+1 IE0;
+         __sbit __at 0x88+2 IT1;
+         __sbit __at 0x88+3 IE1;
+         __sbit __at 0x88+4 TR0;
+         __sbit __at 0x88+5 TF0;
+         __sbit __at 0x88+6 TR1;
+         __sbit __at 0x88+7 TF1;
+__sfr __at 0x89 TMOD;
+__sfr __at 0x8A TL0;
+__sfr __at 0x8B TL1;
+__sfr __at 0x8C TH0;
+__sfr __at 0x8D TH1;
+__sfr __at 0x8E CKCON;
+__sfr __at 0x90 IOB;
          /*  IOB  */
-         sbit at 0x90 + 0 PB0;
-         sbit at 0x90 + 1 PB1;
-         sbit at 0x90 + 2 PB2;
-         sbit at 0x90 + 3 PB3;
-         sbit at 0x90 + 4 PB4;
-         sbit at 0x90 + 5 PB5;
-         sbit at 0x90 + 6 PB6;
-         sbit at 0x90 + 7 PB7;
-sfr at 0x91 EXIF;
+         __sbit __at 0x90 + 0 PB0;
+         __sbit __at 0x90 + 1 PB1;
+         __sbit __at 0x90 + 2 PB2;
+         __sbit __at 0x90 + 3 PB3;
+         __sbit __at 0x90 + 4 PB4;
+         __sbit __at 0x90 + 5 PB5;
+         __sbit __at 0x90 + 6 PB6;
+         __sbit __at 0x90 + 7 PB7;
+__sfr __at 0x91 EXIF;
          
-//sfr at 0x92 MPAGE;
-sfr at 0x92 _XPAGE; // same as MPAGE for pdata sfr access w/ sdcc
-sfr at 0x98 SCON0;
+//__sfr __at 0x92 MPAGE;
+__sfr __at 0x92 _XPAGE; // same as MPAGE for pdata __sfr access w/ sdcc
+__sfr __at 0x98 SCON0;
          /*  SCON0  */
-         sbit at 0x98+0 RI;
-         sbit at 0x98+1 TI;
-         sbit at 0x98+2 RB8;
-         sbit at 0x98+3 TB8;
-         sbit at 0x98+4 REN;
-         sbit at 0x98+5 SM2;
-         sbit at 0x98+6 SM1;
-         sbit at 0x98+7 SM0;
-sfr at 0x99 SBUF0;
+         __sbit __at 0x98+0 RI;
+         __sbit __at 0x98+1 TI;
+         __sbit __at 0x98+2 RB8;
+         __sbit __at 0x98+3 TB8;
+         __sbit __at 0x98+4 REN;
+         __sbit __at 0x98+5 SM2;
+         __sbit __at 0x98+6 SM1;
+         __sbit __at 0x98+7 SM0;
+__sfr __at 0x99 SBUF0;
 
-sfr at 0x9A AUTOPTRH1; 
-sfr at 0x9B AUTOPTRL1; 
-sfr at 0x9D AUTOPTRH2;
-sfr at 0x9E AUTOPTRL2; 
+__sfr __at 0x9A AUTOPTRH1; 
+__sfr __at 0x9B AUTOPTRL1; 
+__sfr __at 0x9D AUTOPTRH2;
+__sfr __at 0x9E AUTOPTRL2; 
 
-sfr at 0xA0 IOC;
+__sfr __at 0xA0 IOC;
          /*  IOC  */
-         sbit at 0xA0 + 0 PC0;
-         sbit at 0xA0 + 1 PC1;
-         sbit at 0xA0 + 2 PC2;
-         sbit at 0xA0 + 3 PC3;
-         sbit at 0xA0 + 4 PC4;
-         sbit at 0xA0 + 5 PC5;
-         sbit at 0xA0 + 6 PC6;
-         sbit at 0xA0 + 7 PC7;
-sfr at 0xA1 INT2CLR;
-sfr at 0xA2 INT4CLR;
+         __sbit __at 0xA0 + 0 PC0;
+         __sbit __at 0xA0 + 1 PC1;
+         __sbit __at 0xA0 + 2 PC2;
+         __sbit __at 0xA0 + 3 PC3;
+         __sbit __at 0xA0 + 4 PC4;
+         __sbit __at 0xA0 + 5 PC5;
+         __sbit __at 0xA0 + 6 PC6;
+         __sbit __at 0xA0 + 7 PC7;
+__sfr __at 0xA1 INT2CLR;
+__sfr __at 0xA2 INT4CLR;
 
-sfr at 0xA8 IE;
+__sfr __at 0xA8 IE;
          /*  IE  */
-         sbit at 0xA8+0 EX0;
-         sbit at 0xA8+1 ET0;
-         sbit at 0xA8+2 EX1;
-         sbit at 0xA8+3 ET1;
-         sbit at 0xA8+4 ES0;
-         sbit at 0xA8+5 ET2;
-         sbit at 0xA8+6 ES1;
-         sbit at 0xA8+7 EA;
+         __sbit __at 0xA8+0 EX0;
+         __sbit __at 0xA8+1 ET0;
+         __sbit __at 0xA8+2 EX1;
+         __sbit __at 0xA8+3 ET1;
+         __sbit __at 0xA8+4 ES0;
+         __sbit __at 0xA8+5 ET2;
+         __sbit __at 0xA8+6 ES1;
+         __sbit __at 0xA8+7 EA;
 
-sfr at 0xAA EP2468STAT;
-sfr at 0xAB EP24FIFOFLGS;
-sfr at 0xAC EP68FIFOFLGS;
-sfr at 0xAF AUTOPTRSETUP;
-sfr at 0xB0 IOD;
+__sfr __at 0xAA EP2468STAT;
+__sfr __at 0xAB EP24FIFOFLGS;
+__sfr __at 0xAC EP68FIFOFLGS;
+__sfr __at 0xAF AUTOPTRSETUP;
+__sfr __at 0xB0 IOD;
          /*  IOD  */
-         sbit at 0xB0 + 0 PD0;
-         sbit at 0xB0 + 1 PD1;
-         sbit at 0xB0 + 2 PD2;
-         sbit at 0xB0 + 3 PD3;
-         sbit at 0xB0 + 4 PD4;
-         sbit at 0xB0 + 5 PD5;
-         sbit at 0xB0 + 6 PD6;
-         sbit at 0xB0 + 7 PD7;
-sfr at 0xB1 IOE;
-sfr at 0xB2 OEA;
-sfr at 0xB3 OEB;
-sfr at 0xB4 OEC;
-sfr at 0xB5 OED;
-sfr at 0xB6 OEE;
+         __sbit __at 0xB0 + 0 PD0;
+         __sbit __at 0xB0 + 1 PD1;
+         __sbit __at 0xB0 + 2 PD2;
+         __sbit __at 0xB0 + 3 PD3;
+         __sbit __at 0xB0 + 4 PD4;
+         __sbit __at 0xB0 + 5 PD5;
+         __sbit __at 0xB0 + 6 PD6;
+         __sbit __at 0xB0 + 7 PD7;
+__sfr __at 0xB1 IOE;
+__sfr __at 0xB2 OEA;
+__sfr __at 0xB3 OEB;
+__sfr __at 0xB4 OEC;
+__sfr __at 0xB5 OED;
+__sfr __at 0xB6 OEE;
 
-sfr at 0xB8 IP;
+__sfr __at 0xB8 IP;
          /*  IP  */
-         sbit at 0xB8+0 PX0;
-         sbit at 0xB8+1 PT0;
-         sbit at 0xB8+2 PX1;
-         sbit at 0xB8+3 PT1;
-         sbit at 0xB8+4 PS0;
-         sbit at 0xB8+5 PT2;
-         sbit at 0xB8+6 PS1;
+         __sbit __at 0xB8+0 PX0;
+         __sbit __at 0xB8+1 PT0;
+         __sbit __at 0xB8+2 PX1;
+         __sbit __at 0xB8+3 PT1;
+         __sbit __at 0xB8+4 PS0;
+         __sbit __at 0xB8+5 PT2;
+         __sbit __at 0xB8+6 PS1;
 
-sfr at 0xBA EP01STAT;
-sfr at 0xBB GPIFTRIG;
+__sfr __at 0xBA EP01STAT;
+__sfr __at 0xBB GPIFTRIG;
 
-sfr at 0xBD GPIFSGLDATH;
-sfr at 0xBE GPIFSGLDATLX;
-sfr at 0xBF GPIFSGLDATLNOX;
+__sfr __at 0xBD GPIFSGLDATH;
+__sfr __at 0xBE GPIFSGLDATLX;
+__sfr __at 0xBF GPIFSGLDATLNOX;
 
-sfr at 0xC0 SCON1;
+__sfr __at 0xC0 SCON1;
          /*  SCON1  */
-         sbit at 0xC0+0 RI1;
-         sbit at 0xC0+1 TI1;
-         sbit at 0xC0+2 RB81;
-         sbit at 0xC0+3 TB81;
-         sbit at 0xC0+4 REN1;
-         sbit at 0xC0+5 SM21;
-         sbit at 0xC0+6 SM11;
-         sbit at 0xC0+7 SM01;
-sfr at 0xC1 SBUF1;
-sfr at 0xC8 T2CON;
+         __sbit __at 0xC0+0 RI1;
+         __sbit __at 0xC0+1 TI1;
+         __sbit __at 0xC0+2 RB81;
+         __sbit __at 0xC0+3 TB81;
+         __sbit __at 0xC0+4 REN1;
+         __sbit __at 0xC0+5 SM21;
+         __sbit __at 0xC0+6 SM11;
+         __sbit __at 0xC0+7 SM01;
+__sfr __at 0xC1 SBUF1;
+__sfr __at 0xC8 T2CON;
          /*  T2CON  */
-         sbit at 0xC8+0 CP_RL2;
-         sbit at 0xC8+1 C_T2;
-         sbit at 0xC8+2 TR2;
-         sbit at 0xC8+3 EXEN2;
-         sbit at 0xC8+4 TCLK;
-         sbit at 0xC8+5 RCLK;
-         sbit at 0xC8+6 EXF2;
-         sbit at 0xC8+7 TF2;
-sfr at 0xCA RCAP2L;
-sfr at 0xCB RCAP2H;
-sfr at 0xCC TL2;
-sfr at 0xCD TH2;
-sfr at 0xD0 PSW;
+         __sbit __at 0xC8+0 CP_RL2;
+         __sbit __at 0xC8+1 C_T2;
+         __sbit __at 0xC8+2 TR2;
+         __sbit __at 0xC8+3 EXEN2;
+         __sbit __at 0xC8+4 TCLK;
+         __sbit __at 0xC8+5 RCLK;
+         __sbit __at 0xC8+6 EXF2;
+         __sbit __at 0xC8+7 TF2;
+__sfr __at 0xCA RCAP2L;
+__sfr __at 0xCB RCAP2H;
+__sfr __at 0xCC TL2;
+__sfr __at 0xCD TH2;
+__sfr __at 0xD0 PSW;
          /*  PSW  */
-         sbit at 0xD0+0 P;
-         sbit at 0xD0+1 FL;
-         sbit at 0xD0+2 OV;
-         sbit at 0xD0+3 RS0;
-         sbit at 0xD0+4 RS1;
-         sbit at 0xD0+5 F0;
-         sbit at 0xD0+6 AC;
-         sbit at 0xD0+7 CY;
-sfr at 0xD8 EICON; // Was WDCON in DS80C320; Bit Values differ from Reg320
+         __sbit __at 0xD0+0 P;
+         __sbit __at 0xD0+1 FL;
+         __sbit __at 0xD0+2 OV;
+         __sbit __at 0xD0+3 RS0;
+         __sbit __at 0xD0+4 RS1;
+         __sbit __at 0xD0+5 F0;
+         __sbit __at 0xD0+6 AC;
+         __sbit __at 0xD0+7 CY;
+__sfr __at 0xD8 EICON; // Was WDCON in DS80C320; Bit Values differ from Reg320
          /*  EICON  */
-         sbit at 0xD8+3 INT6;
-         sbit at 0xD8+4 RESI;
-         sbit at 0xD8+5 ERESI;
-         sbit at 0xD8+7 SMOD1;
-sfr at 0xE0 ACC;
-sfr at 0xE8 EIE; // EIE Bit Values differ from Reg320
+         __sbit __at 0xD8+3 INT6;
+         __sbit __at 0xD8+4 RESI;
+         __sbit __at 0xD8+5 ERESI;
+         __sbit __at 0xD8+7 SMOD1;
+__sfr __at 0xE0 ACC;
+__sfr __at 0xE8 EIE; // EIE Bit Values differ from Reg320
          /*  EIE  */
-         sbit at 0xE8+0 EUSB;
-         sbit at 0xE8+1 EI2C;
-         sbit at 0xE8+2 EIEX4;
-         sbit at 0xE8+3 EIEX5;
-         sbit at 0xE8+4 EIEX6;
-sfr at 0xF0 B;
-sfr at 0xF8 EIP; // EIP Bit Values differ from Reg320
+         __sbit __at 0xE8+0 EUSB;
+         __sbit __at 0xE8+1 EI2C;
+         __sbit __at 0xE8+2 EIEX4;
+         __sbit __at 0xE8+3 EIEX5;
+         __sbit __at 0xE8+4 EIEX6;
+__sfr __at 0xF0 B;
+__sfr __at 0xF8 EIP; // EIP Bit Values differ from Reg320
          /*  EIP  */
-         sbit at 0xF8+0 PUSB;
-         sbit at 0xF8+1 PI2C;
-         sbit at 0xF8+2 EIPX4;
-         sbit at 0xF8+3 EIPX5;
-         sbit at 0xF8+4 EIPX6;
+         __sbit __at 0xF8+0 PUSB;
+         __sbit __at 0xF8+1 PI2C;
+         __sbit __at 0xF8+2 EIPX4;
+         __sbit __at 0xF8+3 EIPX5;
+         __sbit __at 0xF8+4 EIPX6;
 
 
 /* CPU Control & Status Register (CPUCS) */

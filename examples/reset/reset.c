@@ -30,10 +30,10 @@
 
 #define READ_SIZE 100
 
-xdata BYTE buf[READ_SIZE];
+__xdata BYTE buf[READ_SIZE];
 
 #define IIC_SIZE 8
-extern xdata BYTE fx2_c0[];
+extern __xdata BYTE fx2_c0[];
 
 /*
  Modified eeprom_write that always uses two byte buffer.

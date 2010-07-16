@@ -34,11 +34,11 @@
 
 
 volatile WORD bytes;
-volatile bit gotbuf;
+volatile __bit gotbuf;
 volatile BYTE icount;
-volatile bit got_sud;
+volatile __bit got_sud;
 DWORD lcount;
-bit on;
+__bit on;
 
 void main() {
 
@@ -144,7 +144,7 @@ BOOL handle_vendorcommand(BYTE cmd) {
  
      case VC_EPSTAT:
         {         
-         xdata BYTE* pep= ep_addr(SETUPDAT[2]);
+         __xdata BYTE* pep= ep_addr(SETUPDAT[2]);
          printf ( "ep %02x\n" , *pep );
          if (pep) {
           EP0BUF[0] = *pep;
@@ -194,15 +194,15 @@ BOOL handle_set_configuration(BYTE cfg) {
 
 
 // copied usb jt routines from usbjt.h
-void sudav_isr() interrupt SUDAV_ISR {
+void sudav_isr() __interrupt SUDAV_ISR {
   
   got_sud=TRUE;
   CLEAR_SUDAV();
 }
 
-bit on5;
-xdata WORD sofct=0;
-void sof_isr () interrupt SOF_ISR using 1 {
+__bit on5;
+__xdata WORD sofct=0;
+void sof_isr () __interrupt SOF_ISR __using 1 {
     ++sofct;
     if(sofct==8000) { // about 8000 sof interrupts per second at high speed
         on5=!on5;
@@ -212,11 +212,11 @@ void sof_isr () interrupt SOF_ISR using 1 {
     CLEAR_SOF();
 }
 
-void usbreset_isr() interrupt USBRESET_ISR {
+void usbreset_isr() __interrupt USBRESET_ISR {
     handle_hispeed(FALSE);
     CLEAR_USBRESET();
 }
-void hispeed_isr() interrupt HISPEED_ISR {
+void hispeed_isr() __interrupt HISPEED_ISR {
     handle_hispeed(TRUE);
     CLEAR_HISPEED();
 }

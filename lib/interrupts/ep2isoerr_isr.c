@@ -18,5 +18,5 @@
 
 #include <autovector.h>
 
-void ep2isoerr_isr() interrupt EP2ISOERR_ISR {}
+void ep2isoerr_isr() __interrupt EP2ISOERR_ISR {}
 

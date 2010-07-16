@@ -18,5 +18,5 @@
 
 #include <autovector.h>
 
-void suspend_isr() interrupt SUSPEND_ISR {}
+void suspend_isr() __interrupt SUSPEND_ISR {}
 

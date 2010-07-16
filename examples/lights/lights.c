@@ -21,7 +21,7 @@
 #include <lights.h>
 #include <delay.h>
 
-volatile xdata BYTE* bytes[] = { &D2ON, &D3ON, &D4ON, &D5ON, &D2OFF, &D3OFF, &D4OFF, &D5OFF };
+volatile __xdata BYTE* bytes[] = { &D2ON, &D3ON, &D4ON, &D5ON, &D2OFF, &D3OFF, &D4OFF, &D5OFF };
 
 void main(void)
 {

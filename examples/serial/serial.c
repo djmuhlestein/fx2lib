@@ -30,7 +30,7 @@ BYTE ctr_repeat=200;
 volatile BOOL on=FALSE;
 
 
-void timer1_isr() interrupt 3 __critical {
+void timer1_isr() __interrupt 3 __critical {
 	
  if (ctr == 0) { // timer overflowed ctr_repeat times
   if (on) {

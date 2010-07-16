@@ -31,8 +31,8 @@
 
 #define SYNCDELAY() SYNCDELAY4;
 
-volatile bit dosud;
-bit on;
+volatile __bit dosud;
+__bit on;
 WORD count;
 
 
@@ -153,16 +153,16 @@ BOOL handle_set_configuration(BYTE cfg) {
 }
 
 
-void sudav_isr() interrupt SUDAV_ISR {
+void sudav_isr() __interrupt SUDAV_ISR {
  dosud=TRUE;
  CLEAR_SUDAV();
 }
 
-void usbreset_isr() interrupt USBRESET_ISR {
+void usbreset_isr() __interrupt USBRESET_ISR {
  handle_hispeed(FALSE);
  CLEAR_USBRESET();
 }
-void hispeed_isr() interrupt HISPEED_ISR {
+void hispeed_isr() __interrupt HISPEED_ISR {
  handle_hispeed(TRUE);
  CLEAR_HISPEED();
 }
