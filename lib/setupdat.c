@@ -216,6 +216,7 @@ BOOL handle_clear_feature() {
         __xdata BYTE* pep=ep_addr(SETUPDAT[4]);
         printf ( "unstall endpoint %02X\n" , SETUPDAT[4] );
         *pep &= ~bmEPSTALL;        
+	RESETTOGGLE(SETUPDAT[4]);
     } else {
         printf ( "unsupported ep feature %02x", SETUPDAT[2] );
         return FALSE;
