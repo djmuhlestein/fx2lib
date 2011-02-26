@@ -62,15 +62,15 @@ CC = sdcc -mmcs51 \
 	$(INT2JT)
 
 
-.PHONY: ihx iic bix load clean clean-all
+.PHONY: all ihx iic bix load clean clean-all
 
-
+all: ihx
 ihx: $(BUILDDIR)/$(BASENAME).ihx
 bix: $(BUILDDIR)/$(BASENAME).bix
 iic: $(BUILDDIR)/$(BASENAME).iic
 
 $(FX2LIBDIR)/lib/fx2.lib: $(FX2LIBDIR)/lib/*.c $(FX2LIBDIR)/lib/*.a51
-	make -C $(FX2LIBDIR)/lib
+	$(MAKE) -C $(FX2LIBDIR)/lib
 
 $(BUILDDIR):
 	mkdir -p $(BUILDDIR)
@@ -99,5 +99,5 @@ clean:
 	rm -f $(BUILDDIR)/*.{asm,ihx,lnk,lst,map,mem,rel,rst,sym,adb,cdb,bix}
 
 clean-all: clean
-	make -C $(FX2LIBDIR)/lib clean
+	$(MAKE) -C $(FX2LIBDIR)/lib clean
 
