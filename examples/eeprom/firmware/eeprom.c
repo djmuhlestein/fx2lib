@@ -29,7 +29,7 @@
 #include <gpif.h>
 #include <eputils.h>
 
-#define SYNCDELAY() SYNCDELAY4;
+#define SYNCDELAY SYNCDELAY4;
 
 volatile __bit dosud;
 __bit on;
@@ -91,7 +91,7 @@ BOOL handle_vendorcommand(BYTE cmd) {
                     while (EP0CS&bmEPBUSY); // can't do this until EP0 is ready                
                     eeprom_read(0x51, addr, cur_read, EP0BUF );
                     EP0BCH=0;
-                    SYNCDELAY();
+                    SYNCDELAY;
                     EP0BCL=cur_read;
                     len -= cur_read;
                     addr += cur_read;
