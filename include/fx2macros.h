@@ -24,8 +24,8 @@
 #include "fx2regs.h"
 #include "fx2types.h"
 
-#define MSB(addr) (BYTE)((addr >> 8) & 0xff)
-#define LSB(addr) (BYTE)(addr & 0xff)
+#define MSB(addr) (BYTE)(((WORD)(addr) >> 8) & 0xff)
+#define LSB(addr) (BYTE)((WORD)(addr) & 0xff)
 #define MAKEWORD(msb,lsb) (((WORD)msb << 8) | lsb)
 
 #define MSW(dword) (WORD)((dword >> 16) & 0xffff)
