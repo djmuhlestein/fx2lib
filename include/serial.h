@@ -45,7 +45,7 @@
  *    most hardware specs for working.  All rates at 48mhz work at .16%
  **/
 
-void sio0_init( WORD baud_rate ) __critical ; // baud_rate max should be 57600 since int=2 bytes
+void sio0_init( DWORD baud_rate ) __critical ; // baud_rate max should be 57600 since int=2 bytes
 
 /**
  putchar('\\n') or putchar('\\r') both transmit \\r\\n
