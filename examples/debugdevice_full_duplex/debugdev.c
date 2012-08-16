@@ -1,5 +1,5 @@
-/**
- * Copyright (C) 2009 Ubixum, Inc.
+/*
+ * Copyright (C) 2012 Sven Schnelle <svens@stackframe.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -30,35 +30,143 @@
 #define REARMVAL 0x80
 #define REARM() EP2BCL=REARMVAL
 
-volatile WORD bytes;
-volatile __bit gotbuf;
-volatile BYTE icount;
 volatile __bit got_sud;
-DWORD lcount;
-__bit on;
+extern __code WORD debug_dscr;
 
-extern WORD debug_dscr;
-extern void _transchar(char c);
-void main()
+#define INPUTDATA IOB
+#define OUTPUTDATA IOD
+
+#define DVALID_IN (1 << 0)
+#define DLAST_IN (1 << 2)
+#define DRDY_IN  (1 << 3)
+
+#define DVALID_OUT (1 << 4)
+#define DLAST_OUT (1 << 6)
+#define DRDY_OUT  (1 << 7)
+
+typedef enum {
+	TX_STATE_IDLE=0,
+	TX_STATE_DATA,
+	TX_STATE_ACK,
+} tx_state_t;
+
+typedef enum {
+	RX_STATE_IDLE=0,
+	RX_STATE_DATA,
+	RX_STATE_ACK,
+} rx_state_t;
+
+static void tx_state(void)
 {
-	REVCTL=0; // not using advanced endpoint controls
+	static int offset, last;
+	static tx_state_t state = TX_STATE_IDLE;
 
-	d2off();
-	on=0;
-	lcount=0;
-	got_sud=FALSE;
-	icount=0;
-	gotbuf=FALSE;
-	bytes=0;
+	switch(state) {
+		case TX_STATE_IDLE:
+			if (EP2468STAT & bmEP6FULL)
+				break;
+			IOA |= DRDY_OUT;
 
-	// renumerate
-	RENUMERATE_UNCOND();
+			if(IOA & DVALID_IN)
+				state = TX_STATE_DATA;
+			break;
 
+		case TX_STATE_DATA:
+			last = IOA & DLAST_IN;
+			EP6FIFOBUF[offset] = INPUTDATA;
+			IOA &= ~DRDY_OUT;
+			state = TX_STATE_ACK;
+			break;
 
+		case TX_STATE_ACK:
+			if (IOA & DVALID_IN)
+				break;
+			offset++;
+			if (last) {
+				EP6BCH = MSB(offset);
+				SYNCDELAY;
+				EP6BCL = LSB(offset);
+				state = TX_STATE_IDLE;
+				offset = 0;
+				break;
+			}
+			state = TX_STATE_IDLE;;
+			break;
+		default:
+			state = TX_STATE_IDLE;
+	}
+}
+
+static void rx_state(void)
+{
+	static int offset, remaining;
+	static rx_state_t state = RX_STATE_IDLE;
+
+	switch(state) {
+		case RX_STATE_IDLE:
+			if (EP2468STAT & bmEP2EMPTY)
+				break;
+
+			state = RX_STATE_DATA;
+			offset = 0;
+			remaining = MAKEWORD(EP2BCH, EP2BCL);
+			break;
+
+		case RX_STATE_DATA:
+			if (!(IOA & DRDY_IN))
+				break;
+
+			OUTPUTDATA = EP2FIFOBUF[offset++];
+
+			if (--remaining)
+				IOA &= ~DLAST_OUT;
+			else
+				IOA |= DLAST_OUT;
+
+			IOA |= DVALID_OUT;
+
+			state = RX_STATE_ACK;
+			break;
+
+		case RX_STATE_ACK:
+			if (IOA & DRDY_IN)
+				break;
+
+			IOA &= ~DVALID_OUT;
+
+			if (remaining) {
+				state = RX_STATE_DATA;
+			} else {
+				state = RX_STATE_IDLE;
+				REARM();
+			}
+			break;
+		default:
+			state = RX_STATE_IDLE;
+	}
+}
+
+static void mainloop(void)
+{
+	while(TRUE) {
+		if (got_sud) {
+			handle_setupdata();
+			got_sud=FALSE;
+		}
+		tx_state();
+		rx_state();
+	}
+}
+
+static void clock_setup(void)
+{
 	SETCPUFREQ(CLK_48M);
 	SETIF48MHZ();
-	sio0_init(115200);
+}
 
+static void usb_setup(void)
+{
+	RENUMERATE_UNCOND();
 
 	USE_USB_INTS();
 	ENABLE_SUDAV();
@@ -66,64 +174,63 @@ void main()
 	ENABLE_HISPEED();
 	ENABLE_USBRESET();
 
-
-	// only valid endpoints are 2/6
+	/* BULK IN endpoint EP2 */
 	EP2CFG = 0xA2; // 10100010
 	SYNCDELAY;
+
+	/* BULK OUT endpoint EP6 */
 	EP6CFG = 0xE2; // 11100010
 	SYNCDELAY;
+
+	/* disable all other endpoints */
+
 	EP1INCFG &= ~bmVALID;
 	SYNCDELAY;
+
 	EP1OUTCFG &= ~bmVALID;
 	SYNCDELAY;
+
 	EP4CFG &= ~bmVALID;
 	SYNCDELAY;
+
 	EP8CFG &= ~bmVALID;
 	SYNCDELAY;
-
 
 	// arm ep2
 	EP2BCL = 0x80; // write once
 	SYNCDELAY;
 	EP2BCL = 0x80; // do it again
-
-
-	// make it so we enumberate
-
-
-	EA=1; // global __interrupt enable
-	printf ( "USB DEBUG: Done initializing stuff\n" );
-
-
-	d3off();
-
-	while(TRUE) {
-
-		if ( got_sud ) {
-			handle_setupdata();
-			got_sud=FALSE;
-		}
-
-		if ( !(EP2468STAT & bmEP2EMPTY) ) {
-			if  ( !(EP2468STAT & bmEP6FULL) ) { // wait for at least one empty in buffer
-				WORD i;
-
-				bytes = MAKEWORD(EP2BCH,EP2BCL);
-
-				for (i=0;i<bytes;++i)
-					_transchar(EP2FIFOBUF[i]);
-				REARM();
-			}
-		}
-	}
-
 }
 
-// copied routines from setupdat.h
+static void port_setup(void)
+{
+	IOA = 0;
+	IOB = 0xff;
+	IOD = 0xff;
 
-// value (low byte) = ep
+	OEA = 0xf0;	/* [3:0] INPUT, [7:4] OUTPUT */
+	OEB = 0;	/* INPUTDATA */
+	OED = 0xff;	/* OUTPUTDATA */
+}
+
+void main()
+{
+	REVCTL=0; // not using advanced endpoint controls
+
+	port_setup();
+
+	clock_setup();
+
+	usb_setup();
+
+	delay(10);
+
+	EA=1; // global __interrupt enable
+
+	mainloop();
+}
+
 #define VC_EPSTAT 0xB1
-
 
 BOOL handle_vendorcommand(BYTE cmd)
 {
@@ -141,22 +248,19 @@ BOOL handle_vendorcommand(BYTE cmd)
 			return TRUE;
 		}
 	default:
-		printf ( "Need to implement vendor command: %02x\n", cmd );
 	}
 	return FALSE;
 }
 
 // this firmware only supports 0,0
-BOOL handle_get_interface(BYTE ifc, BYTE* alt_ifc)
+BOOL handle_get_interface(BYTE ifc, BYTE *alt_ifc)
 {
-//	printf ( "Get Interface\n" );
-	if (ifc==0) {
-		*alt_ifc=0;
-		return TRUE;
-	} else {
+	if (ifc)
 		return FALSE;
-	}
+	*alt_ifc=0;
+	return TRUE;
 }
+
 BOOL handle_set_interface(BYTE ifc, BYTE alt_ifc)
 {
 	if (ifc==0&&alt_ifc==0) {
@@ -184,7 +288,7 @@ BYTE handle_get_configuration()
 
 BOOL handle_get_descriptor()
 {
-        BYTE desc = SETUPDAT[3];
+	BYTE desc = SETUPDAT[3];
 	if (desc != DSCR_DEBUG_TYPE)
 		return FALSE;
 
@@ -201,25 +305,14 @@ BOOL handle_set_configuration(BYTE cfg)
 
 
 // copied usb jt routines from usbjt.h
-void sudav_isr() __interrupt SUDAV_ISR {
-
-	got_sud=TRUE;
+void sudav_isr() __interrupt SUDAV_ISR
+{
+	got_sud = TRUE;
 	CLEAR_SUDAV();
 }
 
-__bit on5;
-__xdata WORD sofct=0;
 void sof_isr () __interrupt SOF_ISR __using 1
 {
-	if(++sofct==8000) { // about 8000 sof __interrupts per second at high speed
-		on5 = !on5;
-		if (on5) {
-			d5on();
-		} else {
-			d5off();
-		}
-		sofct=0;
-	}
 	CLEAR_SOF();
 }
 
@@ -228,9 +321,9 @@ void usbreset_isr() __interrupt USBRESET_ISR
 	handle_hispeed(FALSE);
 	CLEAR_USBRESET();
 }
+
 void hispeed_isr() __interrupt HISPEED_ISR
 {
 	handle_hispeed(TRUE);
 	CLEAR_HISPEED();
 }
-
