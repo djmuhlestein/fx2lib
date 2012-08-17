@@ -67,16 +67,17 @@ static void tx_state(void)
 				break;
 			IOA |= DRDY_OUT;
 
-			if(IOA & DVALID_IN)
-				state = TX_STATE_DATA;
-			break;
+			if(!(IOA & DVALID_IN))
+				break;
+			state = TX_STATE_DATA;
+			/* intentional fall through */
 
 		case TX_STATE_DATA:
 			last = IOA & DLAST_IN;
 			EP6FIFOBUF[offset] = INPUTDATA;
 			IOA &= ~DRDY_OUT;
 			state = TX_STATE_ACK;
-			break;
+			/* intentional fall through */
 
 		case TX_STATE_ACK:
 			if (IOA & DVALID_IN)
@@ -174,18 +175,19 @@ static void usb_setup(void)
 	ENABLE_HISPEED();
 	ENABLE_USBRESET();
 
+	/* INT endpoint */
+	EP1INCFG = bmVALID | (3 << 4);
+	SYNCDELAY;
+
 	/* BULK IN endpoint EP2 */
 	EP2CFG = 0xA2; // 10100010
 	SYNCDELAY;
 
 	/* BULK OUT endpoint EP6 */
-	EP6CFG = 0xE2; // 11100010
+	EP6CFG = 0xE2;
 	SYNCDELAY;
 
 	/* disable all other endpoints */
-
-	EP1INCFG &= ~bmVALID;
-	SYNCDELAY;
 
 	EP1OUTCFG &= ~bmVALID;
 	SYNCDELAY;

@@ -52,29 +52,29 @@ _dev_dscr:
 	.db	dev_dscr_end-_dev_dscr    ; len
 	.db	DSCR_DEVICE_TYPE		  ; type
 	.dw	0x0002					  ; usb 2.0
-	.db	0xff  					  ; class (vendor specific)
-	.db	0					  ; subclass (vendor specific)
-	.db	0					  ; protocol (vendor specific)
-	.db	64						  ; packet size (ep0)
+	.db	0x02  					  ; class (vendor specific)
+	.db	0x00					  ; subclass (vendor specific)
+	.db	0x00					  ; protocol (vendor specific)
+	.db	0x40						  ; packet size (ep0)
 	.dw	0xb404					  ; vendor id
 	.dw	0x1386					  ; product id
 	.dw	0x0100					  ; version id
-	.db	1					  ; manufacturure str idx
-	.db	2				          ; product str idx
-	.db	0				          ; serial str idx
-	.db	1			              ; n configurations
+	.db	0x01					  ; manufacturure str idx
+	.db	0x02				          ; product str idx
+	.db	0x00				          ; serial str idx
+	.db	0x01					  ; n configurations
 dev_dscr_end:
 
 _dev_qual_dscr:
 	.db	dev_qualdscr_end-_dev_qual_dscr
 	.db	DSCR_DEVQUAL_TYPE
 	.dw	0x0002                              ; usb 2.0
-	.db	0xff
+	.db	0x2
 	.db	0x00
 	.db	0x0
 	.db	64                                  ; max packet
-	.db	1									; n configs
-	.db	0									; extra reserved byte
+	.db	1					; n configs
+	.db	0					; extra reserved byte
 dev_qualdscr_end:
 
 _debug_dscr:
@@ -91,7 +91,7 @@ _highspd_dscr:
     ; can't use .dw because byte order is different
 	.db	(highspd_dscr_realend-_highspd_dscr) % 256 ; total length of config lsb
 	.db	(highspd_dscr_realend-_highspd_dscr) / 256 ; total length of config msb
-	.db	1								 ; n interfaces
+	.db	2								 ; n interfaces
 	.db	1								 ; config number
 	.db	0								 ; config string
 	.db	0x80                             ; attrs = bus powered, no wakeup
@@ -102,21 +102,70 @@ highspd_dscr_end:
 ; NOTE the default TRM actually has more alt interfaces
 ; but you can add them back in if you need them.
 ; here, we just use the default alt setting 1 from the trm
+  	; control endpoints
 	.db	DSCR_INTERFACE_LEN
 	.db	DSCR_INTERFACE_TYPE
-	.db	0				 ; index
-	.db	0				 ; alt setting idx
-	.db	2				 ; n endpoints
-	.db	0xff			 ; class
-	.db	0
-	.db	0
-	.db	3	             ; string index
+	.db	0x00				 ; index
+	.db	0x00				 ; alt setting idx
+	.db	0x01				 ; n endpoints
+	.db	0x02			 	 ; class
+	.db	0x02
+	.db	0x01
+	.db	0x00				; string index
+
+	; CDC header
+	.db	0x05
+	.db	0x24
+	.db	0x00
+	.db	0x10
+	.db	0x01
+
+	; CDC ACM
+	.db	0x04
+	.db	0x24
+	.db	0x02
+	.db	0x00
+
+	; CDC union
+	.db     0x05
+	.db	0x24
+	.db	0x06
+	.db	0x00
+	.db	0x01
+
+	; CDC call managment
+	.db     0x05
+	.db	0x24
+	.db	0x01
+	.db	0x01
+	.db	0x01
+
+; endpoint 1 in
+	.db	DSCR_ENDPOINT_LEN
+	.db	DSCR_ENDPOINT_TYPE
+	.db	0x81				; ep1 dir=IN and address
+	.db	ENDPOINT_TYPE_INT		; type
+	.db	0x40				; max packet LSB
+	.db	0x00				; max packet size=512 bytes
+	.db	0x40				; polling interval
+
+
+	; data endpoints
+	.db	DSCR_INTERFACE_LEN
+	.db	DSCR_INTERFACE_TYPE
+	.db	0x01				; index
+	.db	0x00				; alt setting idx
+	.db	0x02				; n endpoints
+	.db	0x0a				; class
+	.db	0x00
+	.db	0x00
+	.db	0x00				; string index
 
 ; endpoint 2 out
 	.db	DSCR_ENDPOINT_LEN
 	.db	DSCR_ENDPOINT_TYPE
-	.db	0x02				;  ep2 dir=OUT and address
-	.db	ENDPOINT_TYPE_BULK	; type
+	.db	0x02				; ep2 dir=OUT and address
+	.db	ENDPOINT_TYPE_BULK		; type
 	.db	0x00				; max packet LSB
 	.db	0x02				; max packet size=512 bytes
 	.db	0x00				; polling interval
@@ -124,8 +173,8 @@ highspd_dscr_end:
 ; endpoint 6 in
 	.db	DSCR_ENDPOINT_LEN
 	.db	DSCR_ENDPOINT_TYPE
-	.db	0x86				;  ep6 dir=in and address
-	.db	ENDPOINT_TYPE_BULK	; type
+	.db	0x86				; ep6 dir=in and address
+	.db	ENDPOINT_TYPE_BULK		; type
 	.db	0x00				; max packet LSB
 	.db	0x02				; max packet size=512 bytes
 	.db	0x00				; polling interval
@@ -139,7 +188,7 @@ _fullspd_dscr:
     ; can't use .dw because byte order is different
 	.db	(fullspd_dscr_realend-_fullspd_dscr) % 256 ; total length of config lsb
 	.db	(fullspd_dscr_realend-_fullspd_dscr) / 256 ; total length of config msb
-	.db	1								 ; n interfaces
+	.db	2								 ; n interfaces
 	.db	1								 ; config number
 	.db	0								 ; config string
 	.db	0x80                             ; attrs = bus powered, no wakeup
@@ -155,16 +204,64 @@ fullspd_dscr_end:
 	.db	0				 ; index
 	.db	0				 ; alt setting idx
 	.db	2				 ; n endpoints
-	.db	0xff			 ; class
-	.db	0xff
-	.db	0xff
+	.db	0x2			 ; class
+	.db	0x2
+	.db	0x1
 	.db	3	             ; string index
+
+	; CDC header
+	.db	0x05
+	.db	0x24
+	.db	0x00
+	.db	0x10
+	.db	0x01
+
+	; CDC ACM
+	.db	0x04
+	.db	0x24
+	.db	0x02
+	.db	0x00
+
+	; CDC union
+	.db     0x05
+	.db	0x24
+	.db	0x06
+	.db	0x00
+	.db	0x01
+
+	; CDC call managment
+	.db     0x05
+	.db	0x24
+	.db	0x01
+	.db	0x01
+	.db	0x01
+
+; endpoint 1 in
+	.db	DSCR_ENDPOINT_LEN
+	.db	DSCR_ENDPOINT_TYPE
+	.db	0x81				; ep1 dir=IN and address
+	.db	ENDPOINT_TYPE_INT		; type
+	.db	0x40				; max packet LSB
+	.db	0x00				; max packet size=512 bytes
+	.db	0x40				; polling interval
+
+
+	; data endpoints
+	.db	DSCR_INTERFACE_LEN
+	.db	DSCR_INTERFACE_TYPE
+	.db	0x01				; index
+	.db	0x00				; alt setting idx
+	.db	0x02				; n endpoints
+	.db	0x0a				; class
+	.db	0x00
+	.db	0x00
+	.db	0x00				; string index
 
 ; endpoint 2 out
 	.db	DSCR_ENDPOINT_LEN
 	.db	DSCR_ENDPOINT_TYPE
-	.db	0x02				;  ep2 dir=OUT and address
-	.db	ENDPOINT_TYPE_BULK	; type
+	.db	0x02				; ep2 dir=OUT and address
+	.db	ENDPOINT_TYPE_BULK		; type
 	.db	0x40				; max packet LSB
 	.db	0x00				; max packet size=64 bytes
 	.db	0x00				; polling interval
@@ -173,7 +270,7 @@ fullspd_dscr_end:
 	.db	DSCR_ENDPOINT_LEN
 	.db	DSCR_ENDPOINT_TYPE
 	.db	0x86				;  ep6 dir=in and address
-	.db	ENDPOINT_TYPE_BULK	; type
+	.db	ENDPOINT_TYPE_BULK		; type
 	.db	0x40				; max packet LSB
 	.db	0x00				; max packet size=64 bytes
 	.db	0x00				; polling interval
