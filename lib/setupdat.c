@@ -211,6 +211,9 @@ BOOL handle_clear_feature() {
         remote_wakeup_allowed=FALSE;
         break;
     }
+
+    if (SETUPDAT[2] == 6) // debug feature
+	break;
     return FALSE;
    case GF_ENDPOINT:
     if (SETUPDAT[2] == 0) { // ep stall feature
@@ -239,6 +242,8 @@ BOOL handle_set_feature() {
        remote_wakeup_allowed=TRUE; 
        break;
     }
+    if (SETUPDAT[2] == 6) // debug feature
+	break;
     return FALSE;
   case GF_ENDPOINT:
     if ( SETUPDAT[2] == 0 ) { // ep stall feature
