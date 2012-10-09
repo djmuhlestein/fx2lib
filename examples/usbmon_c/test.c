@@ -45,12 +45,13 @@ int main(int argc __attribute__((unused)),
 
 	libusb_set_interface_alt_setting(hndl, 0, 0);
 
+for(;;) {
 	for (i = 0; i < (int)sizeof(buf); i++)
 		buf[i] = i;
-for(;;) {
+
 	printf("OUT transfer to device\n");
 	transferred = 0;
-	rv = libusb_bulk_transfer(hndl, 0x02, buf, 64, &transferred, 500);
+	rv = libusb_bulk_transfer(hndl, 0x02, bufl, 32, &transferred, 500);
 	if(rv) {
 		fprintf(stderr, "OUT Transfer failed: %d (%d transferred)\n", rv, transferred);
 //		goto out;
@@ -58,7 +59,7 @@ for(;;) {
 
 	rv = libusb_bulk_transfer(hndl, 0x02, buf, 0, &transferred, 500);
 	if(rv) {
-		fprintf(stderr, "OUT Transfer failed: %d (%d transferred)\n", rv, transferred);
+		fprintf(stderr, "OUT0 Transfer failed: %d (%d transferred)\n", rv, transferred);
 //		goto out;
 	}
 
