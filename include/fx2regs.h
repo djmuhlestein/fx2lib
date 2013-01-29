@@ -461,6 +461,7 @@ sfr at 0xF8 EIP; // EIP Bit Values differ from Reg320
 /* Port Alternate Configuration Registers */
 /* Port A (PORTACFG) */
 #define bmFLAGD      bmBIT7
+#define bmSLCS       bmBIT6
 #define bmINT1       bmBIT1
 #define bmINT0       bmBIT0
 /* Port C (PORTCCFG) */
@@ -624,5 +625,10 @@ sfr at 0xF8 EIP; // EIP Bit Values differ from Reg320
 
 /* Chip Feature Register (GPCR2) */
 #define bmFULLSPEEDONLY    bmBIT4
+
+/* EP 01 status (EP01STAT) */
+#define bmEP1INBSY      bmBIT2
+#define bmEP1OUTBSY     bmBIT1
+#define bmEP0BSY        bmBIT0
 
 #endif   /* FX2REGS_H */
