@@ -36,7 +36,6 @@ extern BOOL handle_set_configuration(BYTE cfg);
 extern BOOL handle_get_interface(BYTE ifc, BYTE* alt_ifc);
 extern BOOL handle_set_interface(BYTE ifc,BYTE alt_ifc);
 extern BYTE handle_get_configuration();
-extern BOOL handle_set_configuration(BYTE cfg);
 extern void handle_reset_ep(BYTE ep);
 
 /**
