@@ -23,7 +23,7 @@
 
 #include <gpif.h>
 
-#define SYNCDELAY() SYNCDELAY4
+#define SYNCDELAY SYNCDELAY4
 
 void gpif_init( BYTE* wavedata, BYTE* initdata ) {
     
@@ -103,9 +103,9 @@ void gpif_init( BYTE* wavedata, BYTE* initdata ) {
 //  OEE &= 0x7F;      // and as input
  
 // GPIF address pins update when GPIFADRH/L written
-  SYNCDELAY();                    // 
+  SYNCDELAY;                    // 
   GPIFADRH = 0x00;    // bits[7:1] always 0
-  SYNCDELAY();                    // 
+  SYNCDELAY;                    // 
   GPIFADRL = 0x00;    // point to PERIPHERAL address 0x0000
 
 // set the initial flowstates to be all 0 in case flow states are not used
@@ -134,16 +134,16 @@ void gpif_setflowstate( BYTE* flowstates, BYTE bank) {
 
 void gpif_set_tc32(DWORD tc) {
     GPIFTCB3 = MSB(MSW(tc));
-    SYNCDELAY();
+    SYNCDELAY;
     GPIFTCB2 = LSB(MSW(tc));
-    SYNCDELAY();
+    SYNCDELAY;
     GPIFTCB1 = MSB(LSW(tc));
-    SYNCDELAY();
+    SYNCDELAY;
     GPIFTCB0 = LSB(LSW(tc));
 }
 void gpif_set_tc16(WORD tc) {
     GPIFTCB1= MSB(tc);
-    SYNCDELAY();
+    SYNCDELAY;
     GPIFTCB0= LSB(tc);
 }
 

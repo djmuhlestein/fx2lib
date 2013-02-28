@@ -35,6 +35,8 @@
 #
 #
 
+AS8051?=sdas8051
+
 VID?=0x04b4
 PID?=0x8613
 
@@ -60,15 +62,15 @@ CC = sdcc -mmcs51 \
 	$(INT2JT)
 
 
-.PHONY: ihx iic bix load clean clean-all
+.PHONY: all ihx iic bix load clean clean-all
 
-
+all: ihx
 ihx: $(BUILDDIR)/$(BASENAME).ihx
 bix: $(BUILDDIR)/$(BASENAME).bix
 iic: $(BUILDDIR)/$(BASENAME).iic
 
 $(FX2LIBDIR)/lib/fx2.lib: $(FX2LIBDIR)/lib/*.c $(FX2LIBDIR)/lib/*.a51
-	make -C $(FX2LIBDIR)/lib
+	$(MAKE) -C $(FX2LIBDIR)/lib
 
 $(BUILDDIR):
 	mkdir -p $(BUILDDIR)
@@ -78,7 +80,7 @@ $(BUILDDIR)/$(BASENAME).ihx: $(BUILDDIR) $(SOURCES) $(A51_SOURCES) $(FX2LIBDIR)/
 # to differentiate the dependency.  (Is it %.rel: %.c or %.a51)
 	for a in $(A51_SOURCES); do \
 	 cp $$a $(BUILDDIR)/; \
-	 cd $(BUILDDIR) && asx8051 -logs `basename $$a` && cd ..; done
+	 cd $(BUILDDIR) && $(AS8051) -logs `basename $$a` && cd ..; done
 	for s in $(SOURCES); do \
 	 THISREL=$$(basename `echo "$$s" | sed -e 's/\.c$$/\.rel/'`); \
 	 $(CC) -c -I $(FX2LIBDIR)/include $$s -o $(BUILDDIR)/$$THISREL ; done
@@ -97,5 +99,5 @@ clean:
 	rm -f $(BUILDDIR)/*.{asm,ihx,lnk,lst,map,mem,rel,rst,sym,adb,cdb,bix}
 
 clean-all: clean
-	make -C $(FX2LIBDIR)/lib clean
+	$(MAKE) -C $(FX2LIBDIR)/lib clean
 

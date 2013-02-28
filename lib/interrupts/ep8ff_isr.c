@@ -18,5 +18,5 @@
 
 #include <autovector.h>
 
-void ep8ff_isr() interrupt EP8FF_ISR{}
+void ep8ff_isr() __interrupt EP8FF_ISR{}
 

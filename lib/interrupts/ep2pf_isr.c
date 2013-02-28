@@ -18,5 +18,5 @@
 
 #include <autovector.h>
 
-void ep2pf_isr() interrupt EP2PF_ISR{}
+void ep2pf_isr() __interrupt EP2PF_ISR{}
 

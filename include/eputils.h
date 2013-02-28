@@ -32,7 +32,7 @@
  *
  * Example:
  * \code
- *  #define SYNCDELAY() SYNCDELAY4 // SYNCDELAY4 from delay.h
+ *  #define SYNCDELAY SYNCDELAY4 // SYNCDELAY4 from delay.h
  * \endcode
  *
  *
@@ -54,18 +54,18 @@
  * RESETFIFO should not use 0x80|epnum for IN endpoints
  * Only use 0x02, 0x04, 0x06, 0x06 for ep value
  **/
-#define RESETFIFO(ep) {FIFORESET=0x80; SYNCDELAY();\
-                       FIFORESET=ep; SYNCDELAY();\
-                       FIFORESET=0x00; SYNCDELAY();}
+#define RESETFIFO(ep) {FIFORESET=0x80; SYNCDELAY;\
+                       FIFORESET=ep; SYNCDELAY;\
+                       FIFORESET=0x00; SYNCDELAY;}
 /**
  * Quickly reset all endpoint FIFOS.
  **/
-#define RESETFIFOS() {FIFORESET=0x80; SYNCDELAY();\
-                     FIFORESET=0x02; SYNCDELAY();\
-                     FIFORESET=0x04; SYNCDELAY();\
-                     FIFORESET=0x06; SYNCDELAY();\
-                     FIFORESET=0x08; SYNCDELAY();\
-                     FIFORESET=0x00; SYNCDELAY();}
+#define RESETFIFOS() {FIFORESET=0x80; SYNCDELAY;\
+                     FIFORESET=0x02; SYNCDELAY;\
+                     FIFORESET=0x04; SYNCDELAY;\
+                     FIFORESET=0x06; SYNCDELAY;\
+                     FIFORESET=0x08; SYNCDELAY;\
+                     FIFORESET=0x00; SYNCDELAY;}
 
 /**
  * Continually read available bytes from endpoint0 into dst, wait

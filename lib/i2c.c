@@ -33,7 +33,7 @@
 #endif
 
 
-volatile xdata BOOL cancel_i2c_trans;
+volatile __xdata BOOL cancel_i2c_trans;
 #define CHECK_I2C_CANCEL() if (cancel_i2c_trans) return FALSE
 
 /**
