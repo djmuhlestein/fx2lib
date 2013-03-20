@@ -27,18 +27,18 @@
 #include <eputils.h>
 
 
-#define SYNCDELAY() SYNCDELAY4
+#define SYNCDELAY SYNCDELAY4
 #define REARMVAL 0x80
 #define REARM() EP2BCL=REARMVAL
 
 
 
 volatile WORD bytes;
-volatile bit gotbuf;
+volatile __bit gotbuf;
 volatile BYTE icount;
-volatile bit got_sud;
+volatile __bit got_sud;
 DWORD lcount;
-bit on;
+__bit on;
 
 void main() {
 
@@ -70,22 +70,22 @@ void main() {
  
  // only valid endpoints are 2/6
  EP2CFG = 0xA2; // 10100010
- SYNCDELAY();
+ SYNCDELAY;
  EP6CFG = 0xE2; // 11100010 
- SYNCDELAY();
+ SYNCDELAY;
  EP1INCFG &= ~bmVALID;
- SYNCDELAY();
+ SYNCDELAY;
  EP1OUTCFG &= ~bmVALID;
- SYNCDELAY();
+ SYNCDELAY;
  EP4CFG &= ~bmVALID;
- SYNCDELAY();
+ SYNCDELAY;
  EP8CFG &= ~bmVALID;
- SYNCDELAY(); 
+ SYNCDELAY; 
  
  
  // arm ep2
  EP2BCL = 0x80; // write once
- SYNCDELAY();
+ SYNCDELAY;
  EP2BCL = 0x80; // do it again
 
  
@@ -121,7 +121,7 @@ void main() {
 
                  // ARM ep6 out
                  EP6BCH=MSB(bytes);
-                 SYNCDELAY();
+                 SYNCDELAY;
                  EP6BCL=LSB(bytes); 
 
                  REARM(); // ep2
@@ -144,7 +144,7 @@ BOOL handle_vendorcommand(BYTE cmd) {
  
      case VC_EPSTAT:
         {         
-         xdata BYTE* pep= ep_addr(SETUPDAT[2]);
+         __xdata BYTE* pep= ep_addr(SETUPDAT[2]);
          printf ( "ep %02x\n" , *pep );
          if (pep) {
           EP0BUF[0] = *pep;
@@ -175,9 +175,9 @@ BOOL handle_set_interface(BYTE ifc, BYTE alt_ifc) {
     // restore endpoints to default condition
     RESETFIFO(0x02);
     EP2BCL=0x80;
-    SYNCDELAY();
+    SYNCDELAY;
     EP2BCL=0X80;
-    SYNCDELAY();
+    SYNCDELAY;
     RESETFIFO(0x86);
     return TRUE;
  } else 
@@ -194,15 +194,15 @@ BOOL handle_set_configuration(BYTE cfg) {
 
 
 // copied usb jt routines from usbjt.h
-void sudav_isr() interrupt SUDAV_ISR {
+void sudav_isr() __interrupt SUDAV_ISR {
   
   got_sud=TRUE;
   CLEAR_SUDAV();
 }
 
-bit on5;
-xdata WORD sofct=0;
-void sof_isr () interrupt SOF_ISR using 1 {
+__bit on5;
+__xdata WORD sofct=0;
+void sof_isr () __interrupt SOF_ISR __using 1 {
     ++sofct;
     if(sofct==8000) { // about 8000 sof interrupts per second at high speed
         on5=!on5;
@@ -212,11 +212,11 @@ void sof_isr () interrupt SOF_ISR using 1 {
     CLEAR_SOF();
 }
 
-void usbreset_isr() interrupt USBRESET_ISR {
+void usbreset_isr() __interrupt USBRESET_ISR {
     handle_hispeed(FALSE);
     CLEAR_USBRESET();
 }
-void hispeed_isr() interrupt HISPEED_ISR {
+void hispeed_isr() __interrupt HISPEED_ISR {
     handle_hispeed(TRUE);
     CLEAR_HISPEED();
 }

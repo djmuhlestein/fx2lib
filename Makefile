@@ -7,6 +7,11 @@ TAG=HEAD
 
 all:
 	make -C lib
+	make -C examples
+
+clean:
+	make -C lib clean
+	make -C examples clean
 
 docs:
 	doxygen docs/docs.conf

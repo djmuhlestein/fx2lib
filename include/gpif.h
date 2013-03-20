@@ -101,7 +101,7 @@ void gpif_single_read16( WORD* res , WORD len);
  * At leat one EPxFIFOCFG has to have wordwide=1 or this
  * function won't transfer both bytes.
  **/
-void gpif_single_write16( WORD* data, WORD len);
+void gpif_single_write16( WORD* dat, WORD len);
 
 void gpif_fifo_read ( GPIF_EP_NUM ep_num );
 

@@ -29,10 +29,10 @@
 #include <gpif.h>
 #include <eputils.h>
 
-#define SYNCDELAY() SYNCDELAY4;
+#define SYNCDELAY SYNCDELAY4;
 
-volatile bit dosud;
-bit on;
+volatile __bit dosud;
+__bit on;
 WORD count;
 
 
@@ -91,7 +91,7 @@ BOOL handle_vendorcommand(BYTE cmd) {
                     while (EP0CS&bmEPBUSY); // can't do this until EP0 is ready                
                     eeprom_read(0x51, addr, cur_read, EP0BUF );
                     EP0BCH=0;
-                    SYNCDELAY();
+                    SYNCDELAY;
                     EP0BCL=cur_read;
                     len -= cur_read;
                     addr += cur_read;
@@ -153,16 +153,16 @@ BOOL handle_set_configuration(BYTE cfg) {
 }
 
 
-void sudav_isr() interrupt SUDAV_ISR {
+void sudav_isr() __interrupt SUDAV_ISR {
  dosud=TRUE;
  CLEAR_SUDAV();
 }
 
-void usbreset_isr() interrupt USBRESET_ISR {
+void usbreset_isr() __interrupt USBRESET_ISR {
  handle_hispeed(FALSE);
  CLEAR_USBRESET();
 }
-void hispeed_isr() interrupt HISPEED_ISR {
+void hispeed_isr() __interrupt HISPEED_ISR {
  handle_hispeed(TRUE);
  CLEAR_HISPEED();
 }
