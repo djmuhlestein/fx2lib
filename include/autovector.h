@@ -29,7 +29,7 @@
  * Unlike the standard fx2 interrupts (\ref fx2ints.h), the autovectored
  * interrupts are defined in assemply and have pre-written function names.
  * Be sure to override the functions defined in this header or your 
- * interrupt handler will not be called.
+ * __interrupt handler will not be called.
  **/
 
 #ifndef USBJT_H
@@ -60,9 +60,9 @@ extern volatile BYTE INT4JT;
                         INTSETUP|=bmAV2EN;}
 /** This macro causes the autovector assemby for int4 to be overlayed
  * at 0x53.  Don't use this if you want external pin generated int4 interrupts
- * and want to define your own interrupt handler.  It is possible to use
+ * and want to define your own __interrupt handler.  It is possible to use
  * usb interrupts with autovectoring and not use GPIF interrupts but GPIF
- * interrupts require the USB jump table.  (You can't USE your own usb interrupt
+ * interrupts require the USB jump table.  (You can't USE your own usb __interrupt
  * handler if you want to enable GPIF interrupts.)
  **/
 #define USE_GPIF_INTS() {BYTE dummy=INT4JT;\
