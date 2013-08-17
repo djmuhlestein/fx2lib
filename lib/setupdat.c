@@ -31,6 +31,7 @@
 #include <setupdat.h>
 
 
+extern BOOL handle_get_descriptor();
 extern BOOL handle_vendorcommand(BYTE cmd);
 extern BOOL handle_set_configuration(BYTE cfg);
 extern BOOL handle_get_interface(BYTE ifc, BYTE* alt_ifc);
@@ -54,7 +55,7 @@ BOOL handle_set_feature();
   // 0x04 is reserved
 //  SET_ADDRESS=0x05, // this is handled by EZ-USB core unless RENUM=0
 //  GET_DESCRIPTOR,
-void handle_get_descriptor();
+void _handle_get_descriptor();
 //  SET_DESCRIPTOR,
 //  GET_CONFIGURATION, // handled by callback
 //  SET_CONFIGURATION, // handled by callback
@@ -89,7 +90,8 @@ void handle_setupdata() {
             }
             break;
         case GET_DESCRIPTOR:
-            handle_get_descriptor();
+            if (!handle_get_descriptor())
+              _handle_get_descriptor();
             break;
         case GET_CONFIGURATION:            
             EP0BUF[0] = handle_get_configuration();
@@ -301,7 +303,7 @@ void handle_hispeed(BOOL highspeed) {
  *  String
  *  Other-Speed
  **/
-void handle_get_descriptor() {
+void _handle_get_descriptor() {
     //printf ( "Get Descriptor\n" );
     
     switch ( SETUPDAT[3] ) {

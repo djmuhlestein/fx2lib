@@ -74,6 +74,9 @@ void main() {
 
 }
 
+BOOL handle_get_descriptor() {
+  return FALSE;
+}
 
 #define VC_EEPROM 0xb1
         

@@ -24,6 +24,10 @@
 #define printf(...)
 #endif
 
+BOOL handle_get_descriptor() {
+
+}
+
 //************************** Configuration Handlers *****************************
 
 // change to support as many interfaces as you need
