@@ -40,6 +40,7 @@ AS8051?=sdas8051
 VID?=0x04b4
 PID?=0x8613
 
+INCLUDES?=""
 DSCR_AREA?=-Wl"-b DSCR_AREA=0x3e00"
 INT2JT?=-Wl"-b INT2JT=0x3f00"
 CODE_SIZE?=--code-size 0x3c00
@@ -83,7 +84,7 @@ $(BUILDDIR)/$(BASENAME).ihx: $(BUILDDIR) $(SOURCES) $(A51_SOURCES) $(FX2LIBDIR)/
 	 cd $(BUILDDIR) && $(AS8051) -logs `basename $$a` && cd ..; done
 	for s in $(SOURCES); do \
 	 THISREL=$$(basename `echo "$$s" | sed -e 's/\.c$$/\.rel/'`); \
-	 $(CC) -c -I $(FX2LIBDIR)/include $$s -o $(BUILDDIR)/$$THISREL ; done
+	 $(CC) -c -I $(FX2LIBDIR)/include -I $(INCLUDES) $$s -o $(BUILDDIR)/$$THISREL ; done
 	$(CC) -o $@ $(RELS) fx2.lib -L $(FX2LIBDIR)/lib $(LIBS)
 
 
