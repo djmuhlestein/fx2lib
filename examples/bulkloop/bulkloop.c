@@ -135,6 +135,10 @@ void main() {
 
 // copied routines from setupdat.h
 
+BOOL handle_get_descriptor() {
+  return FALSE;
+}
+
 // value (low byte) = ep
 #define VC_EPSTAT 0xB1
 
