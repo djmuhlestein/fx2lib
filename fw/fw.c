@@ -29,8 +29,7 @@
 #define printf(...)
 #endif
 
-
-
+#define SUSPEND_ENABLED
 
 volatile __bit dosud=FALSE;
 volatile __bit dosuspend=FALSE;
@@ -78,6 +77,7 @@ void main() {
        handle_setupdata();
      }
 
+#ifdef SUSPEND_ENABLED
      if (dosuspend) {
         dosuspend=FALSE;
         do {
@@ -107,7 +107,7 @@ void main() {
         }
 
      }
-
+#endif
  } // end while
 
 } // end main
