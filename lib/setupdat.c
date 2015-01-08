@@ -309,7 +309,10 @@ void handle_hispeed(BOOL highspeed) {
  **/
 void _handle_get_descriptor() {
     //printf ( "Get Descriptor\n" );
-    
+
+    // Sets to "Setup Data Pointer Auto Mode" see Appendix C - 29 of TRM
+    SUDPTRCTL = 0x01;
+
     switch ( SETUPDAT[3] ) {
         case DSCR_DEVICE_TYPE:
             printf ( "Get Device Config\n" );
