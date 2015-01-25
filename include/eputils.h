@@ -55,16 +55,16 @@
  * Only use 0x02, 0x04, 0x06, 0x06 for ep value
  **/
 #define RESETFIFO(ep) {FIFORESET=0x80; SYNCDELAY;\
-                       FIFORESET=ep; SYNCDELAY;\
+                       FIFORESET=0x80 | ep; SYNCDELAY;\
                        FIFORESET=0x00; SYNCDELAY;}
 /**
  * Quickly reset all endpoint FIFOS.
  **/
 #define RESETFIFOS() {FIFORESET=0x80; SYNCDELAY;\
-                     FIFORESET=0x02; SYNCDELAY;\
-                     FIFORESET=0x04; SYNCDELAY;\
-                     FIFORESET=0x06; SYNCDELAY;\
-                     FIFORESET=0x08; SYNCDELAY;\
+                     FIFORESET=0x82; SYNCDELAY;\
+                     FIFORESET=0x84; SYNCDELAY;\
+                     FIFORESET=0x86; SYNCDELAY;\
+                     FIFORESET=0x88; SYNCDELAY;\
                      FIFORESET=0x00; SYNCDELAY;}
 
 /**
