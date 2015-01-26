@@ -23,7 +23,7 @@
 
 #include <gpif.h>
 
-#define SYNCDELAY SYNCDELAY4
+#define SYNCDELAY SYNCDELAY16 // using most conservative SYNCDELAY
 
 void gpif_init( BYTE* wavedata, BYTE* initdata ) {
     
