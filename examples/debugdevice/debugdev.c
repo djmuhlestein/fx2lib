@@ -26,7 +26,7 @@
 #include <setupdat.h>
 #include <eputils.h>
 
-#define SYNCDELAY() SYNCDELAY4
+#define SYNCDELAY SYNCDELAY4
 #define REARMVAL 0x80
 #define REARM() EP2BCL=REARMVAL
 
@@ -37,7 +37,7 @@ volatile __bit got_sud;
 DWORD lcount;
 __bit on;
 
-extern code WORD debug_dscr;
+extern WORD debug_dscr;
 extern void _transchar(char c);
 void main()
 {
@@ -69,22 +69,22 @@ void main()
 
 	// only valid endpoints are 2/6
 	EP2CFG = 0xA2; // 10100010
-	SYNCDELAY();
+	SYNCDELAY;
 	EP6CFG = 0xE2; // 11100010
-	SYNCDELAY();
+	SYNCDELAY;
 	EP1INCFG &= ~bmVALID;
-	SYNCDELAY();
+	SYNCDELAY;
 	EP1OUTCFG &= ~bmVALID;
-	SYNCDELAY();
+	SYNCDELAY;
 	EP4CFG &= ~bmVALID;
-	SYNCDELAY();
+	SYNCDELAY;
 	EP8CFG &= ~bmVALID;
-	SYNCDELAY();
+	SYNCDELAY;
 
 
 	// arm ep2
 	EP2BCL = 0x80; // write once
-	SYNCDELAY();
+	SYNCDELAY;
 	EP2BCL = 0x80; // do it again
 
 
@@ -167,9 +167,9 @@ BOOL handle_set_interface(BYTE ifc, BYTE alt_ifc)
 		// restore endpoints to default condition
 		RESETFIFO(0x02);
 		EP2BCL=0x80;
-		SYNCDELAY();
+		SYNCDELAY;
 		EP2BCL=0X80;
-		SYNCDELAY();
+		SYNCDELAY;
 		RESETFIFO(0x86);
 		return TRUE;
 	} else
@@ -182,8 +182,9 @@ BYTE handle_get_configuration()
 	return 1;
 }
 
-BOOL handle_get_descriptor(BYTE desc)
+BOOL handle_get_descriptor()
 {
+        BYTE desc = SETUPDAT[3];
 	if (desc != DSCR_DEBUG_TYPE)
 		return FALSE;
 
