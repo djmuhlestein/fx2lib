@@ -79,3 +79,10 @@ serial:
 timers:
  Demonstrates setting up timers t0, t1, and t2 to be 16 bit counters and also demonstrates
  installing interrupts to process the timer overlow.
+
+
+usbmon_c:
+ Firmware used to test usbmon
+ (https://www.kernel.org/doc/Documentation/usb/usbmon.txt) collected traces of
+ the I/O on the USB bus.
+
