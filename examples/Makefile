@@ -1,4 +1,4 @@
-DIRS=	bulkloop debugdevice eeprom i2c lights reset serial timers
+DIRS=	bulkloop debugdevice debugdevice_full_duplex eeprom i2c lights reset serial timers
      
 .PHONY: dirs $(DIRS) clean
      

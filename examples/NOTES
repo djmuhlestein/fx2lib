@@ -56,6 +56,11 @@ debugdevice:
  device", which is used for low level hardware debugging in the USB stack.
 
 
+debugdevice_full_duplex:
+ This firmware implements a full-duplex version of the EHCI defined "debug
+ device", which is used for low level hardware debugging in the USB stack.
+
+
 i2c:
  A port of the Cypress i2c example.
 
