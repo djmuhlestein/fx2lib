@@ -26,7 +26,7 @@
  * using the comp port implies that timer 2 will be used as
  * a baud rate generator.  (Don't use timer 2)
  **/
-void sio0_init( WORD baud_rate ) __critical { // baud_rate max should be 57600 since int=2 bytes
+void sio0_init( DWORD baud_rate ) __critical { // baud_rate max should be 57600 since int=2 bytes
 	
     WORD hl; // hl value for reload	
 	BYTE mult; // multiplier for clock speed
