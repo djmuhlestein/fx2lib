@@ -1,0 +1,13 @@
+language: c
+sudo: required
+
+install:
+  - # Add PPA with newer version of sdcc backported to precise.
+  - sudo add-apt-repository -y ppa:mithro/sdcc-precise
+  - sudo apt-get update
+  - # Install sdcc
+  - sudo apt-get install -y sdcc
+  - sdcc --version
+
+script:
+  - make
