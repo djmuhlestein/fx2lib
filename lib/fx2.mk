@@ -97,7 +97,7 @@ load: $(BUILDDIR)/$(BASENAME).bix
 	fx2load -v $(VID) -p $(PID) $(BUILDDIR)/$(BASENAME).bix
 
 clean:
-	rm -f $(BUILDDIR)/*.{asm,ihx,lnk,lst,map,mem,rel,rst,sym,adb,cdb,bix}
+	rm -f $(foreach ext, a51 asm ihx lnk lk lst map mem rel rst rest sym adb cdb bix, $(BUILDDIR)/*.${ext})
 
 clean-all: clean
 	$(MAKE) -C $(FX2LIBDIR)/lib clean
