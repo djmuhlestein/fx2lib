@@ -8,7 +8,7 @@ install:
   - # Need libusb-dev for fx2loader and other tools
   - sudo apt-get install -y libusb-1.0-0-dev
   - # Install sdcc
-  - sudo apt-get install -y sdcc
+  - sudo apt-get install --force-yes -y sdcc
   - sdcc --version
 
 script:
