@@ -16,7 +16,7 @@
 
 AS8051?=sdas8051
 SOURCES = serial.c i2c.c delay.c setupdat.c gpif.c eputils.c $(wildcard interrupts/*.c)
-FX2_OBJS = $(patsubst %.c,%.rel, $(SOURCES)) usbav.rel int4av.rel
+FX2_OBJS = $(patsubst %.c,%.rel, $(SOURCES)) usbav.rel
 INCLUDES = -I../include
 SDCC = sdcc -mmcs51 $(SDCCFLAGS)
 LIBS = fx2.lib
@@ -28,9 +28,6 @@ $(LIBS): $(FX2_OBJS)
 
 usbav.rel: usbav.a51
 	$(AS8051) -logs usbav.a51
-
-int4av.rel: int4av.a51
-	$(AS8051) -logs int4av.a51
 
 %.rel: %.c
 	$(SDCC) $(INCLUDES) -c $< -o $@

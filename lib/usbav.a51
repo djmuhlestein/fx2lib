@@ -16,19 +16,15 @@
 
 .module INT2AV ; jump table for usb auto vector
 
-.globl _INT2JT ; defined as global so this assembly gets included in project 
-
-.area INT2AV (ABS,OVR)
-.org    0x43 ; this is where USBINT ( interrupt 8 ) jumps to
-_INT2AV = #. + 2 ; two bytes for ljmp (auto set by INT2IVEC)
-    ljmp _INT2JT
-
 ; INT2 Jump Table
+.globl _usb_isr  ; define jump target for interrupt 8 (USB)
+.globl _gpif_isr ; define jump target for interrupt 10 (GPIF)
 
 .area INT2JT ( CODE )
 ;.org    0x1A00 ; needs to be on a page boundary
 
-_INT2JT:
+_gpif_isr:
+_usb_isr:
     ljmp _sudav_isr
     .db 0
     ljmp _sof_isr

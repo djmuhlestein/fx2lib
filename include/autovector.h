@@ -38,11 +38,6 @@
 #include "fx2regs.h"
 
 
-
-// this causes usbjt to be included from the lib
-// not used for anything
-extern volatile BYTE INT2JT;
-extern volatile BYTE INT4JT;
 /**
  * Enable all interrupts (EA=1) separate from this macro.
  * This macro causes the autovector assembly for int2 interrupts
@@ -55,8 +50,7 @@ extern volatile BYTE INT4JT;
  *   sdcc <files> -Wl"-b INT2JT = 0xaddr"
  * \endcode
  **/
-#define USE_USB_INTS() {BYTE dummy=INT2JT;\
-                        EUSB=1;\
+#define USE_USB_INTS() {EUSB=1;\
                         INTSETUP|=bmAV2EN;}
 /** This macro causes the autovector assemby for int4 to be overlayed
  * at 0x53.  Don't use this if you want external pin generated int4 interrupts
@@ -65,11 +59,9 @@ extern volatile BYTE INT4JT;
  * interrupts require the USB jump table.  (You can't USE your own usb interrupt
  * handler if you want to enable GPIF interrupts.)
  **/
-#define USE_GPIF_INTS() {BYTE dummy=INT4JT;\
-                        EIEX4=1;\
+#define USE_GPIF_INTS() {EIEX4=1;\
                         INTSETUP|=bmAV4EN|INT4IN;}
              
-
 
 #define CLEAR_USBINT() EXIF &= ~0x10
 #define CLEAR_GPIF() EXIF &= ~0x40
@@ -185,7 +177,8 @@ typedef enum {
 // you must include the predef of these in the file with your main
 // so lets just define them here
 
-void sudav_isr() __interrupt (13);
+void usb_isr(void) __interrupt (8);
+void sudav_isr() __interrupt;
 void sof_isr() __interrupt;
 void sutok_isr() __interrupt;
 void suspend_isr() __interrupt;
@@ -214,6 +207,7 @@ void ep6isoerr_isr() __interrupt;
 void ep8isoerr_isr() __interrupt;
 void spare_isr() __interrupt; // not used
 // gpif ints
+void gpif_isr(void) __interrupt (10);
 void ep2pf_isr() __interrupt;
 void ep4pf_isr() __interrupt;
 void ep6pf_isr() __interrupt;
