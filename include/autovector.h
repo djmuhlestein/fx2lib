@@ -185,49 +185,49 @@ typedef enum {
 // you must include the predef of these in the file with your main
 // so lets just define them here
 
-void sudav_isr() __interrupt SUDAV_ISR;
-void sof_isr() __interrupt SOF_ISR;
-void sutok_isr() __interrupt SUTOK_ISR;
-void suspend_isr() __interrupt SUSPEND_ISR;
-void usbreset_isr() __interrupt USBRESET_ISR;
-void hispeed_isr() __interrupt HISPEED_ISR;
-void ep0ack_isr() __interrupt EP0ACK_ISR;
-void ep0in_isr() __interrupt EP0IN_ISR;
-void ep0out_isr() __interrupt EP0OUT_ISR;
-void ep1in_isr() __interrupt EP1IN_ISR;
-void ep1out_isr() __interrupt EP1OUT_ISR;
-void ep2_isr() __interrupt EP2_ISR;
-void ep4_isr() __interrupt EP4_ISR;
-void ep6_isr() __interrupt EP6_ISR;
-void ep8_isr() __interrupt EP8_ISR;
-void ibn_isr() __interrupt IBN_ISR;
-void ep0ping_isr() __interrupt EP0PING_ISR;
-void ep1ping_isr() __interrupt EP1PING_ISR;
-void ep2ping_isr() __interrupt EP2PING_ISR;
-void ep4ping_isr() __interrupt EP4PING_ISR;
-void ep6ping_isr() __interrupt EP6PING_ISR;
-void ep8ping_isr() __interrupt EP8PING_ISR;
-void errlimit_isr() __interrupt ERRLIMIT_ISR;
-void ep2isoerr_isr() __interrupt EP2ISOERR_ISR;
-void ep4isoerr_isr() __interrupt EP4ISOERR_ISR;
-void ep6isoerr_isr() __interrupt EP6ISOERR_ISR;
-void ep8isoerr_isr() __interrupt EP8ISOERR_ISR;
-void spare_isr() __interrupt RESERVED_ISR; // not used
+void sudav_isr() __interrupt (13);
+void sof_isr() __interrupt;
+void sutok_isr() __interrupt;
+void suspend_isr() __interrupt;
+void usbreset_isr() __interrupt;
+void hispeed_isr() __interrupt;
+void ep0ack_isr() __interrupt;
+void ep0in_isr() __interrupt;
+void ep0out_isr() __interrupt;
+void ep1in_isr() __interrupt;
+void ep1out_isr() __interrupt;
+void ep2_isr() __interrupt;
+void ep4_isr() __interrupt;
+void ep6_isr() __interrupt;
+void ep8_isr() __interrupt;
+void ibn_isr() __interrupt;
+void ep0ping_isr() __interrupt;
+void ep1ping_isr() __interrupt;
+void ep2ping_isr() __interrupt;
+void ep4ping_isr() __interrupt;
+void ep6ping_isr() __interrupt;
+void ep8ping_isr() __interrupt;
+void errlimit_isr() __interrupt;
+void ep2isoerr_isr() __interrupt;
+void ep4isoerr_isr() __interrupt;
+void ep6isoerr_isr() __interrupt;
+void ep8isoerr_isr() __interrupt;
+void spare_isr() __interrupt; // not used
 // gpif ints
-void ep2pf_isr() __interrupt EP2PF_ISR;
-void ep4pf_isr() __interrupt EP4PF_ISR;
-void ep6pf_isr() __interrupt EP6PF_ISR;
-void ep8pf_isr() __interrupt EP8PF_ISR;
-void ep2ef_isr() __interrupt EP2EF_ISR;
-void ep4ef_isr() __interrupt EP4EF_ISR;
-void ep6ef_isr() __interrupt EP6EF_ISR;
-void ep8ef_isr() __interrupt EP8EF_ISR;
-void ep2ff_isr() __interrupt EP2FF_ISR;
-void ep4ff_isr() __interrupt EP4FF_ISR;
-void ep6ff_isr() __interrupt EP6FF_ISR;
-void ep8ff_isr() __interrupt EP8FF_ISR;
-void gpifdone_isr() __interrupt GPIFDONE_ISR;
-void gpifwf_isr() __interrupt GPIFWF_ISR;
+void ep2pf_isr() __interrupt;
+void ep4pf_isr() __interrupt;
+void ep6pf_isr() __interrupt;
+void ep8pf_isr() __interrupt;
+void ep2ef_isr() __interrupt;
+void ep4ef_isr() __interrupt;
+void ep6ef_isr() __interrupt;
+void ep8ef_isr() __interrupt;
+void ep2ff_isr() __interrupt;
+void ep4ff_isr() __interrupt;
+void ep6ff_isr() __interrupt;
+void ep8ff_isr() __interrupt;
+void gpifdone_isr() __interrupt;
+void gpifwf_isr() __interrupt;
 
 #endif
 
