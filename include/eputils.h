@@ -47,7 +47,13 @@
  * \brief Reset the toggle on an endpoint.
  * To use this, the endpoint needs bit 8 to be IN=1,OUT=0
  **/
-#define RESETTOGGLE(ep) TOGCTL = (ep&0x0F) + ((ep&0x80)>>3); TOGCTL |= bmRESETTOGGLE
+#define RESETTOGGLE(ep) do {\
+	BYTE x = ep; \
+	if (x&0x80) { x |= 0x10; } \
+	x &= 0x1F; \
+	TOGCTL = x; \
+	TOGCTL = x | bmRESETTOGGLE; \
+} while (0)
 
 
 /**
