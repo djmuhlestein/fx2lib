@@ -217,6 +217,11 @@ void handle_setupdata();
  **/
 void handle_hispeed( BOOL highspeed );
 
+/* Descriptor header */
+typedef struct {
+    BYTE dsc_len;
+    BYTE dsc_type;
+} HEADER_DSCR;
 
 /* descriptor types */
 #define DSCR_DEVICE_TYPE 1
@@ -226,13 +231,10 @@ void handle_hispeed( BOOL highspeed );
 #define DSCR_OTHERSPD_TYPE 7
 #define DSCR_DEBUG_TYPE 10
 
-/* usb spec 2 */
-#define DSCR_BCD 2
+/* USB version 2.0 */
+#define DSCR_BCD 0x0200
 
-
-/* device descriptor */
-#define DSCR_DEVICE_LEN 18
-
+/* Device descriptor */
 typedef struct {
     BYTE dsc_len; // descriptor length (18 for this )
     BYTE dsc_type; // dscr type
@@ -248,26 +250,18 @@ typedef struct {
     BYTE idx_devstr; // product string index
     BYTE idx_serstr; // serial number index
     BYTE num_configs; // number of configurations
-        
 } DEVICE_DSCR;
+#define DSCR_DEVICE_LEN 18
 
-
-/* config descriptor */
+/* Config descriptor  */
 #define DSCR_CONFIG_LEN 9
-typedef struct {
-    BYTE dsc_len; // 9 for this one
-    BYTE dsc_type; // dscr type
-    
-} CONFIG_DSCR;
+#define CONFIG_DSCR DSCR_HEAD
 
-/* string descriptor */
+/* String descriptor */
 typedef struct {
     BYTE dsc_len;
     BYTE dsc_type;
     BYTE pstr;
 } STRING_DSCR;
-
-
-
 
 #endif
