@@ -135,17 +135,21 @@ void handle_setupdata() {
     
 }
 
-__xdata BYTE* ep_addr(BYTE ep) { // bit 8 of ep_num is the direction
- BYTE ep_num = ep&~0x80; // mask the direction
- switch (ep_num) {
-  case 0: return &EP0CS;
-  case 1: return ep&0x80? &EP1INCS : &EP1OUTCS;
-  case 2: return &EP2CS;
-  case 4: return &EP4CS;
-  case 6: return &EP6CS;
-  case 8: return &EP8CS;
-  default: return NULL;
- }
+/**
+ * \brief Get pointer to an endpoint's control status register.
+ **/
+__xdata BYTE* ep_addr(BYTE ep) {
+    // Bit 8 of ep_num is the direction (In or Out) of the endpoint.
+    BYTE ep_num = ep & ~bmBIT7;
+    switch (ep_num) {
+        case 0: return &EP0CS;
+        case 1: return (ep&0x80) ? &EP1INCS : &EP1OUTCS;
+        case 2: return &EP2CS;
+        case 4: return &EP4CS;
+        case 6: return &EP6CS;
+        case 8: return &EP8CS;
+        default: return NULL;
+    }
 }
 
 
