@@ -3,7 +3,12 @@
 set -e
 
 if [ "$TRAVIS" = true -a "$TRAVIS_SECURE_ENV_VARS" = false ]; then
-	echo "No environment variables found, skipping."
+	echo "No environment variables found, skipping (probably a pull request)."
+	exit 0
+fi
+
+if [ "$TRAVIS" = true -a "$TRAVIS_BRANCH" != "master" ]; then
+	echo "No master branch, skipping."
 	exit 0
 fi
 
@@ -72,6 +77,10 @@ find $TMPDIR | sort
 
 echo "- Switching to the gh-pages branch"
 git checkout origin/gh-pages -b gh-pages
+
+echo "- Updating the README"
+sed -e"s-github.com/[^/]\+/[^/ ]\+-github.com/$TRAVIS_REPO_SLUG-" README.md > $TMPDIR/README.md
+cat $TMPDIR/README.md
 
 echo "- Adding the newly generated content"
 rm -rf *
