@@ -286,9 +286,14 @@ extern __code WORD dev_strings;
 WORD pDevConfig = (WORD)&fullspd_dscr;
 WORD pOtherConfig = (WORD)&highspd_dscr;
 
+/**
+ * \brief Change descriptor pointer to either high speed or full speed descriptors.
+ *
+ * This function is called inside ISR functions, so must *not* call any
+ * non-reentrant functions. (This includes things like printf provided by sdcc.)
+ **/
 void handle_hispeed(BOOL highspeed) {
  __critical { 
-     printf ( "Hi Speed or reset Interrupt\n" );
      if (highspeed) {
          pDevConfig=(WORD)&highspd_dscr;
          pOtherConfig=(WORD)&fullspd_dscr;
