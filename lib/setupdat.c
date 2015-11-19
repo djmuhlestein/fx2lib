@@ -35,7 +35,7 @@ extern BOOL handle_get_descriptor();
 extern BOOL handle_vendorcommand(BYTE cmd);
 extern BOOL handle_set_configuration(BYTE cfg);
 extern BOOL handle_get_interface(BYTE ifc, BYTE* alt_ifc);
-extern BOOL handle_set_interface(BYTE ifc,BYTE alt_ifc);
+extern BOOL handle_set_interface(BYTE ifc, BYTE alt_ifc);
 extern BYTE handle_get_configuration();
 extern void handle_reset_ep(BYTE ep);
 
@@ -99,7 +99,7 @@ void handle_setupdata() {
             break;
         case SET_CONFIGURATION:
             // user callback
-            if( !handle_set_configuration(SETUPDAT[2])) {
+            if(!handle_set_configuration(SETUPDAT[2])) {
                 STALLEP0();
             }
             break;
@@ -117,7 +117,7 @@ void handle_setupdata() {
             break;
         case SET_INTERFACE:
             // user callback
-            if ( !handle_set_interface(SETUPDAT[4],SETUPDAT[2])) {
+            if (!handle_set_interface(SETUPDAT[4],SETUPDAT[2])) {
                 STALLEP0();
             }
             break;
