@@ -39,7 +39,6 @@
 
 /**
  * \brief Interrupt numbers for standard FX2 interrupts.
-
  **/
 typedef enum {
  IE0_ISR=0, ///< External interrupt 0
@@ -55,9 +54,9 @@ typedef enum {
  IE4_ISR, ///< External interrupt 4.  An interrupt handler for this should only be used if not using auto vectored interrupts with INT4
  IE5_ISR, ///< External interrupt 5
  IE6_ISR, ///< External interrupt 6
- // Better names for the USART ISR names
- USART0_ISR = TI_0_ISR,
- USART1_ISR = TI_1_ISR,
+ // Better names for the USART interrupts
+ USART0_ISR = TI_0_ISR, ///< Better name for USART0 interrupt
+ USART1_ISR = TI_1_ISR, ///< Better name for USART1 interrupt
 } FX2_ISR;
 
 /**
@@ -82,7 +81,7 @@ typedef enum {
 #define ENABLE_TIMER0() ET0=1
 
 /**
- *  \brief Clear timer 0 interrupt
+ * \brief Clear timer 0 interrupt
  *
  * CLEAR_TIMER0() is a NOP because the timer interrupt flag is automatically
  * cleared when the ISR is called.
@@ -101,7 +100,7 @@ typedef enum {
 #define ENABLE_TIMER1() ET1=1
 
 /**
- *  \brief Clear timer 1 interrupt
+ * \brief Clear timer 1 interrupt
  *
  * CLEAR_TIMER1() is a NOP because the timer interrupt flag is automatically
  * cleared when the ISR is called.
@@ -119,9 +118,9 @@ typedef enum {
  **/
 #define ENABLE_TIMER2() ET2=1
 /**
- *  \brief Clear timer 2 interrupt
+ * \brief Clear timer 2 interrupt
  *
- *  Clears both the TF2 AND EXF2 flag
+ * Clears both the TF2 AND EXF2 flag
  **/
 #define CLEAR_TIMER2() TF2=0;EXF2=0;
 
@@ -171,8 +170,10 @@ typedef enum {
  *
  * Does *not* enable the interrupt.
  *
- * SET_USART0_ISR_PRIO(INTERRUPT_HIGH_PRIO) -- Set USART0 to high priority
- * SET_USART0_ISR_PRIO(INTERRUPT_LOW_PRIO)  -- Set USART0 to low priority
+ * \code
+ *  SET_USART0_ISR_PRIO(INTERRUPT_HIGH_PRIO); // Set USART0 to high priority
+ *  SET_USART0_ISR_PRIO(INTERRUPT_LOW_PRIO);  // Set USART0 to low priority
+ * \endcode
  **/
 #define SET_USART0_ISR_PRIORITY(p) \
 	PS0 = p
@@ -187,17 +188,17 @@ typedef enum {
 #define ENABLE_USART0() \
 	ES0 = 1;
 /**
- *  \brief Clear USART 0 RX bit.
+ * \brief Clear USART 0 RX bit.
  **/
 #define CLEAR_USART0_RX() \
 	RI = 0;
 /**
- *  \brief Clear USART 0 TX bit.
+ * \brief Clear USART 0 TX bit.
  **/
 #define CLEAR_USART0_TX() \
 	TI = 0;
 /**
- *  \brief Clear USART 0 both TX & RX bit.
+ * \brief Clear USART 0 both TX & RX bit.
  **/
 #define CLEAR_USART0() \
 	CLEAR_USART0_RX(); \
@@ -211,8 +212,10 @@ typedef enum {
  *
  * Does *not* enable the interrupt.
  *
- * SET_USART1_ISR_PRIO(INTERRUPT_HIGH_PRIO) -- Set USART1 to high priority
- * SET_USART1_ISR_PRIO(INTERRUPT_LOW_PRIO)  -- Set USART1 to low priority
+ * \code
+ * SET_USART1_ISR_PRIO(INTERRUPT_HIGH_PRIO); // Set USART1 to high priority
+ * SET_USART1_ISR_PRIO(INTERRUPT_LOW_PRIO);  // Set USART1 to low priority
+ * \endcode
  **/
 #define SET_USART1_ISR_PRIORITY(p) \
 	PS1 = p
@@ -227,17 +230,17 @@ typedef enum {
 #define ENABLE_USART1() \
 	ES1 = 1;
 /**
- *  \brief Clear USART 1 receive (RI1) bit.
+ * \brief Clear USART 1 receive (RI1) bit.
  **/
 #define CLEAR_USART1_RX() \
 	RI1 = 0;
 /**
- *  \brief Clear USART 1 transmit (TI1) bit.
+ * \brief Clear USART 1 transmit (TI1) bit.
  **/
 #define CLEAR_USART1_TX() \
 	TI1 = 0;
 /**
- *  \brief Clear USART 1 both TX & RX bits.
+ * \brief Clear USART 1 both TX & RX bits.
  **/
 #define CLEAR_USART1() \
 	CLEAR_USART1_RX(); \
@@ -251,8 +254,10 @@ typedef enum {
  *
  * Does *not* enable the interrupt.
  *
- * SET_I2C_ISR_PRIO(INTERRUPT_HIGH_PRIO) -- Set I2C to high priority
- * SET_I2C_ISR_PRIO(INTERRUPT_LOW_PRIO)  -- Set I2C to low priority
+ * \code
+ *  SET_I2C_ISR_PRIO(INTERRUPT_HIGH_PRIO) // Set I2C to high priority
+ *  SET_I2C_ISR_PRIO(INTERRUPT_LOW_PRIO)  // Set I2C to low priority
+ * \endcode
  **/
 #define SET_I2C_ISR_PRIORITY(p) \
 	PI2C = p
@@ -267,7 +272,7 @@ typedef enum {
 #define ENABLE_I2C() \
 	EI2C = 1;
 /**
- *  \brief Clear I2C interrupt.
+ * \brief Clear I2C interrupt.
  **/
 #define CLEAR_I2C() \
 	EXIF &= ~bmI2CINT;
