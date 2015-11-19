@@ -40,7 +40,7 @@ extern BYTE handle_get_configuration();
 extern void handle_reset_ep(BYTE ep);
 
 /**
- * Predefs for handlers
+ * Forward declaration for handlers
  **/
 
 
@@ -52,7 +52,7 @@ BOOL handle_clear_feature();
 //  SET_FEATURE=0x03,
 BOOL handle_set_feature();
   // 0x04 is reserved
-//  SET_ADDRESS=0x05, // this is handled by EZ-USB core unless RENUM=0
+//  SET_ADDRESS=0x05, // SET_ADDRESS is *always* handled by EZ-USB core.
 //  GET_DESCRIPTOR,
 void _handle_get_descriptor();
 //  SET_DESCRIPTOR,
@@ -274,7 +274,7 @@ BOOL handle_set_feature() {
  return TRUE;
 }
 
-/* these are devined in dscr.asm
+/* these are defined in dscr.asm
    and need to be customized then
    linked in by the firmware manually */
 extern __code WORD dev_dscr;
