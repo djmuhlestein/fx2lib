@@ -15,7 +15,7 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 /*! \file 
- *  Define the standard fx2 interrupts.  For int2 and int4 autovector
+ *  Define the standard FX2 interrupts.  For INT2 and INT4 autovector
  *  interrupts see \ref autovector.h
  *
  *  To enable an interrupt, simply define an interrupt handler function
@@ -38,7 +38,7 @@
 
 
 /**
- * \brief interrupt numbers for standard fx2 interrupts
+ * \brief Interrupt numbers for standard FX2 interrupts.
 
  **/
 typedef enum {
@@ -50,9 +50,9 @@ typedef enum {
  TF2_ISR, ///< Timer 2 interrupt
  RESUME_ISR, ///< Resume interrupt
  TI_1_ISR, ///< Serial port 1 transmit or receive interrupt
- USBINT_ISR, ///< Usb Interrupt.  An interrupt handler for this should only be used if not using auto vectored interrupts with int2
+ USBINT_ISR, ///< USB Interrupt.  An interrupt handler for this should only be used if not using auto vectored interrupts with INT2
  I2CINT_ISR, ///< I2C Bus interrupt
- IE4_ISR, ///< External interrupt 4.  An interrupt handler for this should only be used if not using auto vectored interrupts with int4
+ IE4_ISR, ///< External interrupt 4.  An interrupt handler for this should only be used if not using auto vectored interrupts with INT4
  IE5_ISR, ///< External interrupt 5
  IE6_ISR, ///< External interrupt 6
  // Better names for the USART ISR names
