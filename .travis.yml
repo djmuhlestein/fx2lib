@@ -18,4 +18,4 @@ script:
   - make docs
 
 after_success:
-  - # FIXME: Push documentation to GitHub pages.
+  - ./.travis-push-docs.sh
