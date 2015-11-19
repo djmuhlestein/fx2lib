@@ -97,5 +97,5 @@ unset GIT_EMAIL
 git commit -a -m "Travis build #$TRAVIS_BUILD_NUMBER of $ORIG_GIT_REVISION"
 
 echo "- Pushing"
-git remote set-url origin https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG.git
-git push origin gh-pages
+git remote set-url origin https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG.git > /dev/null 2>&1
+git push origin gh-pages > /dev/null 2>&1
