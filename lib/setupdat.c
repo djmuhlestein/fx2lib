@@ -292,16 +292,14 @@ WORD pOtherConfig = (WORD)&highspd_dscr;
  * This function is called inside ISR functions, so must *not* call any
  * non-reentrant functions. (This includes things like printf provided by sdcc.)
  **/
-void handle_hispeed(BOOL highspeed) {
- __critical { 
-     if (highspeed) {
-         pDevConfig=(WORD)&highspd_dscr;
-         pOtherConfig=(WORD)&fullspd_dscr;
-     } else {
+void handle_hispeed(BOOL highspeed) __critical {
+    if (highspeed) {
+        pDevConfig=(WORD)&highspd_dscr;
+        pOtherConfig=(WORD)&fullspd_dscr;
+    } else {
         pDevConfig=(WORD)&fullspd_dscr;
         pOtherConfig=(WORD)&highspd_dscr;
-     }
- }
+    }
 }
 
 /**
