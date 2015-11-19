@@ -73,7 +73,6 @@ void handle_setupdata() {
     //printf ( "Handle setupdat: %02x\n", SETUPDAT[1] );
 
     switch ( SETUPDAT[1] ) {
-
         case GET_STATUS:
             if (!handle_get_status())
                 STALLEP0();
@@ -109,9 +108,9 @@ void handle_setupdata() {
                 if (!handle_get_interface(SETUPDAT[4],&alt_ifc)) {
                     STALLEP0();
                 } else {
-                 EP0BUF[0] = alt_ifc;
-                 EP0BCH=0;
-                 EP0BCL=1;
+                    EP0BUF[0] = alt_ifc;
+                    EP0BCH=0;
+                    EP0BCL=1;
                 }
             }
             break;
@@ -122,17 +121,14 @@ void handle_setupdata() {
             }
             break;
         default:
-         if (!handle_vendorcommand(SETUPDAT[1])) {
-            printf ( "Unhandled Vendor Command: %02x\n" , SETUPDAT[1] );
-            STALLEP0();
-         }
-        
-        
+            if (!handle_vendorcommand(SETUPDAT[1])) {
+                printf ( "Unhandled Vendor Command: %02x\n" , SETUPDAT[1] );
+                STALLEP0();
+            }
     }
     
     // do the handshake
     EP0CS |= bmHSNAK;
-    
 }
 
 /**
