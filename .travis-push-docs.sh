@@ -76,6 +76,8 @@ cp docs/intro/intro.pdf $TMPDIR/
 find $TMPDIR | sort
 
 echo "- Switching to the gh-pages branch"
+git remote set-branches --add origin gh-pages
+git fetch origin gh-pages
 git checkout origin/gh-pages -b gh-pages
 
 echo "- Updating the README"
