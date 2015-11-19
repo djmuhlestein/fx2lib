@@ -131,9 +131,6 @@ void handle_setupdata() {
     EP0CS |= bmHSNAK;
 }
 
-/**
- * \brief Get pointer to an endpoint's control status register.
- **/
 __xdata BYTE* ep_addr(BYTE ep) {
     // Bit 8 of ep_num is the direction (In or Out) of the endpoint.
     BYTE ep_num = ep & ~bmBIT7;
@@ -297,10 +294,9 @@ WORD pDevConfig = (WORD)&fullspd_dscr;
 WORD pOtherConfig = (WORD)&highspd_dscr;
 
 /**
- * \brief Change descriptor pointer to either high speed or full speed descriptors.
- *
  * This function is called inside ISR functions, so must *not* call any
- * non-reentrant functions. (This includes things like printf provided by sdcc.)
+ * non-reentrant functions.
+ * (This *includes* things like printf provided by SDCC.)
  **/
 void handle_hispeed(BOOL highspeed) __critical {
     if (highspeed) {
