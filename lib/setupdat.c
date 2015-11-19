@@ -204,74 +204,78 @@ BOOL handle_get_status() {
 #define GF_ENDPOINT 2
 
 BOOL handle_clear_feature() {
- //printf ( "Clear Feature\n" );
- switch ( SETUPDAT[0] ) {
-   case GF_DEVICE:
-    if (SETUPDAT[2] == 1) {
-        remote_wakeup_allowed=FALSE;
-        break;
-    }
+    printf ( "Clear Feature %02x\n", SETUPDAT[0] );
+    switch ( SETUPDAT[0] ) {
+        case GF_DEVICE:
+            if (SETUPDAT[2] == 1) {
+                remote_wakeup_allowed=FALSE;
+                break;
+            }
 
-    if (SETUPDAT[2] == 6) // debug feature
-	break;
-    return FALSE;
-   case GF_ENDPOINT:
-    if (SETUPDAT[2] == 0) { // ep stall feature
-        __xdata BYTE* pep=ep_addr(SETUPDAT[4]);
-        printf ( "unstall endpoint %02X\n" , SETUPDAT[4] );
-        *pep &= ~bmEPSTALL;        
-	RESETTOGGLE(SETUPDAT[4]);
-    } else {
-        printf ( "unsupported ep feature %02x", SETUPDAT[2] );
-        return FALSE;
-    }
+            if (SETUPDAT[2] == 6) // debug feature
+                break;
 
-    break;
-   default:
-    return handle_vendorcommand(SETUPDAT[1]);
- }
- return TRUE;
+            return FALSE;
+        case GF_ENDPOINT:
+            if (SETUPDAT[2] == 0) { // ep stall feature
+                __xdata BYTE* pep=ep_addr(SETUPDAT[4]);
+                printf ( "unstall endpoint %02X\n" , SETUPDAT[4] );
+                *pep &= ~bmEPSTALL;
+                RESETTOGGLE(SETUPDAT[4]);
+            } else {
+                printf ( "unsupported ep feature %02x", SETUPDAT[2] );
+                return FALSE;
+            }
+            break;
+        default:
+            return handle_vendorcommand(SETUPDAT[1]);
+    }
+    return TRUE;
 }
 
 BOOL handle_set_feature() {
- printf ( "Set Feature %02x\n", SETUPDAT[0] );
- switch ( SETUPDAT[0] ) {
-  case GF_DEVICE:
-    if (SETUPDAT[2] == 2) break; // this is TEST_MODE and we simply need to return the handshake
-    if (SETUPDAT[2] == 1) {
-       remote_wakeup_allowed=TRUE; 
-       break;
-    }
-    if (SETUPDAT[2] == 6) // debug feature
-	break;
-    return FALSE;
-  case GF_ENDPOINT:
-    if ( SETUPDAT[2] == 0 ) { // ep stall feature
-        // set TRM 2.3.2
-        // stall and endpoint
-        __xdata BYTE* pep = ep_addr(SETUPDAT[4]);
-        printf ( "Stall ep %d\n", SETUPDAT[4] );
-        if (!pep) {            
+    printf ( "Set Feature %02x\n", SETUPDAT[0] );
+    switch ( SETUPDAT[0] ) {
+        case GF_DEVICE:
+            // this is TEST_MODE and we simply need to return the handshake
+            if (SETUPDAT[2] == 2)
+                break;
+
+            if (SETUPDAT[2] == 1) {
+                remote_wakeup_allowed=TRUE;
+                break;
+            }
+            // debug feature
+            if (SETUPDAT[2] == 6)
+                break;
+
             return FALSE;
-        }
+        case GF_ENDPOINT:
+            if ( SETUPDAT[2] == 0 ) { // ep stall feature
+                // set TRM 2.3.2
+                // stall and endpoint
+                __xdata BYTE* pep = ep_addr(SETUPDAT[4]);
+                printf ( "Stall ep %d\n", SETUPDAT[4] );
+                if (!pep) {
+                    return FALSE;
+                }
         
-        *pep |= bmEPSTALL;
-        // should now reset data toggles
-        // write ep+dir to TOGCTL
-        RESETTOGGLE(SETUPDAT[4]);
-        // restore stalled ep to default condition
-        // NOTE
-        //handle_reset_ep(SETUPDAT[4]);
-        
-    } else {
-        printf ( "unsupported ep feature %02x\n", SETUPDAT[2] );
-        return FALSE;
-    }  
-   break;
-   default:
-    return handle_vendorcommand(SETUPDAT[1]);
- }
- return TRUE;
+                *pep |= bmEPSTALL;
+                // should now reset data toggles
+                // write ep+dir to TOGCTL
+                RESETTOGGLE(SETUPDAT[4]);
+                // restore stalled ep to default condition
+                // NOTE
+                //handle_reset_ep(SETUPDAT[4]);
+            } else {
+                printf ( "unsupported ep feature %02x\n", SETUPDAT[2] );
+                return FALSE;
+            }
+            break;
+        default:
+            return handle_vendorcommand(SETUPDAT[1]);
+    }
+    return TRUE;
 }
 
 /* these are defined in dscr.asm
