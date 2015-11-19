@@ -283,7 +283,13 @@ extern __code WORD highspd_dscr;
 extern __code WORD fullspd_dscr;
 extern __code WORD dev_strings;
 
+/**
+ * \brief Pointer to the active descriptor.
+ **/
 WORD pDevConfig = (WORD)&fullspd_dscr;
+/**
+ * \brief Pointer to the inactive descriptor.
+ **/
 WORD pOtherConfig = (WORD)&highspd_dscr;
 
 /**
