@@ -57,8 +57,10 @@ fi
 
 TMPDIR=$(mktemp --directory)
 
-echo "- Fetching non shallow to get git version"
-git fetch --unshallow && git fetch --tags
+if ! git describe > /dev/null 2>&1; then
+	echo "- Fetching non shallow to get git version"
+	git fetch --unshallow && git fetch --tags
+fi
 ORIG_GIT_REVISION=`git describe`
 ORIG_COMMITTER_NAME=$(git log -1 --pretty=%an)
 ORIG_COMMITTER_EMAIL=$(git log -1 --pretty=%ae)
