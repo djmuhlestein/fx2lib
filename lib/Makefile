@@ -15,16 +15,18 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 AS8051?=sdas8051
+CC=sdcc
+CCLIB?=sdcclib
 SOURCES = serial.c i2c.c delay.c setupdat.c gpif.c eputils.c $(wildcard interrupts/*.c)
 FX2_OBJS = $(patsubst %.c,%.rel, $(SOURCES)) usbav.rel
 INCLUDES = -I../include
-SDCC = sdcc -mmcs51 $(SDCCFLAGS)
+SDCC = $(CC) -mmcs51 $(SDCCFLAGS)
 LIBS = fx2.lib
 
 all: $(LIBS)
 
 $(LIBS): $(FX2_OBJS)
-	sdcclib fx2.lib $?
+	$(CCLIB) fx2.lib $?
 
 usbav.rel: usbav.a51
 	$(AS8051) -logs usbav.a51
