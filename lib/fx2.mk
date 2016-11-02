@@ -44,6 +44,9 @@ INCLUDES?=""
 DSCR_AREA?=-Wl"-b DSCR_AREA=0x3e00"
 INT2JT?=-Wl"-b INT2JT=0x3f00"
 CC=sdcc
+# these are pretty good settings for most firmwares.
+# Have to be careful with memory locations for
+# firmwares that require more xram etc.
 CODE_SIZE?=--code-size 0x3c00
 XRAM_SIZE?=--xram-size 0x0200
 XRAM_LOC?=--xram-loc 0x3c00
@@ -52,14 +55,10 @@ BUILDDIR?=build
 FX2LIBDIR?=$(dir $(lastword $(MAKEFILE_LIST)))../
 
 RELS=$(addprefix $(BUILDDIR)/, $(addsuffix .rel, $(notdir $(basename $(SOURCES) $(A51_SOURCES)))))
-# these are pretty good settings for most firmwares.  
-# Have to be careful with memory locations for 
-# firmwares that require more xram etc.
-SDCC = $(CC) -mmcs51 \
-	$(SDCCFLAGS) \
-    $(CODE_SIZE) \
-    $(XRAM_SIZE) \
-    $(XRAM_LOC) \
+
+LINKFLAGS=$(CODE_SIZE) \
+	$(XRAM_SIZE) \
+	$(XRAM_LOC) \
 	$(DSCR_AREA) \
 	$(INT2JT)
 
@@ -77,16 +76,14 @@ $(FX2LIBDIR)/lib/fx2.lib: $(FX2LIBDIR)/lib/*.c $(FX2LIBDIR)/lib/*.a51
 $(BUILDDIR):
 	mkdir -p $(BUILDDIR)
 
-$(BUILDDIR)/$(BASENAME).ihx: $(BUILDDIR) $(SOURCES) $(A51_SOURCES) $(FX2LIBDIR)/lib/fx2.lib $(DEPS) 
-# can't use default target %.rel because there is no way
-# to differentiate the dependency.  (Is it %.rel: %.c or %.a51)
-	for a in $(A51_SOURCES); do \
-	 cp $$a $(BUILDDIR)/; \
-	 cd $(BUILDDIR) && $(AS8051) -logs `basename $$a` && cd ..; done
-	for s in $(SOURCES); do \
-	 THISREL=$$(basename `echo "$$s" | sed -e 's/\.c$$/\.rel/'`); \
-	 $(SDCC) -c -I $(FX2LIBDIR)/include -I $(INCLUDES) $$s -o $(BUILDDIR)/$$THISREL ; done
-	$(SDCC) -o $@ $(RELS) fx2.lib -L $(FX2LIBDIR)/lib $(LIBS)
+$(BUILDDIR)/$(BASENAME).ihx: $(BUILDDIR) $(RELS) $(FX2LIBDIR)/lib/fx2.lib $(DEPS)
+	$(CC) -mmcs51 $(SDCCFLAGS) -o $@ $(RELS) fx2.lib $(LINKFLAGS) -L $(FX2LIBDIR)/lib $(LIBS)
+
+%.rel: ../%.c
+	$(CC) -mmcs51 $(SDCCFLAGS) -c -o $@ -I $(FX2LIBDIR)/include -I $(INCLUDES) $<
+
+%.rel: ../%.a51
+	$(AS8051) -logs $@ $<
 
 
 $(BUILDDIR)/$(BASENAME).bix: $(BUILDDIR)/$(BASENAME).ihx
