@@ -10,6 +10,12 @@ install:
   - # Install sdcc
   - sudo apt-get install --force-yes -y sdcc
   - sdcc --version
+  - # doxygen & rubber are needed for generating the documentation
+  - sudo apt-get install -y doxygen rubber
 
 script:
   - make
+  - make docs
+
+after_success:
+  - ./.travis-push-docs.sh
