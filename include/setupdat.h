@@ -138,36 +138,90 @@ typedef enum {
 
 
 /**
- * returns the control/status register for an end point
- * (bit 7=1 for IN, 0 for out
+ * \brief Get pointer to an endpoint's control/status register.
+ *
+ * \param Endpoint number (lower bits) and direction (bit 7).
  **/
 __xdata BYTE* ep_addr(BYTE ep);
 
 /*
- You can call this function directly if you are polling
- for setup data in your main loop.
- You can also use the usbjt and enable the sudav isr
- and call the function from withing the sudav isr routine
-*/
+ * \brief Handle the "setup data" USB requests.
+ *
+ * This function should *not* be called inside an ISR (as it calls
+ * non-reentrant functions). Instead you should set a flag inside the ISR and
+ * then call this function ASAP as part of your main loop.
+ *
+ * \code
+ * volatile __bit dosud=FALSE;
+ * void sudav_isr() __interrupt SUDAV_ISR {
+ *     CLEAR_SUDAV();
+ *     if(dosud) {
+ *         // Indicate error
+ *     }
+ *     dosud=TRUE;
+ * }
+ *
+ * void main() {
+ *     // Other init code
+ *     ENABLE_SUDAV();
+ *     EA=1; // Enable interrupts
+ *
+ *     while(TRUE) {
+ *         if(dosud) { // Check flag
+ *             handle_setupdata();
+ *             dosud=FALSE;
+ *         }
+ *         // Other loop code
+ *     }
+ * }
+ * \endcode
+ */
 void handle_setupdata();
 
 
 /**
-    For devices to properly handle usb hispeed
-    (This is if your descriptor has high speed and full speed versions
-     and it should since the fx2lp is a high speed capable device
-    )
-    enable both USBRESET and HISPEED interrupts and
-    call this function to switch the descriptors.  This function uses
-    a __critical section to switch the descriptors and is safe to call
-    from the hispeed or reset interrupt.  See \ref fw.c
-
-    \param highspeed Call the function with highspeed = TRUE if 
-        calling because the highspeed interrupt was received.
-        If calling from usbreset, call with highspeed=false
-**/
+ * \brief Switch the descriptor pointer to right descriptor version.
+ *
+ * This function switches the descriptor pointer between the high speed and
+ * full speed descriptor versions. To use this function;
+ *  \li Your descriptors should have both versions.
+ *  \li Enable both USBRESET and HISPEED interrupts.
+ *  \li In your ISR for these functions call this method;
+ *    \li  * highspeed = FALSE for USBRESET
+ *    \li  * highspeed = TRUE for HISPEED
+ *
+ * This function is safe to call both inside an ISR and outside because it
+ * disable interrupts while operating (__critical).
+ *
+ * \code
+ * void usbreset_isr() __interrupt USBRESET_ISR {
+ *     handle_hispeed(FALSE);
+ *     CLEAR_USBRESET();
+ * }
+ * void hispeed_isr() __interrupt HISPEED_ISR {
+ *     handle_hispeed(TRUE);
+ *     CLEAR_HISPEED();
+ * }
+ *
+ * void main() {
+ *     ENABLE_USBRESET();
+ *     ENABLE_HISPEED();
+ * }
+ * \endcode
+ *
+ * See \ref fw.c for full example.
+ *
+ * \param highspeed Use high speed descriptor?
+ *     \li TRUE, use high speed descriptor.
+ *     \li FALSE, use full speed descriptor.
+ **/
 void handle_hispeed( BOOL highspeed );
 
+/* Descriptor header */
+typedef struct {
+    BYTE dsc_len;
+    BYTE dsc_type;
+} HEADER_DSCR;
 
 /* descriptor types */
 #define DSCR_DEVICE_TYPE 1
@@ -177,13 +231,10 @@ void handle_hispeed( BOOL highspeed );
 #define DSCR_OTHERSPD_TYPE 7
 #define DSCR_DEBUG_TYPE 10
 
-/* usb spec 2 */
-#define DSCR_BCD 2
+/* USB version 2.0 */
+#define DSCR_BCD 0x0200
 
-
-/* device descriptor */
-#define DSCR_DEVICE_LEN 18
-
+/* Device descriptor */
 typedef struct {
     BYTE dsc_len; // descriptor length (18 for this )
     BYTE dsc_type; // dscr type
@@ -199,26 +250,18 @@ typedef struct {
     BYTE idx_devstr; // product string index
     BYTE idx_serstr; // serial number index
     BYTE num_configs; // number of configurations
-        
 } DEVICE_DSCR;
+#define DSCR_DEVICE_LEN 18
 
-
-/* config descriptor */
+/* Config descriptor  */
 #define DSCR_CONFIG_LEN 9
-typedef struct {
-    BYTE dsc_len; // 9 for this one
-    BYTE dsc_type; // dscr type
-    
-} CONFIG_DSCR;
+#define CONFIG_DSCR DSCR_HEAD
 
-/* string descriptor */
+/* String descriptor */
 typedef struct {
     BYTE dsc_len;
     BYTE dsc_type;
     BYTE pstr;
 } STRING_DSCR;
-
-
-
 
 #endif
