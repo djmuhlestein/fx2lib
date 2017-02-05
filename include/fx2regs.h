@@ -635,4 +635,10 @@ __sfr __at 0xF8 EIP; // EIP Bit Values differ from Reg320
 #define bmEP1OUTBSY     bmBIT1
 #define bmEP0BSY        bmBIT0
 
+/* EXIF - External interrupt flags */
+#define bmIE5           bmBIT7
+#define bmIE4           bmBIT6
+#define bmI2CINT        bmBIT5
+#define bmUSBNT         bmBIT4
+
 #endif   /* FX2REGS_H */
