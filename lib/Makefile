@@ -16,7 +16,7 @@
 
 AS8051?=sdas8051
 CC=sdcc
-CCLIB?=sdcclib
+SDAR?=sdar
 SOURCES = serial.c i2c.c delay.c setupdat.c gpif.c eputils.c $(wildcard interrupts/*.c)
 FX2_OBJS = $(patsubst %.c,%.rel, $(SOURCES)) usbav.rel
 INCLUDES = -I../include
@@ -26,7 +26,7 @@ LIBS = fx2.lib
 all: $(LIBS)
 
 $(LIBS): $(FX2_OBJS)
-	$(CCLIB) fx2.lib $?
+	$(SDAR) -rc fx2.lib $?
 
 usbav.rel: usbav.a51
 	$(AS8051) -logs usbav.a51
