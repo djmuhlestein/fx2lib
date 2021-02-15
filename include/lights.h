@@ -33,14 +33,14 @@
 #define D4OFFH #0xA0 
 #define D5ONH #0xB8 
 #define D5OFFH #0xB0 
-volatile __xdata __at 0x8800 BYTE D2ON;
-volatile __xdata __at 0x8000 BYTE D2OFF;
-volatile __xdata __at 0x9800 BYTE D3ON;
-volatile __xdata __at 0x9000 BYTE D3OFF;
-volatile __xdata __at 0xA800 BYTE D4ON;
-volatile __xdata __at 0xA000 BYTE D4OFF;
-volatile __xdata __at 0xB800 BYTE D5ON;
-volatile __xdata __at 0xB000 BYTE D5OFF;
+volatile __xdata __at(0x8800) BYTE D2ON;
+volatile __xdata __at(0x8000) BYTE D2OFF;
+volatile __xdata __at(0x9800) BYTE D3ON;
+volatile __xdata __at(0x9000) BYTE D3OFF;
+volatile __xdata __at(0xA800) BYTE D4ON;
+volatile __xdata __at(0xA000) BYTE D4OFF;
+volatile __xdata __at(0xB800) BYTE D5ON;
+volatile __xdata __at(0xB000) BYTE D5OFF;
 #else
 // FX1 dev board lights
 #define D2ONH #0x80 // assembly high byte of light addr 
@@ -51,14 +51,14 @@ volatile __xdata __at 0xB000 BYTE D5OFF;
 #define D4OFFH #0xA1 
 #define D5ONH #0xB0 
 #define D5OFFH #0xB1 
-volatile __xdata __at 0x8000 BYTE D2ON;
-volatile __xdata __at 0x8100 BYTE D2OFF;
-volatile __xdata __at 0x9000 BYTE D3ON;
-volatile __xdata __at 0x9100 BYTE D3OFF;
-volatile __xdata __at 0xA000 BYTE D4ON;
-volatile __xdata __at 0xA100 BYTE D4OFF;
-volatile __xdata __at 0xB000 BYTE D5ON;
-volatile __xdata __at 0xB100 BYTE D5OFF;
+volatile __xdata __at(0x8000) BYTE D2ON;
+volatile __xdata __at(0x8100) BYTE D2OFF;
+volatile __xdata __at(0x9000) BYTE D3ON;
+volatile __xdata __at(0x9100) BYTE D3OFF;
+volatile __xdata __at(0xA000) BYTE D4ON;
+volatile __xdata __at(0xA100) BYTE D4OFF;
+volatile __xdata __at(0xB000) BYTE D5ON;
+volatile __xdata __at(0xB100) BYTE D5OFF;
 #endif
 
 /**
