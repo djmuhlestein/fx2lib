@@ -26,17 +26,17 @@ volatile __bit d3;
 volatile __bit d4;
 volatile __bit d5;
 
-void timer0_isr() __interrupt TF0_ISR {
+void timer0_isr(void) __interrupt TF0_ISR {
  d2 = !d2;
  if (d2) { d2on(); } else { d2off(); }
 }
 
-void timer1_isr() __interrupt TF1_ISR {
+void timer1_isr(void) __interrupt TF1_ISR {
  d3 = !d3;
  if (d3) { d3on(); } else { d3off(); }
 }
 
-void timer2_isr() __interrupt TF2_ISR {
+void timer2_isr(void) __interrupt TF2_ISR {
  d4 = !d4;
  if (d4) { d4on(); } else { d4off(); }
 

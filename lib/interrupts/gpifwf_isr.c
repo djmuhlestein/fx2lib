@@ -18,5 +18,5 @@
 
 #include <autovector.h>
 
-void gpifwf_isr() __interrupt {}
+void gpifwf_isr(void) __interrupt {}
 

@@ -60,7 +60,7 @@ void eeprom_write_local(BYTE prom_addr, WORD addr, WORD length, BYTE* buf) {
     
 }
 
-void main() {
+void main(void) {
     
  BOOL on=FALSE;
  unsigned int size=0;

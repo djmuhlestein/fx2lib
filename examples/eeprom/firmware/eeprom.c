@@ -36,7 +36,7 @@ __bit on;
 WORD count;
 
 
-void main() {
+void main(void) {
 
  REVCTL = 0; // not using advanced endpoint controls
 
@@ -74,7 +74,7 @@ void main() {
 
 }
 
-BOOL handle_get_descriptor() {
+BOOL handle_get_descriptor(void) {
   return FALSE;
 }
 
@@ -144,7 +144,7 @@ BOOL handle_set_interface(BYTE ifc,BYTE alt_ifc) {
 // keep track of the config number and return the correct number
 // config numbers are set int the dscr file.
 volatile BYTE config=1;
-BYTE handle_get_configuration() { 
+BYTE handle_get_configuration(void) { 
  return config; 
 }
 // return TRUE if you handle this request
@@ -156,16 +156,16 @@ BOOL handle_set_configuration(BYTE cfg) {
 }
 
 
-void sudav_isr() __interrupt SUDAV_ISR {
+void sudav_isr(void) __interrupt SUDAV_ISR {
  dosud=TRUE;
  CLEAR_SUDAV();
 }
 
-void usbreset_isr() __interrupt USBRESET_ISR {
+void usbreset_isr(void) __interrupt USBRESET_ISR {
  handle_hispeed(FALSE);
  CLEAR_USBRESET();
 }
-void hispeed_isr() __interrupt HISPEED_ISR {
+void hispeed_isr(void) __interrupt HISPEED_ISR {
  handle_hispeed(TRUE);
  CLEAR_HISPEED();
 }

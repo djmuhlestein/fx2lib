@@ -149,7 +149,7 @@ __xdata BYTE* ep_addr(BYTE ep);
  You can also use the usbjt and enable the sudav isr
  and call the function from withing the sudav isr routine
 */
-void handle_setupdata();
+void handle_setupdata(void);
 
 
 /**

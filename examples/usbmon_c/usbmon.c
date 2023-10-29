@@ -117,7 +117,7 @@ static void setup_usb(void)
 
 }
 
-void main()
+void main(void)
 {
 	got_sud=FALSE;
 
@@ -185,7 +185,7 @@ BOOL handle_set_interface(BYTE ifc, BYTE alt_ifc)
 }
 
 // get/set configuration
-BYTE handle_get_configuration()
+BYTE handle_get_configuration(void)
 {
 	return 1;
 }
@@ -202,24 +202,24 @@ BOOL handle_set_configuration(BYTE cfg)
 	return cfg==1 ? TRUE : FALSE; // we only handle cfg 1
 }
 
-void sudav_isr() __interrupt SUDAV_ISR
+void sudav_isr(void) __interrupt SUDAV_ISR
 {
 
 	got_sud=TRUE;
 	CLEAR_SUDAV();
 }
 
-void sof_isr () __interrupt SOF_ISR __using 1
+void sof_isr(void) __interrupt SOF_ISR __using 1
 {
 	CLEAR_SOF();
 }
 
-void usbreset_isr() __interrupt USBRESET_ISR
+void usbreset_isr(void) __interrupt USBRESET_ISR
 {
 	handle_hispeed(FALSE);
 	CLEAR_USBRESET();
 }
-void hispeed_isr() __interrupt HISPEED_ISR
+void hispeed_isr(void) __interrupt HISPEED_ISR
 {
 	handle_hispeed(TRUE);
 	CLEAR_HISPEED();

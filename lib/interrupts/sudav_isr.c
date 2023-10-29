@@ -18,5 +18,5 @@
 
 #include <autovector.h>
 
-void sudav_isr() __interrupt {}
+void sudav_isr(void) __interrupt {}
 

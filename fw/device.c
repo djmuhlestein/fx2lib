@@ -24,7 +24,7 @@
 #define printf(...)
 #endif
 
-BOOL handle_get_descriptor() {
+BOOL handle_get_descriptor(void) {
 
 }
 
@@ -54,7 +54,7 @@ BOOL handle_set_interface(BYTE ifc,BYTE alt_ifc) {
 // keep track of the config number and return the correct number
 // config numbers are set int the dscr file.
 //volatile BYTE config=1;
-BYTE handle_get_configuration() { 
+BYTE handle_get_configuration(void) { 
  return 1;
 }
 
@@ -77,7 +77,7 @@ BOOL handle_vendorcommand(BYTE cmd) {
 
 //********************  INIT ***********************
 
-void main_init() {
+void main_init(void) {
 
  REVCTL=3;
  SETIF48MHZ();
@@ -91,7 +91,7 @@ void main_init() {
 }
 
 
-void main_loop() {
+void main_loop(void) {
  // do some work
 }
 

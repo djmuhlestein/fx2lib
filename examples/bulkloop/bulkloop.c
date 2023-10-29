@@ -40,7 +40,7 @@ volatile __bit got_sud;
 DWORD lcount;
 __bit on;
 
-void main() {
+void main(void) {
 
  REVCTL=0; // not using advanced endpoint controls
 
@@ -135,7 +135,7 @@ void main() {
 
 // copied routines from setupdat.h
 
-BOOL handle_get_descriptor() {
+BOOL handle_get_descriptor(void) {
   return FALSE;
 }
 
@@ -189,7 +189,7 @@ BOOL handle_set_interface(BYTE ifc, BYTE alt_ifc) {
 }
 
 // get/set configuration
-BYTE handle_get_configuration() {
+BYTE handle_get_configuration(void) {
  return 1; 
  }
 BOOL handle_set_configuration(BYTE cfg) { 
@@ -198,7 +198,7 @@ BOOL handle_set_configuration(BYTE cfg) {
 
 
 // copied usb jt routines from usbjt.h
-void sudav_isr() __interrupt SUDAV_ISR {
+void sudav_isr(void) __interrupt SUDAV_ISR {
   
   got_sud=TRUE;
   CLEAR_SUDAV();
@@ -206,7 +206,7 @@ void sudav_isr() __interrupt SUDAV_ISR {
 
 __bit on5;
 __xdata WORD sofct=0;
-void sof_isr () __interrupt SOF_ISR __using 1 {
+void sof_isr (void) __interrupt SOF_ISR __using 1 {
     ++sofct;
     if(sofct==8000) { // about 8000 sof interrupts per second at high speed
         on5=!on5;
@@ -216,11 +216,11 @@ void sof_isr () __interrupt SOF_ISR __using 1 {
     CLEAR_SOF();
 }
 
-void usbreset_isr() __interrupt USBRESET_ISR {
+void usbreset_isr(void) __interrupt USBRESET_ISR {
     handle_hispeed(FALSE);
     CLEAR_USBRESET();
 }
-void hispeed_isr() __interrupt HISPEED_ISR {
+void hispeed_isr(void) __interrupt HISPEED_ISR {
     handle_hispeed(TRUE);
     CLEAR_HISPEED();
 }
