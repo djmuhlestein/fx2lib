@@ -202,24 +202,24 @@ BOOL handle_set_configuration(BYTE cfg)
 	return cfg==1 ? TRUE : FALSE; // we only handle cfg 1
 }
 
-void sudav_isr(void) __interrupt SUDAV_ISR
+void sudav_isr(void) __interrupt (SUDAV_ISR)
 {
 
 	got_sud=TRUE;
 	CLEAR_SUDAV();
 }
 
-void sof_isr(void) __interrupt SOF_ISR __using 1
+void sof_isr(void) __interrupt (SOF_ISR) __using (1)
 {
 	CLEAR_SOF();
 }
 
-void usbreset_isr(void) __interrupt USBRESET_ISR
+void usbreset_isr(void) __interrupt (USBRESET_ISR)
 {
 	handle_hispeed(FALSE);
 	CLEAR_USBRESET();
 }
-void hispeed_isr(void) __interrupt HISPEED_ISR
+void hispeed_isr(void) __interrupt (HISPEED_ISR)
 {
 	handle_hispeed(TRUE);
 	CLEAR_HISPEED();
