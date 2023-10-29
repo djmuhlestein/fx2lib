@@ -18,5 +18,5 @@
 
 #include <autovector.h>
 
-void sof_isr() __interrupt {}
+void sof_isr(void) __interrupt {}
 

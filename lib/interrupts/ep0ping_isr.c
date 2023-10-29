@@ -18,5 +18,5 @@
 
 #include <autovector.h>
 
-void ep0ping_isr() __interrupt {}
+void ep0ping_isr(void) __interrupt {}
 

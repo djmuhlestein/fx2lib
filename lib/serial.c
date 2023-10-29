@@ -69,7 +69,7 @@ void sio0_init( DWORD baud_rate ) __critical { // baud_rate max should be 57600 
 
 }
 
-int getchar() {
+int getchar(void) {
   char c;
   while (!RI)
     ;  

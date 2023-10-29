@@ -18,5 +18,5 @@
 
 #include <autovector.h>
 
-void sutok_isr() __interrupt {}
+void sutok_isr(void) __interrupt {}
 

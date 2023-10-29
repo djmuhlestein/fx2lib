@@ -18,5 +18,5 @@
 
 #include <autovector.h>
 
-void spare_isr() __interrupt {}
+void spare_isr(void) __interrupt {}
 
