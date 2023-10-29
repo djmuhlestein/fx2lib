@@ -156,16 +156,16 @@ BOOL handle_set_configuration(BYTE cfg) {
 }
 
 
-void sudav_isr(void) __interrupt SUDAV_ISR {
+void sudav_isr(void) __interrupt (SUDAV_ISR) {
  dosud=TRUE;
  CLEAR_SUDAV();
 }
 
-void usbreset_isr(void) __interrupt USBRESET_ISR {
+void usbreset_isr(void) __interrupt (USBRESET_ISR) {
  handle_hispeed(FALSE);
  CLEAR_USBRESET();
 }
-void hispeed_isr(void) __interrupt HISPEED_ISR {
+void hispeed_isr(void) __interrupt (HISPEED_ISR) {
  handle_hispeed(TRUE);
  CLEAR_HISPEED();
 }
