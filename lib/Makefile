@@ -35,6 +35,5 @@ usbav.rel: usbav.a51
 	$(SDCC) $(INCLUDES) -c $< -o $@
 
 clean:
-	rm -f *.{asm,ihx,lnk,lst,map,mem,rel,rst,sym,adb,cdb,lib}
-	rm -f interrupts/*.{asm,ihx,lnk,lst,map,mem,rel,rst,sym,adb,dcb,lib}
+	rm -f $(foreach ext, asm ihx lnk lst map mem rel rst sym adb cdb lib, *.${ext} interrupts/*.${ext})
 
