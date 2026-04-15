@@ -43,6 +43,16 @@
 __xdata __at(0xE400) volatile BYTE GPIF_WAVE_DATA;
 __xdata __at(0xE480) volatile BYTE RES_WAVEDATA_END;
 
+
+// ID Registers that provide an unique serial number -> Cypress KBA89285
+
+__xdata __at(0xE507) volatile BYTE UNIQID0;  // ID register byte 0 (LSB)
+__xdata __at(0xE508) volatile BYTE UNIQID1;  // ID register
+__xdata __at(0xE509) volatile BYTE UNIQID2;  // ID register
+__xdata __at(0xE50A) volatile BYTE UNIQID3;  // ID register
+__xdata __at(0xE50B) volatile BYTE UNIQID4;  // ID register
+__xdata __at(0xE50C) volatile BYTE UNIQID5;  // ID register byte 5 (MSB)
+
 // General Configuration
 
 __xdata __at(0xE600) volatile BYTE CPUCS;  ///< Control & Status
